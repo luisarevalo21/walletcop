@@ -8,6 +8,8 @@ import LoginPage from "./pages/LoginPage.jsx";
 import SignUpPage from "./pages/SignupPage.jsx";
 import Dashboard from "./pages/Dashboard.jsx";
 import RootLayout from "./components/RootLayout.jsx";
+import CardDetails from "./components/Card/CardDetails.jsx";
+import Wallet from "./pages/WalletPage.jsx";
 // Import your publishable key
 const PUBLISHABLE_KEY = import.meta.env.VITE_CLERK_PUBLISHABLE_KEY;
 
@@ -23,6 +25,9 @@ const router = createBrowserRouter([
       { path: "/dashboard", element: <Dashboard /> },
       { path: "/login", element: <LoginPage /> },
       { path: "/signup", element: <SignUpPage /> },
+      { path: "/account", element: <SignUpPage /> },
+      { path: "/card/:id", element: <CardDetails /> },
+      { path: "/wallet", element: <Wallet /> },
     ],
   },
 ]);

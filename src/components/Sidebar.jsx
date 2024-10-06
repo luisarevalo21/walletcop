@@ -1,9 +1,11 @@
 import React, { useState } from "react";
-import { Box, Typography, Stack, Link } from "@mui/material";
+import { Box, Typography, Stack, Link, Button } from "@mui/material";
 import AccountBoxIcon from "@mui/icons-material/AccountBox";
 import WalletIcon from "@mui/icons-material/Wallet";
 import HomeIcon from "@mui/icons-material/Home";
-
+import LogoutIcon from "@mui/icons-material/Logout";
+import LoginIcon from "@mui/icons-material/Login";
+import { SignedIn, SignedOut, SignOutButton, SignInButton } from "@clerk/clerk-react";
 const Sidebar = ({ open, setOpen }) => {
   //   if (!open) {
   //     return <></>;
@@ -75,6 +77,46 @@ const Sidebar = ({ open, setOpen }) => {
         >
           <AccountBoxIcon sx={{ mr: "4px" }} /> Account
         </Link>
+
+        <SignedIn>
+          <SignOutButton>
+            <Link
+              href="/login"
+              textAlign={"center"}
+              display={"flex"}
+              alignItems={"center"}
+              fontSize={"1.2rem"}
+              sx={{ textDecoration: "none", color: "black" }}
+            >
+              <LogoutIcon sx={{ mr: "4px" }} />
+              Log out
+            </Link>
+          </SignOutButton>
+        </SignedIn>
+        <SignedOut>
+          <Link
+            href="/signin"
+            textAlign={"center"}
+            display={"flex"}
+            alignItems={"center"}
+            fontSize={"1.2rem"}
+            sx={{ textDecoration: "none", color: "black" }}
+          >
+            <LoginIcon sx={{ mr: "4px" }} />
+            <SignInButton>Login/Sign Up</SignInButton>
+          </Link>
+          {/* <Link
+            href="/login"
+            textAlign={"center"}
+            display={"flex"}
+            alignItems={"center"}
+            fontSize={"1.2rem"}
+            sx={{ textDecoration: "none", color: "black" }}
+          >
+            <LoginIcon sx={{ mr: "4px" }} />
+            Login
+          </Link> */}
+        </SignedOut>
       </Stack>
     </Box>
   );
