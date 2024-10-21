@@ -4,12 +4,9 @@ import CardItem from "./CardItem";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 
-const Card = ({ category, handleClick, handleDelete }) => {
-  const [cards, setCards] = useState([]);
-
+const Card = ({ category, handleClick, handleDelete, cards }) => {
   const [toggleCards, setToggleCards] = useState(true);
   const handleToggleCards = () => {
-    console.log("button clciked");
     setToggleCards(!toggleCards);
   };
 
@@ -31,9 +28,9 @@ const Card = ({ category, handleClick, handleDelete }) => {
       </Box>
       {toggleCards && (
         <>
-          <CardItem id="1" handleClick={handleClick} handleDelete={handleDelete} />
-          <CardItem id="2" handleClick={handleClick} handleDelete={handleDelete} />
-          <CardItem id="3" handleClick={handleClick} handleDelete={handleDelete} />
+          {cards.map(card => (
+            <CardItem key={card.id} card={card} handleClick={handleClick} handleDelete={handleDelete} />
+          ))}
         </>
       )}
     </Box>

@@ -10,6 +10,7 @@ import Dashboard from "./pages/Dashboard.jsx";
 import RootLayout from "./components/RootLayout.jsx";
 import CardDetails from "./components/Card/CardDetails.jsx";
 import Wallet from "./pages/WalletPage.jsx";
+import FavoritesPage from "./pages/FavoritesPage.jsx";
 // Import your publishable key
 const PUBLISHABLE_KEY = import.meta.env.VITE_CLERK_PUBLISHABLE_KEY;
 
@@ -28,6 +29,7 @@ const router = createBrowserRouter([
       { path: "/account", element: <SignUpPage /> },
       { path: "/card/:id", element: <CardDetails /> },
       { path: "/wallet", element: <Wallet /> },
+      { path: "/favorites", element: <FavoritesPage /> },
     ],
   },
 ]);

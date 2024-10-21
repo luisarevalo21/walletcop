@@ -10,7 +10,6 @@ if (!PUBLISHABLE_KEY) {
 export default function RootLayout() {
   const navigate = useNavigate();
   const location = useLocation();
-  console.log(location);
   return (
     <ClerkProvider
       // routerPush={to => navigate(to)}
@@ -19,18 +18,7 @@ export default function RootLayout() {
       signInForceRedirectUrl="/dashboard"
     >
       <header className="header">
-        {location.pathname.startsWith("/card") ? null : <Navbar />}
-        {/* <div>
-          <div>
-            <p>Clerk + React + React Router App</p>
-          </div>
-          <SignedIn>
-            <UserButton />
-          </SignedIn>
-          <SignedOut>
-            <Link to="/login">Sign In</Link>
-          </SignedOut>
-        </div> */}
+        <Navbar />
       </header>
       <main>
         <Outlet />

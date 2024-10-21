@@ -2,8 +2,36 @@ import React from "react";
 import { Box, Typography, Stack, Button } from "@mui/material";
 import visaImage from "../../assets/visa-cc.png";
 import NavigateNextIcon from "@mui/icons-material/NavigateNext";
+import EditIcon from "@mui/icons-material/Edit";
 import DeleteForeverOutlinedIcon from "@mui/icons-material/DeleteForeverOutlined";
-const CardItem = ({ id, handleClick, handleDelete }) => {
+const CardItem = ({ handleClick, handleDelete, card, edit, handleEdit, categoryName, favorites }) => {
+  if (favorites) {
+    //pass teh fvaorite card
+    //then map over the users cards and display them
+    //add the onclick to change the current favorite for the sepecific category
+    //filter if the card is not the same as the favorite card
+
+    return (
+      <Box display={"flex"} alignItems={"center"} justifyContent={"center"} p={1.5}>
+        <Box mr={2} boxShadow={""} borderRadius={"5px"} width={"200px"}>
+          <img src={visaImage} alt="card" width={"100%"} />
+        </Box>
+        <Box
+          width={"100%"}
+          display={"flex"}
+          flexDirection={"column"}
+          justifyContent={"space-evenly"}
+          alignItems={"flex-start"}
+        >
+          <Typography variant={"p"}>{card.bank}</Typography>
+          <Typography variant={"p"}>{card.creditCardName}</Typography>
+          <Typography variant={"p"}>2% cashback on food</Typography>
+          <Typography variant={"p"}>2% cashback on food</Typography>
+        </Box>
+      </Box>
+    );
+  }
+
   return (
     <Box
       border={"1px solid black"}
@@ -25,7 +53,7 @@ const CardItem = ({ id, handleClick, handleDelete }) => {
           margin: "0",
           minWidth: 0,
         }}
-        onClick={() => handleDelete(id)}
+        onClick={() => handleDelete(card.id)}
       >
         <DeleteForeverOutlinedIcon style={{ fill: "#EB5757" }} />
       </Button>
@@ -35,25 +63,48 @@ const CardItem = ({ id, handleClick, handleDelete }) => {
 
       <Stack>
         <Typography variant={"p"} mb={1}>
-          3% cash back on food Freedom
+          {card.bank}
         </Typography>
-        <Typography variant={"p"}>2% cash back on groceries</Typography>
+        <Typography variant={"p"}>{card.creditCardName}</Typography>
       </Stack>
-      <Button
-        sx={{
-          position: "absolute",
-          right: "0",
-          margin: "0",
-          padding: "0",
-          display: "flex",
-          justifyContent: "flex-end",
-        }}
-        onClick={() => {
-          handleClick(id);
-        }}
-      >
-        <NavigateNextIcon sx={{ backgroundColor: "#85BDAC", color: "black", borderRadius: "50%" }} />
-      </Button>
+      {edit ? (
+        <Button
+          sx={{
+            position: "absolute",
+            right: "0",
+            margin: "0",
+            padding: "0",
+            display: "flex",
+            justifyContent: "flex-end",
+          }}
+          onClick={() => {
+            handleEdit({
+              id: card.id,
+              categoryName,
+              creditCardName: card.creditCardName,
+              bank: card.bank,
+            });
+          }}
+        >
+          <EditIcon sx={{ backgroundColor: "#85BDAC", color: "black", borderRadius: "50%" }} />
+        </Button>
+      ) : (
+        <Button
+          sx={{
+            position: "absolute",
+            right: "0",
+            margin: "0",
+            padding: "0",
+            display: "flex",
+            justifyContent: "flex-end",
+          }}
+          onClick={() => {
+            handleClick(card.id);
+          }}
+        >
+          <NavigateNextIcon sx={{ backgroundColor: "#85BDAC", color: "black", borderRadius: "50%" }} />
+        </Button>
+      )}
     </Box>
   );
 };
