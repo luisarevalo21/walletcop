@@ -8,21 +8,23 @@ if (!PUBLISHABLE_KEY) {
 }
 
 export default function RootLayout() {
-  const navigate = useNavigate();
-  const location = useLocation();
+  // const navigate = useNavigate();
+  // const location = useLocation();
   return (
-    <ClerkProvider
-      // routerPush={to => navigate(to)}
-      // routerReplace={to => navigate(to, { replace: true })}
-      publishableKey={PUBLISHABLE_KEY}
-      signInForceRedirectUrl="/dashboard"
-    >
+    // <ClerkProvider
+    //   // routerPush={to => navigate(to)}
+    //   // routerReplace={to => navigate(to, { replace: true })}
+    //   publishableKey={PUBLISHABLE_KEY}
+    //   signInForceRedirectUrl="/dashboard"
+    // >
+    <>
       <header className="header">
         <Navbar />
       </header>
       <main>
         <Outlet />
       </main>
-    </ClerkProvider>
+    </>
+    // </ClerkProvider>
   );
 }

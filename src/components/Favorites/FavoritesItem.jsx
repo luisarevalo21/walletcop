@@ -7,10 +7,10 @@ const FavoritesItem = ({ card, categoryName, handleEdit, favoritesArray, handleN
     return (
       <Box
         display={"flex"}
-        alignItems={"center"}
+        alignItems={"flex"}
         justifyContent={"center"}
         p={1.5}
-        onClick={() => handleNewFavorite(card)}
+        onClick={() => handleNewFavorite(categoryName, card)}
       >
         <Box mr={2} boxShadow={""} borderRadius={"5px"} width={"200px"}>
           <img src={visaImage} alt="card" width={"100%"} />

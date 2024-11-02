@@ -7,6 +7,8 @@ import LogoutIcon from "@mui/icons-material/Logout";
 import LoginIcon from "@mui/icons-material/Login";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import CloseIcon from "@mui/icons-material/Close";
+import DashboardIcon from "@mui/icons-material/Dashboard";
+import InfoIcon from "@mui/icons-material/Info";
 import avatar from "../assets/avatar.jpg";
 import { SignedIn, SignedOut, SignOutButton, SignInButton, useUser } from "@clerk/clerk-react";
 const Sidebar = ({ open, setOpen }) => {
@@ -33,22 +35,22 @@ const Sidebar = ({ open, setOpen }) => {
       >
         <CloseIcon />
       </Button>
-      <img
-        src={user?.imageUrl}
-        alt="User Profile"
-        style={{
-          width: "70px",
-          height: "70px",
-          borderRadius: "50%",
-          border: "1px solid black",
-          textAlign: "center",
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-        }}
-      />
 
       <SignedIn>
+        <img
+          src={user?.imageUrl}
+          alt="User Profile"
+          style={{
+            width: "70px",
+            height: "70px",
+            borderRadius: "50%",
+            border: "1px solid black",
+            textAlign: "center",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        />
         <Box display={"flex"} flexDirection={"column"} textAlign={"center"} mt={2} mb={3} width={"100%"}>
           <Typography variant="h4">{user?.firstName}</Typography>
           <Typography variant="p" fontSize={"13px"}>
@@ -75,49 +77,51 @@ const Sidebar = ({ open, setOpen }) => {
           fontSize={"1.2rem"}
           sx={{ textDecoration: "none", color: "black" }}
         >
-          about
+          <InfoIcon sx={{ mr: "4px" }} /> About
         </Link>
-        <Link
-          href={"/wallet"}
-          textAlign={"center"}
-          display={"flex"}
-          alignItems={"center"}
-          fontSize={"1.2rem"}
-          sx={{ textDecoration: "none", color: "black" }}
-        >
-          <WalletIcon sx={{ mr: "4px" }} /> Wallet
-        </Link>
-        <Link
-          href={"/favorites"}
-          textAlign={"center"}
-          display={"flex"}
-          alignItems={"center"}
-          fontSize={"1.2rem"}
-          sx={{ textDecoration: "none", color: "black" }}
-        >
-          <FavoriteIcon sx={{ mr: "4px" }} /> Favorites
-        </Link>
-        {/* <Link
-          href={"/dashboard"}
-          textAlign={"center"}
-          display={"flex"}
-          alignItems={"center"}
-          fontSize={"1.2rem"}
-          sx={{ textDecoration: "none", color: "black" }}
-        >
-          <HomeIcon sx={{ mr: "4px" }} /> Dashboard
-        </Link> */}
-        <Link
-          href={"/account"}
-          textAlign={"center"}
-          display={"flex"}
-          alignItems={"center"}
-          fontSize={"1.2rem"}
-          sx={{ textDecoration: "none", color: "black" }}
-        >
-          <AccountBoxIcon sx={{ mr: "4px" }} /> Account
-        </Link>
+        <SignedIn>
+          <Link
+            href={"/dashboard"}
+            textAlign={"center"}
+            display={"flex"}
+            alignItems={"center"}
+            fontSize={"1.2rem"}
+            sx={{ textDecoration: "none", color: "black" }}
+          >
+            <DashboardIcon sx={{ mr: "4px" }} /> Dashboard
+          </Link>
+          <Link
+            href={"/wallet"}
+            textAlign={"center"}
+            display={"flex"}
+            alignItems={"center"}
+            fontSize={"1.2rem"}
+            sx={{ textDecoration: "none", color: "black" }}
+          >
+            <WalletIcon sx={{ mr: "4px" }} /> Wallet
+          </Link>
+          <Link
+            href={"/favorites"}
+            textAlign={"center"}
+            display={"flex"}
+            alignItems={"center"}
+            fontSize={"1.2rem"}
+            sx={{ textDecoration: "none", color: "black" }}
+          >
+            <FavoriteIcon sx={{ mr: "4px" }} /> Favorites
+          </Link>
 
+          <Link
+            href={"/account"}
+            textAlign={"center"}
+            display={"flex"}
+            alignItems={"center"}
+            fontSize={"1.2rem"}
+            sx={{ textDecoration: "none", color: "black" }}
+          >
+            <AccountBoxIcon sx={{ mr: "4px" }} /> Account
+          </Link>
+        </SignedIn>
         <SignedIn>
           <SignOutButton>
             <Link

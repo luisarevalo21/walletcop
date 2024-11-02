@@ -35,7 +35,8 @@ const CardDetails = () => {
           }}
           onClick={() => {
             //maintain previous state
-            navigate("/dashboard");
+            navigate(-1);
+            // navigate("/dashboard");
           }}
         >
           <ArrowBackIosIcon

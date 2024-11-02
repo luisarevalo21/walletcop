@@ -58,8 +58,18 @@ const FavoritesPage = () => {
     setSelectedCard(null);
   };
 
-  const handleNewFavorite = card => {
-    console.log("clciedk", card);
+  const handleNewFavorite = (categoryName, card) => {
+    setOpen(false);
+    setSelectedCard(null);
+
+    //set the favorites array with the new card
+    const newFavorites = favorites.map(favorite => {
+      if (favorite.categoryName === categoryName) {
+        return { categoryName: categoryName, card: card };
+      }
+      return favorite;
+    });
+    setFavorites(newFavorites);
   };
   return (
     <>

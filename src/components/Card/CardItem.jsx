@@ -11,6 +11,10 @@ const CardItem = ({ handleClick, handleDelete, card, edit, handleEdit, categoryN
     //add the onclick to change the current favorite for the sepecific category
     //filter if the card is not the same as the favorite card
 
+    //update the card for the faovriet that was selected
+    //filter our users cards that doesn't include teh current favorite card
+    //send it back to the favorites page component
+
     return (
       <Box display={"flex"} alignItems={"center"} justifyContent={"center"} p={1.5}>
         <Box mr={2} boxShadow={""} borderRadius={"5px"} width={"200px"}>
@@ -42,7 +46,7 @@ const CardItem = ({ handleClick, handleDelete, card, edit, handleEdit, categoryN
       mt={"1em"}
       display={"flex"}
       alignItems={"center"}
-      justifyContent={"center"}
+      justifyContent={"flex-start"}
     >
       <Button
         sx={{

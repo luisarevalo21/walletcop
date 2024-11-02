@@ -20,7 +20,6 @@ const FavoritesModal = props => {
     // alignItems: "center",
   };
 
-  console.log("categoryName", categoryName);
   return (
     // <Modal
     //   onClose={handleClose}
@@ -92,6 +91,7 @@ const FavoritesModal = props => {
             edit={false}
             handleNewFavorite={handleNewFavorite}
             key={card.id}
+            categoryName={categoryName}
           />
         ))}
       </Box>

@@ -25,11 +25,14 @@ const Navbar = () => {
           />
         </Box>
 
-        {user && !location.pathname.startsWith("/wallet") && !location.pathname.startsWith("/favorites") && (
-          <Typography variant={"h3"} textAlign={"center"}>
-            {user.firstName}&#39;s Portal
-          </Typography>
-        )}
+        {user &&
+          !location.pathname.startsWith("/wallet") &&
+          !location.pathname.startsWith("/favorites") &&
+          !location.pathname.startsWith("/card") && (
+            <Typography variant={"h3"} textAlign={"center"}>
+              {user.firstName}&#39;s Portal
+            </Typography>
+          )}
 
         {location.pathname.startsWith("/wallet") && (
           <Typography variant={"h3"} textAlign={"center"}>
