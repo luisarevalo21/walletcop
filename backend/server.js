@@ -1,8 +1,11 @@
+require("dotenv").config();
+
 const express = require("express");
 const app = express();
 const port = 3000;
 const cors = require("cors");
 const connectDB = require("./db/index");
+
 const Card = require("./models/cards.js");
 const Category = require("./models/categories.js");
 const Bank = require("./models/banks.js");
