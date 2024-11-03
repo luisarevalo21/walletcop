@@ -1,25 +1,29 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Box, Typography, FormControl, Select, InputLabel, MenuItem } from "@mui/material";
 import CategoryItem from "./CategoryItem";
 import Card from "../Card/Card";
+import axios from "axios";
 
 const Category = ({ handleClick }) => {
+  useEffect(() => {
+    const fetchCategories = async () => {
+      try {
+        setIsLoadingCategories(true);
+        const res = await axios.get("http://localhost:3000/categories");
+        console.log("res", res.data);
+        setCategories(res.data);
+        setIsLoadingCategories(false);
+      } catch (err) {
+        console.error("Error fetching categories:", err);
+      }
+    };
+    fetchCategories();
+  }, []);
   //reset category state when going back here from card
   const [category, setCategory] = useState("");
-  const [categories, setCategories] = useState([
-    {
-      id: 1,
-      value: "Groceries",
-    },
-    {
-      id: 2,
-      value: "Gas",
-    },
-    {
-      id: 3,
-      value: "Online",
-    },
-  ]);
+  const [categories, setCategories] = useState([]);
+  const [isLoadingCategories, setIsLoadingCategories] = useState(false);
+  const [isLoadingUsersCards, setIsLoadingUsersCards] = useState(false);
   const [usersCards, setUsersCards] = useState([
     { creditCardName: "Chase Sapphire Preferred", bank: "JPMorgan Chase", id: 1 },
     { creditCardName: "American Express Platinum", bank: "American Express", id: 2 },
@@ -34,6 +38,15 @@ const Category = ({ handleClick }) => {
   const handleDelete = id => {
     setUsersCards(usersCards => usersCards.filter(card => card.id !== id));
   };
+
+  if (isLoadingCategories) {
+    return <Typography>Loading...</Typography>;
+  }
+
+  if (isLoadingUsersCards) {
+    return <Typography>Loading Users Cards...</Typography>;
+  }
+
   return (
     <>
       <FormControl
@@ -49,10 +62,17 @@ const Category = ({ handleClick }) => {
       >
         <InputLabel>Category</InputLabel>
         <Select value={category} label="Category" onChange={handleChange} sx={{ left: 0 }}>
-          <MenuItem value={"groceries"}>Groceries</MenuItem>
+          {categories.map(category => {
+            return (
+              <MenuItem key={category.category} value={category.category}>
+                {category.category}
+              </MenuItem>
+            );
+          })}
+          {/* <MenuItem value={"groceries"}>Groceries</MenuItem>
           <MenuItem value={"gas"}>Gas</MenuItem>
           <MenuItem value={"online"}>Online</MenuItem>
-          <MenuItem value={"dining"}>Dining</MenuItem>
+          <MenuItem value={"dining"}>Dining</MenuItem> */}
 
           {/* {categories.map(category => {
             return <CategoryItem key={category.id} value={category.value} label={category.value} />;
