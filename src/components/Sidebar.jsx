@@ -139,7 +139,7 @@ const Sidebar = ({ open, setOpen }) => {
         </SignedIn>
         <SignedOut>
           <Link
-            href="/signin"
+            href="/login"
             textAlign={"center"}
             display={"flex"}
             alignItems={"center"}

@@ -46,7 +46,7 @@ if (!PUBLISHABLE_KEY) {
 createRoot(document.getElementById("root")).render(
   <StrictMode>
     {/* <RouterProvider router={router} /> */}
-    <ClerkProvider publishableKey={PUBLISHABLE_KEY} signInForceRedirectUrl="/dashboard">
+    <ClerkProvider publishableKey={PUBLISHABLE_KEY} signInForceRedirectUrl="/dashboard" afterSignOutUrl={"/"}>
       <App />
     </ClerkProvider>
     {/* <RouterProvider router={router} /> */}

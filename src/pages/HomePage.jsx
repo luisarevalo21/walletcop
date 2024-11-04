@@ -1,7 +1,7 @@
 import { Box, Button, Container, Typography } from "@mui/material";
 import React, { useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { SignedIn, SignInButton } from "@clerk/clerk-react";
+import { SignedIn, SignInButton, SignedOut } from "@clerk/clerk-react";
 const HomePage = () => {
   const navigate = useNavigate();
 
@@ -30,7 +30,17 @@ const HomePage = () => {
           use for your purchase!
         </Typography>
         <Box display={"flex"} justifyItems={"center"}>
-          <SignInButton>
+          <SignedOut>
+            <SignInButton>
+              <Button variant="outlined">Login</Button>
+            </SignInButton>
+            <SignInButton>
+              <Button variant="contained" sx={{ ml: ".5em" }}>
+                Sign Up
+              </Button>
+            </SignInButton>
+          </SignedOut>
+          {/* <SignInButton>
             <Button variant="outlined" onClick={() => navigate("/login")}>
               Login
             </Button>
@@ -40,7 +50,7 @@ const HomePage = () => {
             <Button variant="contained" sx={{ ml: ".5em" }}>
               Sign Up
             </Button>
-          </SignInButton>
+          </SignInButton> */}
         </Box>
       </Box>
     </Container>

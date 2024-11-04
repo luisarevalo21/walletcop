@@ -8,7 +8,7 @@ const LoginPage = () => {
       <Typography variant={"h3"} mb={3}>
         Login
       </Typography>
-      <>
+      {/* <>
         <SignedOut>
           <SignIn />
         </SignedOut>
@@ -16,7 +16,7 @@ const LoginPage = () => {
         <SignedIn>
           <SignOutButton />
         </SignedIn>
-      </>
+      </> */}
 
       {/* <Auth
         path="/signup"
