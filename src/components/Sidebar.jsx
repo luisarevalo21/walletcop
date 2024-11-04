@@ -125,7 +125,7 @@ const Sidebar = ({ open, setOpen }) => {
         <SignedIn>
           <SignOutButton>
             <Link
-              href="/login"
+              href="/"
               textAlign={"center"}
               display={"flex"}
               alignItems={"center"}
