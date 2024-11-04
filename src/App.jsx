@@ -33,14 +33,14 @@ function Root() {
 
         <Route path="/login" element={<LoginPage />} />
         <Route path="/signup" element={<SignUpPage />} />
-        <Route element={<ProtectedRoute />}>
-          <Route path="/dashboard" element={<Dashboard />} />
-          <Route path="/account" element={<SignUpPage />} />
-          <Route path="/card/:id" element={<CardDetails />} />
-          <Route path="/wallet" element={<Wallet />} />
-          <Route path="/favorites" element={<FavoritesPage />} />
-        </Route>
+        {/* <Route element={<ProtectedRoute />}> */}
+        <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/account" element={<SignUpPage />} />
+        <Route path="/card/:id" element={<CardDetails />} />
+        <Route path="/wallet" element={<Wallet />} />
+        <Route path="/favorites" element={<FavoritesPage />} />
       </Route>
+      {/* </Route> */}
     </Routes>
   );
 }
