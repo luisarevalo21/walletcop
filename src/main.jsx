@@ -22,34 +22,10 @@ if (!PUBLISHABLE_KEY) {
   throw new Error("Missing Publishable Key");
 }
 
-// const router = createBrowserRouter([
-//   {
-//     element: <RootLayout />,
-//     children: [
-//       { path: "/", element: <HomePage /> },
-//       // {
-//       //   path: "/dashboard",
-//       //   element: (
-//       //     <ProtectedRoute>
-//       //       <Dashboard />
-//       //     </ProtectedRoute>
-//       //   ),
-//       // },
-//       { path: "/login", element: <LoginPage /> },
-//       { path: "/signup", element: <SignUpPage /> },
-//       { path: "/account", element: <SignUpPage /> },
-//       { path: "/card/:id", element: <CardDetails /> },
-//       { path: "/wallet", element: <Wallet /> },
-//       { path: "/favorites", element: <FavoritesPage /> },
-//     ],
-//   },
-// ]);
 createRoot(document.getElementById("root")).render(
   <StrictMode>
-    {/* <RouterProvider router={router} /> */}
     <ClerkProvider publishableKey={PUBLISHABLE_KEY} signInForceRedirectUrl="/dashboard">
       <App />
     </ClerkProvider>
-    {/* <RouterProvider router={router} /> */}
   </StrictMode>
 );
