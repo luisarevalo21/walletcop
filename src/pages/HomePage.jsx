@@ -31,7 +31,6 @@ const HomePage = () => {
           use for your purchase!
         </Typography>
         <Box display={"flex"} justifyItems={"center"} mt={2}>
-
           <SignedOut>
             <SignInButton>
               <Button variant="outlined">Login</Button>
@@ -43,25 +42,6 @@ const HomePage = () => {
               </Button>
             </SignInButton>
           </SignedOut>
-// =======
-//             <SignInButton>
-//               <Button variant="contained" sx={{ ml: ".5em" }}>
-//                 Sign Up
-//               </Button>
-//             </SignInButton>
-//           </SignedOut>
-//           {/* <SignInButton>
-//             <Button variant="outlined" onClick={() => navigate("/login")}>
-//               Login
-//             </Button>
-//           </SignInButton>
-
-//           <SignInButton>
-//             <Button variant="contained" sx={{ ml: ".5em" }}>
-//               Sign Up
-//             </Button>
-//           </SignInButton> */}
-// >>>>>>> main
         </Box>
       </Box>
     </Container>
