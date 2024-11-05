@@ -5,23 +5,28 @@ import Card from "../Card/Card";
 import axios from "axios";
 
 const Category = ({ handleClick }) => {
-  useEffect(() => {
-    const fetchCategories = async () => {
-      try {
-        setIsLoadingCategories(true);
-        const res = await axios.get("http://localhost:3000/categories");
-        console.log("res", res.data);
-        setCategories(res.data);
-        setIsLoadingCategories(false);
-      } catch (err) {
-        console.error("Error fetching categories:", err);
-      }
-    };
-    fetchCategories();
-  }, []);
+  // useEffect(() => {
+  //   const fetchCategories = async () => {
+  //     try {
+  //       setIsLoadingCategories(true);
+  //       const res = await axios.get("http://localhost:3000/categories");
+  //       console.log("res", res.data);
+  //       setCategories(res.data);
+  //       setIsLoadingCategories(false);
+  //     } catch (err) {
+  //       console.error("Error fetching categories:", err);
+  //     }
+  //   };
+  //   fetchCategories();
+  // }, []);
   //reset category state when going back here from card
   const [category, setCategory] = useState("");
-  const [categories, setCategories] = useState([]);
+  const [categories, setCategories] = useState([
+    { category: "groceries", id: 1 },
+    { category: "gas", id: 2 },
+    { category: "online", id: 3 },
+    { category: "dining", id: 4 },
+  ]);
   const [isLoadingCategories, setIsLoadingCategories] = useState(false);
   const [isLoadingUsersCards, setIsLoadingUsersCards] = useState(false);
   const [usersCards, setUsersCards] = useState([
