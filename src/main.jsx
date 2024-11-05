@@ -6,7 +6,6 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
 import HomePage from "./pages/HomePage.jsx";
 import LoginPage from "./pages/LoginPage.jsx";
-import SignUpPage from "./pages/SignupPage.jsx";
 import Dashboard from "./pages/Dashboard.jsx";
 import RootLayout from "./components/RootLayout.jsx";
 import CardDetails from "./components/Card/CardDetails.jsx";
@@ -24,7 +23,8 @@ if (!PUBLISHABLE_KEY) {
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
-    <ClerkProvider publishableKey={PUBLISHABLE_KEY} signInForceRedirectUrl="/dashboard">
+    {/* <RouterProvider router={router} /> */}
+    <ClerkProvider publishableKey={PUBLISHABLE_KEY} afterSignOutUrl={"/"} signInUrl="/dashboard">
       <App />
     </ClerkProvider>
   </StrictMode>
