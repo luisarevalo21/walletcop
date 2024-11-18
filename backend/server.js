@@ -4,13 +4,18 @@ const express = require("express");
 const app = express();
 const port = 3000;
 const cors = require("cors");
-const connectDB = require("./db/index");
+const { clerkMiddleware, requireAuth } = require("@clerk/express");
 
-const Card = require("./models/cards.js");
-const Category = require("./models/categories.js");
-const Bank = require("./models/banks.js");
+const connectDB = require("./db/index");
+const cardRouter = require("./routes/CardRouter");
+const categoryRouter = require("./routes/CategoryRouter");
+const bankRouter = require("./routes/bankRouter");
+const userRouter = require("./routes/userRouter");
+const signInRouter = require("./routes/signInRouter");
+
 connectDB();
 
+app.use(clerkMiddleware());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static("public"));
@@ -21,45 +26,37 @@ app.use(
   })
 );
 
-app.get("/", (req, res) => {
-  res.send("Hello World");
+app.get("/auth-state", (req, res) => {
+  const authState = req.auth;
+  return res.json(authState);
 });
 
-app.get("/cards", async (req, res) => {
-  const cards = await Card.find();
-  res.json(cards);
+app.get("/protected", requireAuth(), (req, res) => {
+  res.send("This is a protected route");
 });
 
-app.get("/add-card", async (req, res) => {
-  const card = new Card({
-    creditCardName: "Chase Platnium",
-    bank: "Chase",
-  });
+// Error handling middleware function
+app.use((err, req, res, next) => {
+  console.log("error occured");
+  console.error(err.stack);
+  return res.status(401).send("Unauthenticated!");
+});
+app.use("/auth", signInRouter); // Use the signInRouter for authentication routes
 
-  card
-    .save()
-    .then(result => res.send(result))
-    .catch(err => console.log(err));
-});
-app.get("/banks", async (req, res) => {
-  try {
-    const banks = await Bank.find({});
-    res.json(banks);
-  } catch (err) {
-    console.error("Error fetching banks:", err);
-    res.status(500).json({ message: "Failed to fetch banks" });
-  }
-});
+app.use("/cards", requireAuth(), cardRouter);
+app.use("/categories", requireAuth(), categoryRouter);
+app.use("/cards", requireAuth(), cardRouter);
 
-app.get("/categories", async (req, res) => {
-  try {
-    const categories = await Category.find({});
-    res.json(categories);
-  } catch (err) {
-    console.error("Error fetching categories:", err);
-    res.status(500).json({ message: "Failed to fetch categories" });
-  }
+app.post("/signup", async (req, res) => {
+  const { email, password } = req.body;
+
+  console.log("email", email);
+  console.log("sign up called");
 });
+app.use("/user", userRouter);
+// app.get("/", (req, res) => {
+//   res.send("Hello World");
+// });
 
 app.listen(port, () => {
   console.log(`Server running on port ${port}`);

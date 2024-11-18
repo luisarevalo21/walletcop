@@ -2,16 +2,18 @@ import React, { useEffect, useState } from "react";
 import { Box, Typography, FormControl, Select, InputLabel, MenuItem } from "@mui/material";
 import CategoryItem from "./CategoryItem";
 import Card from "../Card/Card";
-import axios from "axios";
+import { useAxiosWithAuth } from "../../api/useAxiosWithAuth";
 
 const Category = ({ handleClick }) => {
+  const api = useAxiosWithAuth();
   useEffect(() => {
     const fetchCategories = async () => {
       try {
         setIsLoadingCategories(true);
-        const res = await axios.get("http://localhost:3000/categories");
+        // const token = await getToken();
+        const res = await api.get("/auth-state");
         console.log("res", res.data);
-        setCategories(res.data);
+        setCategories([]);
         setIsLoadingCategories(false);
       } catch (err) {
         console.error("Error fetching categories:", err);
@@ -22,10 +24,10 @@ const Category = ({ handleClick }) => {
   //reset category state when going back here from card
   const [category, setCategory] = useState("");
   const [categories, setCategories] = useState([
-    { category: "groceries", id: 1 },
-    { category: "gas", id: 2 },
-    { category: "online", id: 3 },
-    { category: "dining", id: 4 },
+    // { category: "groceries", id: 1 },
+    // { category: "gas", id: 2 },
+    // { category: "online", id: 3 },
+    // { category: "dining", id: 4 },
   ]);
   const [isLoadingCategories, setIsLoadingCategories] = useState(false);
   const [isLoadingUsersCards, setIsLoadingUsersCards] = useState(false);

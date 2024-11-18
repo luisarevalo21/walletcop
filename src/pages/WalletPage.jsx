@@ -1,10 +1,12 @@
 import React, { useState } from "react";
 import { Box, Typography, Button, Stack } from "@mui/material";
 import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import Card from "../components/Card/Card";
 import NewCardForm from "../components/Card/NewCardForm";
 const Wallet = () => {
   const [toggleAddCard, setToggleAddCard] = useState(false);
+  const navigate = useNavigate();
   //fetch users cards
 
   const [cards, setCards] = useState([
@@ -14,7 +16,7 @@ const Wallet = () => {
 
   useEffect(() => {}, []);
   const handleClick = id => {
-    // navigate(`/card/${id}`);
+    navigate(`/card/${id}`);
   };
   const handleAddCard = () => {
     setToggleAddCard(prev => !prev);

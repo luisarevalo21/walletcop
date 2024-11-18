@@ -1,30 +1,19 @@
-import React from "react";
-import { SignedIn, SignedOut, SignIn, SignInButton, SignOutButton, UserButton } from "@clerk/clerk-react";
-
+import React, { useEffect } from "react";
+import { SignedIn, SignedOut, SignIn, SignInButton, SignOutButton, UserButton, useUser } from "@clerk/clerk-react";
 import { Box, Typography } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 const LoginPage = () => {
+  const { isSignedIn, user, isLoaded } = useUser();
+
+  const navigate = useNavigate();
+  useEffect(() => {
+    if (isSignedIn) {
+      navigate("/dashboard");
+    }
+  }, []);
   return (
-    <Box display={"flex"} justifyContent={"center"} alignItems={"center"} flexDirection={"column"}>
-      <Typography variant={"h3"} mb={3}>
-        Login
-      </Typography>
-      {/* <>
-        <SignedOut>
-          <SignIn />
-        </SignedOut>
-
-        <SignedIn>
-          <SignOutButton />
-        </SignedIn>
-      </> */}
-
-      {/* <Auth
-        path="/signup"
-        routing={{
-          afterSignIn: "/dashboard",
-          afterSignOut: "/", // Redirect to the home page after sign out
-        }}
-      /> */}
+    <Box display={"flex"} justifyContent={"center"} alignItems={"center"} margin={"0 auto"} flexDirection={"column"}>
+      <SignIn path="/login" />;
     </Box>
   );
 };
