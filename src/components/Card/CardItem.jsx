@@ -59,7 +59,7 @@ const CardItem = ({ handleClick, handleDelete, card, edit, handleEdit, categoryN
       </Button>
       <Box p={2} display={"flex"} alignItems={"center"} justifyContent={"flex-start"}>
         <Box mr={2} maxWidth={"120px"}>
-          <img src={visaImage} alt="card" width={"100%"} />
+          <img src={card.imageUrl} alt="card" width={"100%"} />
         </Box>
 
         <Stack>

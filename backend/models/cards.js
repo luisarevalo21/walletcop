@@ -39,7 +39,10 @@ const cardSchema = new Schema(
         details: String,
       },
     ],
-    benefits: [String], // General benefits
+    benefits: [String], // General benefits,
+    imageUrl: {
+      type: String,
+    },
   },
   {
     timestamps: true,

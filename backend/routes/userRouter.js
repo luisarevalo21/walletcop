@@ -54,6 +54,7 @@ router.get("/:userId/cards", async (req, res) => {
         bonuses: card.creditCardId.bonuses,
         benefits: card.creditCardId.benefits,
         id: card.creditCardId.id,
+        imageUrl: card.creditCardId.imageUrl,
       };
     });
 

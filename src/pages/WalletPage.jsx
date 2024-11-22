@@ -19,6 +19,8 @@ const Wallet = () => {
     const getUser = async () => {
       const response = await fetchUsersCards();
 
+      console.log("updated cards", response.data);
+
       setCards(response.data);
     };
 
