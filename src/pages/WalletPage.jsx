@@ -52,11 +52,13 @@ const Wallet = () => {
       const res = await api.post(`/user/${user.id}/newcard`, {
         creditCardId: form.creditCardId,
       });
-      if (res.success) {
+
+      if (res.data.success) {
         const updatedCards = await fetchUsersCards();
         setCards(updatedCards.data);
+        return;
       }
-      if (!res.success) {
+      if (!res.data.success) {
         alert("Card already exists try another card");
         return;
         // throw new Error(res.message);

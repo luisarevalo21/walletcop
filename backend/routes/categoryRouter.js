@@ -3,8 +3,6 @@ const router = express.Router();
 const Category = require("../models/categories.js");
 
 router.get("/", async (req, res) => {
-  // console.log("req.auth", req.auth);
-  // console.log("categorioes called");
   try {
     const results = await Category.find();
     res.json(results);
