@@ -14,10 +14,32 @@ const cardSchema = new Schema(
       type: String,
       required: true,
     },
-    bank: {
+    abbreviation: {
       type: String,
       required: true,
     },
+    fees: {
+      annualFee: { type: String },
+      foreignTransactionFee: { type: String },
+      balanceTransferFee: { type: String },
+    },
+    bankName: {
+      type: String,
+      required: true,
+    },
+    cardImage: {
+      type: String,
+    },
+    bonuses: [
+      {
+        type: { type: String, enum: ["cashback", "points", "miles"], required: true },
+        value: { type: Number, required: true },
+        unit: { type: String, enum: ["%", "points per $", "miles per $"], required: true },
+        category: { type: String, required: true },
+        details: String,
+      },
+    ],
+    benefits: [String], // General benefits
   },
   {
     timestamps: true,

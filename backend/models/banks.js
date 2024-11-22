@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const Card = require("./cards");
 const Schema = mongoose.Schema;
 
 const bankSchema = new Schema(
@@ -7,6 +8,16 @@ const bankSchema = new Schema(
       type: String,
       required: true,
     },
+    abbreviation: {
+      type: String,
+      required: true,
+    },
+    // creditCards: [
+    //   {
+    //     type: Schema.Types.ObjectId,
+    //     ref: "Card",
+    //   },
+    // ],
   },
   { timestamps: true }
 );

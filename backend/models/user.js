@@ -7,9 +7,6 @@ const userSchema = new Schema({
     required: true,
     unique: true,
   },
-  password: {
-    type: String,
-  },
   firstName: {
     type: String,
     required: true,
@@ -21,12 +18,15 @@ const userSchema = new Schema({
   googleId: {
     type: String,
   },
-  clerkId: {
-    type: String,
-  },
   imageUrl: {
     type: String,
   },
+  wallet: [
+    {
+      creditCardId: { type: Schema.Types.ObjectId, ref: "Card" },
+      addedAt: { type: Date, default: Date.now }, // Timestamp when the card was added
+    },
+  ],
 });
 
 const User = mongoose.model("User", userSchema);
