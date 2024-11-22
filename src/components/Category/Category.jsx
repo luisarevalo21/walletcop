@@ -11,9 +11,9 @@ const Category = ({ handleClick }) => {
       try {
         setIsLoadingCategories(true);
         // const token = await getToken();
-        const res = await api.get("/auth-state");
+        const res = await api.get("/categories");
         console.log("res", res.data);
-        setCategories([]);
+        setCategories(res.data);
         setIsLoadingCategories(false);
       } catch (err) {
         console.error("Error fetching categories:", err);

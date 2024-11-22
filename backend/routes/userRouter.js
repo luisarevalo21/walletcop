@@ -12,10 +12,12 @@ router.post("/:userId/newcard", async (req, res) => {
       res.status(404).json({ message: "User not found" });
     }
 
-    const cardExists = user.wallet.some(card => card.creditCardId === req.body.creditCardId);
+    console.log("credut card id", creditCardId);
+
+    const cardExists = user.wallet.some(card => card.creditCardId.equals(creditCardId));
 
     if (cardExists) {
-      res.status(400).json({ message: "Card already exists" });
+      return res.status(200).json({ success: false, message: "Card already exists. Try another card." });
     }
 
     user.wallet.push({
@@ -23,7 +25,7 @@ router.post("/:userId/newcard", async (req, res) => {
     });
     await user.save();
 
-    return res.status(200).json({ message: "Card added successfully" });
+    return res.status(200).json({ success: true, message: "Card added successfully." });
     // user.cards.push(req.body);
     // await user.save();
     // res.status(200).json(user);
@@ -54,8 +56,6 @@ router.get("/:userId/cards", async (req, res) => {
       };
     });
 
-    // console.log("return data", returnData);
-    // console.log("users ", usersCards);
     return res.status(200).json(returnData);
   } catch (err) {
     console.log(err);

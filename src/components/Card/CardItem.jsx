@@ -4,6 +4,14 @@ import visaImage from "../../assets/visa-cc.png";
 import NavigateNextIcon from "@mui/icons-material/NavigateNext";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteForeverOutlinedIcon from "@mui/icons-material/DeleteForeverOutlined";
+import Accordion from "@mui/material/Accordion";
+import AccordionSummary from "@mui/material/AccordionSummary";
+import AccordionDetails from "@mui/material/AccordionDetails";
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import Table from "@mui/material/Table";
+import TableBody from "@mui/material/TableBody";
+import TableCell from "@mui/material/TableCell";
+import TableRow from "@mui/material/TableRow";
 const CardItem = ({ handleClick, handleDelete, card, edit, handleEdit, categoryName, favorites }) => {
   if (favorites) {
     //pass teh fvaorite card
@@ -27,27 +35,15 @@ const CardItem = ({ handleClick, handleDelete, card, edit, handleEdit, categoryN
           justifyContent={"space-evenly"}
           alignItems={"flex-start"}
         >
-          <Typography variant={"p"}>{card.bank}</Typography>
+          <Typography variant={"p"}>{card.bankName}</Typography>
           <Typography variant={"p"}>{card.creditCardName}</Typography>
-          <Typography variant={"p"}>2% cashback on food</Typography>
-          <Typography variant={"p"}>2% cashback on food</Typography>
         </Box>
       </Box>
     );
   }
 
   return (
-    <Box
-      border={"1px solid black"}
-      borderRadius={"3px"}
-      maxWidth={"100%"}
-      position={"relative"}
-      p={2}
-      mt={"1em"}
-      display={"flex"}
-      alignItems={"center"}
-      justifyContent={"flex-start"}
-    >
+    <Box borderRadius={"3px"} mt={"1em"} maxWidth={"100%"} border={"1px solid black"} position={"relative"} p={2}>
       <Button
         sx={{
           position: "absolute",
@@ -61,16 +57,63 @@ const CardItem = ({ handleClick, handleDelete, card, edit, handleEdit, categoryN
       >
         <DeleteForeverOutlinedIcon style={{ fill: "#EB5757" }} />
       </Button>
-      <Box mr={2} maxWidth={"120px"}>
-        <img src={visaImage} alt="card" width={"100%"} />
-      </Box>
+      <Box p={2} display={"flex"} alignItems={"center"} justifyContent={"flex-start"}>
+        <Box mr={2} maxWidth={"120px"}>
+          <img src={visaImage} alt="card" width={"100%"} />
+        </Box>
 
-      <Stack>
-        <Typography variant={"p"} mb={1}>
-          {card.bank}
-        </Typography>
-        <Typography variant={"p"}>{card.creditCardName}</Typography>
-      </Stack>
+        <Stack>
+          <Typography variant={"p"} mb={1}>
+            {card.bankName}
+          </Typography>
+          <Typography variant={"p"}>{card.creditCardName}</Typography>
+
+          {/* <Box mb={1} display={"flex"} flexDirection={"column"}> */}
+          {/* {card.bonuses.map(bonus => {
+          return <Typography key={bonus.details}>{bonus.details}</Typography>;
+        })} */}
+          {/* </Box> */}
+        </Stack>
+      </Box>
+      <Accordion>
+        <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+          <Typography>Bonuses</Typography>
+        </AccordionSummary>
+        <AccordionDetails>
+          <Table>
+            <TableBody>
+              {card.bonuses.map(bonus => (
+                <TableRow key={bonus._id}>
+                  <TableCell>{bonus.type}</TableCell>
+                  <TableCell>{bonus.details}</TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </AccordionDetails>
+      </Accordion>
+
+      {/* <Box mb={1} display={"flex"} flexDirection={"column"}>
+        {card.bonuses.map(bonus => {
+          return (
+            <Typography key={bonus.details} mb={0.75} component={"li"}>
+              {bonus.details}
+            </Typography>
+          );
+        })}
+      </Box> */}
+      {/* <Accordion>
+        <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+          <Typography>Bonuses</Typography>
+        </AccordionSummary>
+        <AccordionDetails>
+          <Box display="flex" flexDirection="column" gap={1}>
+            {card.bonuses.map(bonus => (
+              <Typography key={bonus.details}>{bonus.details}</Typography>
+            ))}
+          </Box>
+        </AccordionDetails>
+      </Accordion> */}
       {edit ? (
         <Button
           sx={{
@@ -78,6 +121,7 @@ const CardItem = ({ handleClick, handleDelete, card, edit, handleEdit, categoryN
             right: "0",
             margin: "0",
             padding: "0",
+            top: "50%",
             display: "flex",
             justifyContent: "flex-end",
           }}
@@ -86,7 +130,7 @@ const CardItem = ({ handleClick, handleDelete, card, edit, handleEdit, categoryN
               id: card.id,
               categoryName,
               creditCardName: card.creditCardName,
-              bank: card.bank,
+              bankName: card.bankName,
             });
           }}
         >
@@ -99,6 +143,7 @@ const CardItem = ({ handleClick, handleDelete, card, edit, handleEdit, categoryN
             right: "0",
             margin: "0",
             padding: "0",
+            top: "0",
             display: "flex",
             justifyContent: "flex-end",
           }}

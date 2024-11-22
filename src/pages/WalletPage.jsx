@@ -4,20 +4,36 @@ import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import Card from "../components/Card/Card";
 import NewCardForm from "../components/Card/NewCardForm";
+import { useAxiosWithAuth } from "../api/useAxiosWithAuth";
+import { useAuth, useUser } from "@clerk/clerk-react";
 const Wallet = () => {
+  const { user } = useUser();
+  const api = useAxiosWithAuth();
+
   const [toggleAddCard, setToggleAddCard] = useState(false);
+  const [cards, setCards] = useState([]);
   const navigate = useNavigate();
   //fetch users cards
 
-  const [cards, setCards] = useState([
-    { creditCardName: "Chase Sapphire Preferred", bank: "JPMorgan Chase", id: 1 },
-    { creditCardName: "American Express Platinum", bank: "American Express", id: 2 },
-  ]);
+  useEffect(() => {
+    const getUser = async () => {
+      const response = await fetchUsersCards();
 
-  useEffect(() => {}, []);
+      setCards(response.data);
+    };
+
+    getUser();
+  }, []);
+
+  // useEffect(() => {}, []);
   const handleClick = id => {
     navigate(`/card/${id}`);
   };
+  const fetchUsersCards = async () => {
+    const cards = await api.get(`/user/${user.id}/cards`);
+    return cards;
+  };
+
   const handleAddCard = () => {
     setToggleAddCard(prev => !prev);
   };
@@ -25,12 +41,27 @@ const Wallet = () => {
   const handleClose = () => {
     setToggleAddCard(false);
   };
-  const handleDelete = id => {
-    setCards(cards => cards.filter(card => card.id !== id));
+  const handleDelete = async id => {
+    const res = await api.delete(`/user/${user.id}/card/${id}`);
+    if (res.status === 200) {
+      setCards(cards => cards.filter(card => card.id !== id));
+    }
   };
-  const handleNewCard = form => {
-    console.log(form);
-    setCards([...cards, form]);
+  const handleNewCard = async form => {
+    try {
+      const res = await api.post(`/user/${user.id}/newcard`, {
+        creditCardId: form.creditCardId,
+      });
+      if (res.success) {
+        const updatedCards = await fetchUsersCards();
+        setCards(updatedCards.data);
+      }
+      if (!res.success) {
+        alert("Card already exists try another card");
+        return;
+        // throw new Error(res.message);
+      }
+    } catch (err) {}
   };
 
   return (
@@ -42,7 +73,9 @@ const Wallet = () => {
       </Stack>
       <Card handleClick={handleClick} handleDelete={handleDelete} cards={cards} />
 
-      {toggleAddCard && <NewCardForm open={toggleAddCard} handleClose={handleClose} handleNewCard={handleNewCard} />}
+      {toggleAddCard && (
+        <NewCardForm open={toggleAddCard} handleClose={handleClose} userId={user.id} handleNewCard={handleNewCard} />
+      )}
     </Box>
   );
 };

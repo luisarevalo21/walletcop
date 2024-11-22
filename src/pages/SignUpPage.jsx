@@ -14,7 +14,7 @@ const SignUpPage = () => {
   }, []);
   return (
     <Box display={"flex"} justifyContent={"center"} alignItems={"center"} margin={"0 auto"} flexDirection={"column"}>
-      <SignUp path="/signup" />
+      <SignUp path="/signup" signUpForceRedirectUrl="/dashboard" fallbackRedirectUrl="/dashboard" />
     </Box>
   );
 };

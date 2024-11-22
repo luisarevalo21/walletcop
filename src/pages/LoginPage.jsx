@@ -13,7 +13,7 @@ const LoginPage = () => {
   }, []);
   return (
     <Box display={"flex"} justifyContent={"center"} alignItems={"center"} margin={"0 auto"} flexDirection={"column"}>
-      <SignIn path="/login" />;
+      <SignIn path="/login" signUpForceRedirectUrl="/dashboard" fallbackRedirectUrl="/dashboard" />;
     </Box>
   );
 };

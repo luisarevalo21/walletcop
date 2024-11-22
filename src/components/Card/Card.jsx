@@ -28,9 +28,15 @@ const Card = ({ category, handleClick, handleDelete, cards }) => {
       </Box>
       {toggleCards && (
         <>
-          {cards.map(card => (
-            <CardItem key={card.id} card={card} handleClick={handleClick} handleDelete={handleDelete} />
-          ))}
+          {cards.length === 0 ? (
+            <Box>
+              <Typography variant="h4"> No cards found try adding some!</Typography>
+            </Box>
+          ) : (
+            cards.map(card => (
+              <CardItem key={card.id} card={card} handleClick={handleClick} handleDelete={handleDelete} />
+            ))
+          )}
         </>
       )}
     </Box>
