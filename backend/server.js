@@ -55,7 +55,7 @@ app.use("/auth", signInRouter); // Use the signInRouter for authentication route
 app.use("/banks", requireAuth(), bankRouter);
 app.use("/cards", requireAuth(), cardRouter);
 app.use("/categories", requireAuth(), categoryRouter);
-app.use("/cards", requireAuth(), cardRouter);
+// app.use("/cards", requireAuth(), cardRouter);
 app.post(
   "/api/webhooks",
   // This is a generic method to parse the contents of the payload.

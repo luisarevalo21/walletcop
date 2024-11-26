@@ -27,6 +27,11 @@ const userSchema = new Schema({
       addedAt: { type: Date, default: Date.now }, // Timestamp when the card was added
     },
   ],
+  categories: [
+    {
+      categoryId: { type: Schema.Types.ObjectId, ref: "Category" },
+    },
+  ],
 });
 
 const User = mongoose.model("User", userSchema);

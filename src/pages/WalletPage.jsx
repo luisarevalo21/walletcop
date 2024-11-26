@@ -7,16 +7,16 @@ import NewCardForm from "../components/Card/NewCardForm";
 import { useAxiosWithAuth } from "../api/useAxiosWithAuth";
 import { useAuth, useUser } from "@clerk/clerk-react";
 const Wallet = () => {
+  const navigate = useNavigate();
   const { user } = useUser();
   const api = useAxiosWithAuth();
 
   const [toggleAddCard, setToggleAddCard] = useState(false);
   const [cards, setCards] = useState([]);
-  const navigate = useNavigate();
   //fetch users cards
 
   useEffect(() => {
-    const getUser = async () => {
+    const getUserCards = async () => {
       const response = await fetchUsersCards();
 
       console.log("updated cards", response.data);
@@ -24,13 +24,16 @@ const Wallet = () => {
       setCards(response.data);
     };
 
-    getUser();
+    getUserCards();
   }, []);
 
   // useEffect(() => {}, []);
-  const handleClick = id => {
-    navigate(`/card/${id}`);
+
+  const handleClick = async id => {
+    navigate(`/card/${id}`, { state: { id } });
+    // await api.get("/card/673bd769fe445011fac7834f");
   };
+
   const fetchUsersCards = async () => {
     const cards = await api.get(`/user/${user.id}/cards`);
     return cards;

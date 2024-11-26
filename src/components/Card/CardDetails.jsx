@@ -1,15 +1,39 @@
-import React, { useEffect } from "react";
-import { Box, Typography, Stack, Button } from "@mui/material";
+import React, { useEffect, useState } from "react";
+import { Box, Typography, Stack, Button, Table, TableBody, TableRow, TableCell } from "@mui/material";
 import { useNavigate, useParams } from "react-router-dom";
 import visaImage from "../../assets/visa-cc.png";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
+import { useAxiosWithAuth } from "../../api/useAxiosWithAuth";
+
 const CardDetails = () => {
+  const api = useAxiosWithAuth();
   const params = useParams();
   const navigate = useNavigate();
+  const [selectedCard, setSelectedCard] = useState(null);
+
+  const [loading, setLoading] = useState(true);
   useEffect(() => {
-    // console.log("params", params);
+    const fetchCardDetails = async () => {
+      setLoading(true);
+      const card = await getCardDetails();
+      setSelectedCard(card.data);
+      setLoading(false);
+    };
+    fetchCardDetails();
   }, []);
 
+  const getCardDetails = async () => {
+    return await api.get(`/cards/card/${params.id}`);
+  };
+  console.log("selectedCard", selectedCard);
+  console.log("loading", loading);
+  if (loading) {
+    return (
+      <Box>
+        <Typography>Loading Card Details...</Typography>
+      </Box>
+    );
+  }
   return (
     <Box
     // display={"flex"}
@@ -55,14 +79,65 @@ const CardDetails = () => {
 
       <Stack maxWidth={"100%"} display={"flex"} justifyContent={"center"} alignItems={"center"}>
         <Box mb={2} mt={3} width={"200px"}>
-          <img src={visaImage} alt="card" width={"100%"} />
+          <img src={selectedCard?.imageUrl} alt="card" width={"100%"} />
         </Box>
 
         <Box mb={2} display={"flex"} flexDirection={"column"} justifyContent={"center"} alignItems={"center"}>
-          <Typography variant={"p"} mb={1}>
-            3% cash back on food Freedom
+          <Stack textAlign={"center"}>
+            <Typography variant={"h5"} textAlign={"center"} mb={2}>
+              {selectedCard.creditCardName}
+            </Typography>
+            <Typography variant={"h5"}> {selectedCard.bankName}</Typography>
+            <Typography variant={"h5"}> {selectedCard.abbreviation}</Typography>
+          </Stack>
+
+          <Typography variant="h5" mt={2}>
+            Bonuses:
           </Typography>
-          <Typography variant={"p"}>2% cash back on groceries</Typography>
+          <Table>
+            <TableBody>
+              {selectedCard.bonuses.map(bonus => (
+                <TableRow key={bonus._id}>
+                  <TableCell>{bonus.type}</TableCell>
+                  <TableCell>{bonus.details}</TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+
+          <Typography variant="h5" mt={2}>
+            Bonuses:
+          </Typography>
+          <Table
+            sx={{
+              textAlign: "center",
+            }}
+          >
+            <TableBody>
+              {selectedCard.benefits.map(benefit => (
+                <TableRow key={benefit}>
+                  <TableCell
+                    sx={{
+                      textAlign: "center",
+                    }}
+                  >
+                    {benefit}
+                  </TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+          <Typography variant={"h5"} mt={2}>
+            Annual Fee: {selectedCard.annualFee}
+          </Typography>
+          <Table>
+            <TableBody>
+              <TableRow key={selectedCard.fees._id}>
+                <TableCell>{selectedCard.fees.annualFee}</TableCell>
+                <TableCell>{selectedCard.fees.balanceTransferFee}</TableCell>
+              </TableRow>
+            </TableBody>
+          </Table>
         </Box>
       </Stack>
     </Box>

@@ -12,7 +12,24 @@ router.get("/", async (req, res) => {
   }
 });
 
+router.get("/card/:cardId", async (req, res) => {
+  const { cardId } = req.params;
+
+  try {
+    const result = await Card.find({
+      _id: cardId,
+    });
+
+    console.log("result", result);
+
+    return res.status(200).json(result[0]);
+  } catch (err) {
+    console.log(err);
+  }
+});
+
 router.get("/:userId", async (req, res) => {
+  console.log("get was called");
   const { userId } = req.params;
   try {
     const usersCards = await User.find({

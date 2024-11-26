@@ -1,15 +1,19 @@
 import { Box, Card, Stack, Typography } from "@mui/material";
 import React, { useState, useEffect } from "react";
-import visaCard from "../assets/visa-cc.png";
 import FavoritesItem from "../components/Favorites/FavoritesItem";
 import FavoritesModal from "../components/Favorites/FavoritesModal";
+import { useAxiosWithAuth } from "../api/useAxiosWithAuth";
+import { useAuth, useUser } from "@clerk/clerk-react";
+
 const FavoritesPage = () => {
+  const { user } = useUser();
+  const api = useAxiosWithAuth();
   const [open, setOpen] = useState(false);
   const [usersCards, setUsersCards] = useState([
-    { creditCardName: "Chase Sapphire Preferred", bank: "JPMorgan Chase", id: 1 },
-    { creditCardName: "American Express Platinum", bank: "American Express", id: 2 },
-    { creditCardName: "Citi Double Cash Card", bank: "Citibank", id: 3 },
-    { creditCardName: "Bank of America Cash Rewards", bank: "Bank of America", id: 4 },
+    // { creditCardName: "Chase Sapphire Preferred", bank: "JPMorgan Chase", id: 1 },
+    // { creditCardName: "American Express Platinum", bank: "American Express", id: 2 },
+    // { creditCardName: "Citi Double Cash Card", bank: "Citibank", id: 3 },
+    // { creditCardName: "Bank of America Cash Rewards", bank: "Bank of America", id: 4 },
   ]);
 
   const [selectedCard, setSelectedCard] = useState(null);
@@ -49,6 +53,22 @@ const FavoritesPage = () => {
     },
   ]);
 
+  console.log("favorites", favorites);
+  useEffect(() => {
+    const getUserCards = async () => {
+      const response = await fetchUsersCards();
+
+      console.log("updated cards", response.data);
+      setUsersCards([]);
+    };
+
+    // getUserCards();
+  }, []);
+
+  const fetchUsersCards = async () => {
+    const cards = await api.get(`/user/${user.id}/cards`);
+    return cards;
+  };
   const handleEdit = card => {
     setOpen(true);
     setSelectedCard(card);
@@ -90,6 +110,7 @@ const FavoritesPage = () => {
             card={favorite.card}
             handleEdit={handleEdit}
             categoryName={favorite.categoryName}
+            favoritesArray={true}
           />
         ))}
       </Box>

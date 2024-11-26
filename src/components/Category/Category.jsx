@@ -10,7 +10,6 @@ const Category = ({ handleClick }) => {
     const fetchCategories = async () => {
       try {
         setIsLoadingCategories(true);
-        // const token = await getToken();
         const res = await api.get("/categories");
         console.log("res", res.data);
         setCategories(res.data);

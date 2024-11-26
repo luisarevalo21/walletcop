@@ -12,12 +12,9 @@ router.post("/:userId/newcard", async (req, res) => {
       res.status(404).json({ message: "User not found" });
     }
 
-    console.log("credut card id", user.wallet);
-
     const cardExists = user.wallet.some(card => card.creditCardId.equals(creditCardId));
 
     if (cardExists) {
-      console.log("card exists");
       return res.status(200).json({ success: false, message: "Card already exists. Try another card." });
     }
 
