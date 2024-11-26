@@ -25,8 +25,6 @@ const CardDetails = () => {
   const getCardDetails = async () => {
     return await api.get(`/cards/card/${params.id}`);
   };
-  console.log("selectedCard", selectedCard);
-  console.log("loading", loading);
   if (loading) {
     return (
       <Box>
