@@ -52,6 +52,7 @@ app.use((err, req, res, next) => {
   return res.status(401).send("Unauthenticated!");
 });
 app.use("/auth", signInRouter); // Use the signInRouter for authentication routes
+app.use("/user", userRouter);
 app.use("/banks", requireAuth(), bankRouter);
 app.use("/cards", requireAuth(), cardRouter);
 app.use("/categories", requireAuth(), categoryRouter);
@@ -92,7 +93,6 @@ app.post(
         email: emailAdress,
       });
 
-      console.log("foundUser", foundUser);
       if (foundUser.length !== 0) {
         return res.status(200).json("okay");
       }
@@ -124,7 +124,6 @@ app.post(
   // }
 );
 
-app.use("/user", userRouter);
 // app.get("/", (req, res) => {
 //   res.send("Hello World");
 // });

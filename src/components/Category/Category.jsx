@@ -4,15 +4,17 @@ import CategoryItem from "./CategoryItem";
 import Card from "../Card/Card";
 import { useAxiosWithAuth } from "../../api/useAxiosWithAuth";
 
+import { useUser } from "@clerk/clerk-react";
 const Category = ({ handleClick }) => {
   const api = useAxiosWithAuth();
+  const { user } = useUser();
   useEffect(() => {
     const fetchCategories = async () => {
       try {
         setIsLoadingCategories(true);
         const res = await api.get("/categories");
-        console.log("res", res.data);
         setCategories(res.data);
+
         setIsLoadingCategories(false);
       } catch (err) {
         console.error("Error fetching categories:", err);
@@ -31,15 +33,22 @@ const Category = ({ handleClick }) => {
   const [isLoadingCategories, setIsLoadingCategories] = useState(false);
   const [isLoadingUsersCards, setIsLoadingUsersCards] = useState(false);
   const [usersCards, setUsersCards] = useState([
-    { creditCardName: "Chase Sapphire Preferred", bank: "JPMorgan Chase", id: 1 },
-    { creditCardName: "American Express Platinum", bank: "American Express", id: 2 },
-    { creditCardName: "Citi Double Cash Card", bank: "Citibank", id: 3 },
-    { creditCardName: "Bank of America Cash Rewards", bank: "Bank of America", id: 4 },
+    // { creditCardName: "Chase Sapphire Preferred", bank: "JPMorgan Chase", id: 1 },
+    // { creditCardName: "American Express Platinum", bank: "American Express", id: 2 },
+    // { creditCardName: "Citi Double Cash Card", bank: "Citibank", id: 3 },
+    // { creditCardName: "Bank of America Cash Rewards", bank: "Bank of America", id: 4 },
   ]);
 
+  const fetchUsersCategory = async category => {
+    console.log("fetching users category");
+    const res = await api.get(`/user/${user.id}/cards/${category}`);
+    console.log("users cards", res.data);
+    setUsersCards(res.data);
+  };
   const handleChange = event => {
-    console.log("event triggered");
     setCategory(event.target.value);
+
+    fetchUsersCategory(event.target.value);
   };
   const handleDelete = id => {
     setUsersCards(usersCards => usersCards.filter(card => card.id !== id));

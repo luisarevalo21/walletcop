@@ -35,7 +35,7 @@ const cardSchema = new Schema(
         type: { type: String, enum: ["cashback", "points", "miles"], required: true },
         value: { type: Number, required: true },
         unit: { type: String, enum: ["%", "points per $", "miles per $"], required: true },
-        category: { type: String, required: true },
+        categories: { type: String, required: true },
         details: String,
       },
     ],
@@ -43,6 +43,7 @@ const cardSchema = new Schema(
     imageUrl: {
       type: String,
     },
+    category: [String],
   },
   {
     timestamps: true,

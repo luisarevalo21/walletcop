@@ -61,6 +61,73 @@ router.get("/:userId/cards", async (req, res) => {
   }
 });
 
+function helper(wallet, category) {
+  console.log("inside helper");
+  console.log("wallet", wallet);
+
+  const cardsWithCashback = wallet.map(cardWrapper => {
+    console.log("cardWrapper", cardWrapper);
+    const card = cardWrapper.creditCardId;
+    const highestCashback = card.bonuses
+      .filter(bonus => bonus.categories.includes(category))
+      .reduce((max, bonus) => (bonus.value > max.value ? bonus : max), {
+        value: 0,
+      });
+    return { ...card.toObject(), highestCashback: highestCashback.value };
+  });
+  // const sortedCards = wallet.sort((a, b) => {
+  //   return (a.creditCardId.bonuses[0].cashback - b.creditCardId.bonuses[0].cashback && a.creditCardId.bonuses[0].cashback - b.creditCardId.bonuses[0].cashback) || a.creditCardId.bonuses[0].cashback - b.creditCardId.bonuses[0].cashback;
+  // });
+  // console.log("sortedCards", sortedCards);
+  return cardsWithCashback;
+}
+router.get("/:userId/cards/:category", async (req, res) => {
+  console.log("inside get user cards by category");
+  const { userId, category } = req.params;
+  //get uesrs cards
+  //filter by category
+  //then filter by which gives the highest cashback for the given category
+  //from ascending order of cashback
+  try {
+    const usersWallet = await User.findOne({
+      googleId: userId,
+    })
+      .populate("wallet.creditCardId")
+      .exec();
+
+    const filteredCards = usersWallet.wallet.filter(card => card.creditCardId.category.includes(category));
+    usersWallet.wallet = filteredCards;
+    console.log("usersWallet", usersWallet.wallet);
+
+    // const sortedCards = helper(usersWallet.wallet, category);
+    // console.log("sortedCards", cardsWithCashback);
+    // usersWallet.wallet = cardsWithCashback;
+
+    // console.log(usersWallet.wallet);
+    // const returnData = usersWallet.wallet.map(card => {
+    //   return {
+    //     abbreviation: card.creditCardId.abbreviation,
+    //     bankName: card.creditCardId.bankName,
+    //     creditCardName: card.creditCardId.creditCardName,
+    //     bonuses: card.creditCardId.bonuses,
+    //     benefits: card.creditCardId.benefits,
+    //     id: card.creditCardId.id,
+    //     imageUrl: card.creditCardId.imageUrl,
+    //   };
+    // });
+
+    // return res.status(200).json(returnData);
+  } catch (err) {
+    console.log(err);
+  }
+  // const { wallet } = usersWallet;
+  // const cards = wallet.filter(card => card.creditCardId.category.includes(category));
+  // console.log("cards", cards);
+
+  // return res.status(200).json(cards);
+  // console.log("category", category);
+});
+
 router.delete("/:userId/card/:creditCardId", async (req, res) => {
   const { userId, creditCardId } = req.params;
 
