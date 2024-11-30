@@ -82,7 +82,6 @@ function helper(wallet, category) {
   return cardsWithCashback;
 }
 router.get("/:userId/cards/:category", async (req, res) => {
-  console.log("inside get user cards by category");
   const { userId, category } = req.params;
   //get uesrs cards
   //filter by category
@@ -95,9 +94,41 @@ router.get("/:userId/cards/:category", async (req, res) => {
       .populate("wallet.creditCardId")
       .exec();
 
-    const filteredCards = usersWallet.wallet.filter(card => card.creditCardId.category.includes(category));
-    usersWallet.wallet = filteredCards;
-    console.log("usersWallet", usersWallet.wallet);
+    console.log("usersWallet", usersWallet);
+    // const filteredCards = usersWallet.wallet.filter(card => card.creditCardId.category.includes(category));
+    // usersWallet.wallet = filteredCards;
+    // console.log("usersWallet", usersWallet.wallet);
+
+    // Step 2: Filter cards by category
+    const filteredCards = usersWallet.wallet.filter(cardWrapper => {
+      const card = cardWrapper.creditCardId; // Access populated card details
+      // console.log("card in side filter", card);
+      return card.category.includes(category); // Check if the card matches the category
+    });
+
+    // Step 3: Map cards to include the highest cashback value for the category
+    const cardsWithCashback = filteredCards.map(cardWrapper => {
+      const card = cardWrapper.creditCardId;
+
+      // console.log("card", card);
+      // Find the highest cashback for the target category in the bonuses array
+      const highestCashbackBonus = card.bonuses
+        .filter(bonus => {
+          // console.log("bonus", bonus);
+          return bonus.categories.includes(category);
+        }) // Match cashback and category
+        .reduce((max, bonus) => (bonus.value > max ? bonus.value : max), 0); // Get the highest cashback value
+
+      return {
+        ...card.toObject(), // Convert Mongoose object to plain JavaScript object
+        highestCashback: highestCashbackBonus, // Add highest cashback value
+      };
+    });
+
+    const sortedCards = cardsWithCashback.sort((a, b) => b.highestCashback - a.highestCashback);
+
+    console.log("cardsWithCashback", sortedCards);
+    return res.status(200).json(sortedCards);
 
     // const sortedCards = helper(usersWallet.wallet, category);
     // console.log("sortedCards", cardsWithCashback);

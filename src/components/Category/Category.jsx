@@ -107,7 +107,9 @@ const Category = ({ handleClick }) => {
         </Select>
       </FormControl>
 
-      {category && <Card handleClick={handleClick} handleDelete={handleDelete} cards={usersCards} />}
+      {category && (
+        <Card handleClick={handleClick} handleDelete={handleDelete} cards={usersCards} categoryPage={true} />
+      )}
     </>
   );
 };
