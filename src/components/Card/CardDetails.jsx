@@ -33,27 +33,22 @@ const CardDetails = () => {
     );
   }
   return (
-    <Box
-    // display={"flex"}
-    // justifyContent={"center"}
-    // alignContent={"center"}
-    // alignItems={"center"}
-    // flexDirection={"column"}
-    >
-      {/* <Box display={"flex"} alignItems={"center"}>
-        <Button>
-          <ArrowBackIosIcon />
-        </Button>
-        <Typography variant="h3" color="#092C4C" textAlign={"center"}>
-          Card Benefits
-        </Typography>
-      </Box> */}
-
-      <Box direction={"row"} display={"flex"} alignItems={"center"} mt={4} justifyContent={"center"}>
+    <Box>
+      <Box
+        direction={"row"}
+        display={"flex"}
+        alignItems={"center"}
+        mt={4}
+        justifyContent={"center"}
+        position={"relative"}
+      >
         <Button
           sx={{
             padding: "0",
             margin: "0",
+            position: "absolute",
+            top: "0",
+            left: "0",
           }}
           onClick={() => {
             //maintain previous state
@@ -70,7 +65,7 @@ const CardDetails = () => {
             }}
           />
         </Button>
-        <Typography variant="h3" color="#092C4C" textAlign={"center"}>
+        <Typography variant="h4" color="#092C4C" textAlign={"center"}>
           Card Benefits
         </Typography>
       </Box>
@@ -96,7 +91,13 @@ const CardDetails = () => {
             <TableBody>
               {selectedCard.bonuses.map(bonus => (
                 <TableRow key={bonus._id}>
-                  <TableCell>{bonus.type}</TableCell>
+                  <TableCell
+                    sx={{
+                      textTransform: "capitalize",
+                    }}
+                  >
+                    {bonus.type}
+                  </TableCell>
                   <TableCell>{bonus.details}</TableCell>
                 </TableRow>
               ))}
@@ -131,8 +132,13 @@ const CardDetails = () => {
           <Table>
             <TableBody>
               <TableRow key={selectedCard.fees._id}>
-                <TableCell>{selectedCard.fees.annualFee}</TableCell>
-                <TableCell>{selectedCard.fees.balanceTransferFee}</TableCell>
+                <TableCell
+                  sx={{
+                    textAlign: "center",
+                  }}
+                >
+                  {selectedCard.fees.annualFee}
+                </TableCell>
               </TableRow>
             </TableBody>
           </Table>

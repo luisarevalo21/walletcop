@@ -13,13 +13,10 @@ const Wallet = () => {
 
   const [toggleAddCard, setToggleAddCard] = useState(false);
   const [cards, setCards] = useState([]);
-  //fetch users cards
 
   useEffect(() => {
     const getUserCards = async () => {
       const response = await fetchUsersCards();
-
-      console.log("updated cards", response.data);
 
       setCards(response.data);
     };

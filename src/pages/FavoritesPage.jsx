@@ -1,4 +1,4 @@
-import { Box, Card, Stack, Typography } from "@mui/material";
+import { Box, Card, Stack, Typography, Button } from "@mui/material";
 import React, { useState, useEffect } from "react";
 import FavoritesItem from "../components/Favorites/FavoritesItem";
 import FavoritesModal from "../components/Favorites/FavoritesModal";
@@ -15,58 +15,26 @@ const FavoritesPage = () => {
     // { creditCardName: "Citi Double Cash Card", bank: "Citibank", id: 3 },
     // { creditCardName: "Bank of America Cash Rewards", bank: "Bank of America", id: 4 },
   ]);
+  const [loading, setLoading] = useState(true);
 
   const [selectedCard, setSelectedCard] = useState(null);
 
-  const [favorites, setFavorites] = useState([
-    {
-      categoryName: "Groceries",
-      card: {
-        bank: "Chase",
-        creditCardName: "Chase Sapphire Preferred",
-        id: 1,
-      },
-    },
-    {
-      categoryName: "Restaurant",
-      card: {
-        bank: "Chase",
-        creditCardName: "Chase Sapphire Preferred",
-        id: 2,
-      },
-    },
-    {
-      categoryName: "Online Purchases",
-      card: {
-        bank: "Chase",
-        creditCardName: "Chase Sapphire Preferred",
-        id: 3,
-      },
-    },
-    {
-      categoryName: "Gas",
-      card: {
-        bank: "Chase",
-        creditCardName: "Chase Sapphire Preferred",
-        id: 4,
-      },
-    },
-  ]);
+  const [usersFavorites, setUsersFavorites] = useState();
 
-  console.log("favorites", favorites);
   useEffect(() => {
-    const getUserCards = async () => {
-      const response = await fetchUsersCards();
+    setLoading(true);
+    const getUsersFavorites = async () => {
+      const response = await fetchUsersFavorites();
 
-      console.log("updated cards", response.data);
-      setUsersCards([]);
+      setUsersCards(response.data);
+      setLoading(false);
     };
 
-    // getUserCards();
+    getUsersFavorites();
   }, []);
 
-  const fetchUsersCards = async () => {
-    const cards = await api.get(`/user/${user.id}/cards`);
+  const fetchUsersFavorites = async () => {
+    const cards = await api.get(`/user/${user.id}/favorites`);
     return cards;
   };
   const handleEdit = card => {
@@ -91,6 +59,11 @@ const FavoritesPage = () => {
     });
     setFavorites(newFavorites);
   };
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
   return (
     <>
       {open && (
@@ -104,13 +77,16 @@ const FavoritesPage = () => {
         />
       )}
       <Box flexDirection={"column"} justifyContent={"center"} alignItems={"center"} p={2} width={"100%"}>
-        {favorites.map(favorite => (
+        <Button variant="contained">Add New Category</Button>
+        {usersFavorites.map(favorite => (
           <FavoritesItem
-            key={favorite.card.id}
-            card={favorite.card}
-            handleEdit={handleEdit}
-            categoryName={favorite.categoryName}
-            favoritesArray={true}
+            key={favorite}
+            // favoriteTitle={favorite}
+            // card={usersCards}
+            // card={favorite.card}
+            // handleEdit={handleEdit}
+            // categoryName={favorite.categoryName}
+            // favoritesArray={true}
           />
         ))}
       </Box>

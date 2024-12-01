@@ -27,6 +27,12 @@ const userSchema = new Schema({
       addedAt: { type: Date, default: Date.now }, // Timestamp when the card was added
     },
   ],
+  favorites: [
+    {
+      categoryName: { type: String, ref: "Category" },
+      card: { type: Schema.Types.ObjectId, ref: "Card" },
+    },
+  ],
   categories: [
     {
       categoryId: { type: Schema.Types.ObjectId, ref: "Category" },
