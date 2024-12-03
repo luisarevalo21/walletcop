@@ -27,12 +27,31 @@ const userSchema = new Schema({
       addedAt: { type: Date, default: Date.now }, // Timestamp when the card was added
     },
   ],
-  favorites: [
-    {
-      categoryName: { type: String, ref: "Category" },
-      card: { type: Schema.Types.ObjectId, ref: "Card" },
-    },
-  ],
+  favorites: {
+    type: [
+      {
+        categoryId: { type: Schema.Types.ObjectId, ref: "Card", default: null },
+        categoryName: {
+          type: String,
+          ref: "Category",
+          required: true,
+          validate: {
+            validator: async function (value) {
+              console.log("value", value);
+              const categoryExists = await mongoose.model("Category").exists({ category: value });
+              return categoryExists;
+            },
+            message: props => `${props.value} is not a valid category!`,
+          },
+        },
+      },
+    ],
+    // default: [
+    //   { cardId: null, categoryName: "Gas" },
+    //   { cardId: null, categoryName: "Dining" },
+    //   { cardId: null, categoryName: "Groceries" },
+    // ],
+  },
   categories: [
     {
       categoryId: { type: Schema.Types.ObjectId, ref: "Category" },

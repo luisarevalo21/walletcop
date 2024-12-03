@@ -12,7 +12,7 @@ import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
 import TableRow from "@mui/material/TableRow";
-const CardItem = ({ handleClick, handleDelete, card, edit, handleEdit, categoryName, favorites }) => {
+const CardItem = ({ handleClick, handleDelete, card, edit, handleEdit, favorite, categoryName, favorites }) => {
   // if (favorites) {
   //   //pass teh fvaorite card
   //   //then map over the users cards and display them

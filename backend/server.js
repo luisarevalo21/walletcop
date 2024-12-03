@@ -13,8 +13,8 @@ const cardRouter = require("./routes/CardRouter");
 const categoryRouter = require("./routes/CategoryRouter");
 const bankRouter = require("./routes/bankRouter");
 const userRouter = require("./routes/userRouter");
-const signInRouter = require("./routes/signInRouter");
 const User = require("./models/user");
+const Category = require("./models/categories");
 connectDB();
 
 app.use(clerkMiddleware());
@@ -51,7 +51,6 @@ app.use((err, req, res, next) => {
   console.error(err.stack);
   return res.status(401).send("Unauthenticated!");
 });
-app.use("/auth", signInRouter); // Use the signInRouter for authentication routes
 app.use("/user", userRouter);
 app.use("/banks", requireAuth(), bankRouter);
 app.use("/cards", requireAuth(), cardRouter);
@@ -65,6 +64,18 @@ app.post(
   bodyParser.raw({ type: "application/json" }),
 
   async (req, res) => {
+    const defaultCategoryNames = ["Gas", "Dining", "Groceries", "Travel"]; // Replace with your default names
+    const defaultCategories = await Category.find({
+      category: { $in: defaultCategoryNames },
+    });
+
+    const data = defaultCategories.map(category => {
+      return {
+        categoryName: category.category,
+        categoryId: category._id,
+      };
+    });
+
     const SIGNING_SECRET = process.env.SIGNING_SECRET;
 
     if (!SIGNING_SECRET) {
@@ -81,6 +92,26 @@ app.post(
       res.status(400).json({});
     }
 
+    if (result.data.user_id) {
+      try {
+        const userId = result.data.user_id;
+        const foundUser = await User.findOne({
+          googleId: userId,
+        });
+
+        if (foundUser.length !== 0) {
+          if (foundUser.favorites.length === 0) {
+            foundUser.favorites = data;
+
+            await foundUser.save();
+          }
+          return res.status(200).json("okay");
+        }
+      } catch (err) {
+        console.log("error", err);
+      }
+    }
+
     // Do something with the message...
 
     const emailAdress = result.data.email_addresses[0].email_address;
@@ -92,6 +123,16 @@ app.post(
       const foundUser = await User.find({
         email: emailAdress,
       });
+
+      if (foundUser.favorites.length === 0) {
+        const defaultFavorites = [
+          { categoryName: "Gas", categoryId: null },
+          { categoryName: "Dining", categoryId: null },
+          { categoryName: "Groceries", categoryId: null },
+        ];
+        foundUser.favorites = defaultFavorites;
+        await foundUser.save();
+      }
 
       if (foundUser.length !== 0) {
         return res.status(200).json("okay");
@@ -124,6 +165,44 @@ app.post(
   // }
 );
 
+app.post(
+  "/api/webhooks/session",
+  // This is a generic method to parse the contents of the payload.
+  // Depending on the framework, packages, and configuration, this may be
+  // different or not required.
+  bodyParser.raw({ type: "application/json" }),
+
+  async (req, res) => {
+    const SIGNING_SECRET = process.env.SIGNING_SECRET;
+
+    if (!SIGNING_SECRET) {
+      throw new Error("Error: Please add SIGNING_SECRET from Clerk Dashboard to .env");
+    }
+    const payload = req.body;
+    const headers = req.headers;
+
+    const wh = new Webhook(SIGNING_SECRET);
+    let result = null;
+    try {
+      result = wh.verify(payload, headers);
+    } catch (err) {
+      res.status(400).json({});
+    }
+
+    try {
+      const userId = result.data.user_id;
+      const foundUser = await User.find({
+        googleId: userId,
+      });
+
+      if (foundUser.length !== 0) {
+        return res.status(200).json("okay");
+      }
+    } catch (err) {
+      console.log("error", err);
+    }
+  }
+);
 // app.get("/", (req, res) => {
 //   res.send("Hello World");
 // });

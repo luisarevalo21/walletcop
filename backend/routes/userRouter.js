@@ -31,6 +31,50 @@ router.post("/:userId/newcard", async (req, res) => {
   }
 });
 
+router.post("/:userId/:newCategory", async (req, res) => {
+  const { userId, newCategory } = req.params;
+
+  try {
+    const updatedUser = await User.findOneAndUpdate(
+      { googleId: userId },
+      { $push: { favorites: { categoryName: newCategory } } },
+      {
+        new: true,
+      }
+    );
+
+    if (!updatedUser) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    const { favorites } = updatedUser;
+    // console.log(favorites);
+    return res.status(200).json(favorites);
+  } catch (err) {
+    console.log(err);
+  }
+});
+
+router.delete("/:userId/:categoryId", async (req, res) => {
+  const { userId, categoryId } = req.params;
+
+  try {
+    const updated = await User.findOneAndUpdate(
+      { googleId: userId },
+      { $pull: { favorites: { categoryId: categoryId } } },
+      { new: true }
+    );
+
+    if (!updated) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    return res.status(200).json(updated.favorites);
+  } catch (err) {
+    console.log(err);
+  }
+});
+
 router.get("/:userId/cards", async (req, res) => {
   const { userId } = req.params;
 
@@ -108,8 +152,7 @@ router.get("/:userId/favorites", async (req, res) => {
     const user = await User.findOne({
       googleId: userId,
     });
-
-    console.log(user);
+    return res.status(200).json(user.favorites);
   } catch (err) {
     console.log(err);
   }

@@ -9,6 +9,7 @@ const FavoritesPage = () => {
   const { user } = useUser();
   const api = useAxiosWithAuth();
   const [open, setOpen] = useState(false);
+  const [showNewCategory, setShowNewCategory] = useState(false);
   const [usersCards, setUsersCards] = useState([
     // { creditCardName: "Chase Sapphire Preferred", bank: "JPMorgan Chase", id: 1 },
     // { creditCardName: "American Express Platinum", bank: "American Express", id: 2 },
@@ -21,12 +22,18 @@ const FavoritesPage = () => {
 
   const [usersFavorites, setUsersFavorites] = useState();
 
+  const [usersCategories, setUsersCategories] = useState(null);
+
   useEffect(() => {
     setLoading(true);
     const getUsersFavorites = async () => {
+      setLoading(true);
       const response = await fetchUsersFavorites();
 
-      setUsersCards(response.data);
+      const categories = response.data.map(favorite => favorite.categoryName);
+
+      setUsersFavorites(response.data);
+      setUsersCategories(categories);
       setLoading(false);
     };
 
@@ -44,6 +51,18 @@ const FavoritesPage = () => {
   const handleClose = () => {
     setOpen(false);
     setSelectedCard(null);
+  };
+
+  const handleAddNewCategory = async selectedCategory => {
+    console.log("new tategory trigged");
+    const response = await api.post(`/user/${user.id}/${selectedCategory}`);
+    setUsersFavorites(response.data);
+    setShowNewCategory(false);
+  };
+  const handleDeleteCategory = async categoryId => {
+    const response = await api.delete(`/user/${user.id}/${categoryId}`);
+
+    setUsersFavorites(response.data);
   };
 
   const handleNewFavorite = (categoryName, card) => {
@@ -66,6 +85,15 @@ const FavoritesPage = () => {
 
   return (
     <>
+      {showNewCategory && (
+        <FavoritesModal
+          open={showNewCategory}
+          handleClose={() => setShowNewCategory(false)}
+          handleAddCategory={handleAddNewCategory}
+          usersCategories={usersCategories}
+          newCategory={true}
+        />
+      )}
       {open && (
         <FavoritesModal
           open={open}
@@ -77,10 +105,17 @@ const FavoritesPage = () => {
         />
       )}
       <Box flexDirection={"column"} justifyContent={"center"} alignItems={"center"} p={2} width={"100%"}>
-        <Button variant="contained">Add New Category</Button>
+        <Box display={"flex"} justifyContent={"center"} mb={4}>
+          <Button variant="contained" onClick={() => setShowNewCategory(true)}>
+            Add New Category
+          </Button>
+        </Box>
         {usersFavorites.map(favorite => (
           <FavoritesItem
-            key={favorite}
+            key={favorite._id}
+            id={favorite._id}
+            favorite={favorite}
+            handleDeleteCategory={handleDeleteCategory}
             // favoriteTitle={favorite}
             // card={usersCards}
             // card={favorite.card}

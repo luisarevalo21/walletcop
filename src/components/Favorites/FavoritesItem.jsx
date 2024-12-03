@@ -3,7 +3,15 @@ import { Box, Typography, Button } from "@mui/material";
 import CardItem from "../Card/CardItem";
 import DeleteForeverOutlinedIcon from "@mui/icons-material/DeleteForeverOutlined";
 
-const FavoritesItem = ({ card, categoryName, handleEdit, favoritesArray, handleNewFavorite, favoriteTitle }) => {
+const FavoritesItem = ({
+  categoryName,
+  favorite,
+  handleEdit,
+  favoritesArray,
+  handleNewFavorite,
+  favoriteTitle,
+  handleDeleteCategory,
+}) => {
   const handleAddCard = () => {
     console.log("clicked");
   };
@@ -35,35 +43,38 @@ const FavoritesItem = ({ card, categoryName, handleEdit, favoritesArray, handleN
   //   );
   // }
 
-  const cardItems = card?.map(card => {
-    return <CardItem key={card.id} card={card} edit={true} handleEdit={handleEdit} categoryName={categoryName} />;
-  });
+  // const cardItems = card?.map(card => {
+  //   return <CardItem key={card.id} card={card} edit={true} handleEdit={handleEdit} categoryName={categoryName} />;
+  // });
   return (
-    <Box display={"flex"} justifyContent={"center"} flexDirection={"column"} mt={2} border={"2px solid black"} p={2}>
-      <Typography variant="h5" textAlign={"left"} position={"relative"}>
+    <Box mt={2} border={"2px solid black"} p={2} position={"relative"}>
+      <Box>
         <Button
           sx={{
-            // position: "absolute",
-            // top: "0",
-            // left: "0",
+            top: "0",
+            left: "0",
+            position: "absolute",
             padding: "0",
             margin: "0",
             minWidth: 0,
           }}
-          onClick={() => handleDelete(card.id)}
+          onClick={() => handleDeleteCategory(favorite.categoryId)}
         >
           <DeleteForeverOutlinedIcon style={{ fill: "#EB5757" }} />
         </Button>
-        {""}
-        {favoriteTitle}
-      </Typography>
+        <Typography variant="h5" textAlign={"left"} mt={2}>
+          {favorite.categoryName}
+        </Typography>
+      </Box>
 
-      <Box>
+      <Box display="flex" ml={4} alignItems={"center"} mt={2}>
         <Button variant="contained" onClick={handleAddCard}>
           Add Card
         </Button>
       </Box>
 
+      {/* <Box>{favorite.category}</Box> */}
+      {/* <CardItem edit={true} handleEdit={handleEdit} categoryName={favorite.categoryName} /> */}
       {/* <CardItem edit={true} card={card} handleEdit={handleEdit} categoryName={categoryName} /> */}
     </Box>
   );

@@ -1,10 +1,42 @@
-import React from "react";
-import { Box, Typography, Modal, Button, SvgIcon } from "@mui/material";
+import React, { useEffect, useState } from "react";
+import { Box, Typography, Modal, Button, SvgIcon, FormControl, InputLabel, MenuItem, Select } from "@mui/material";
 import CardItem from "../Card/CardItem";
 import CloseIcon from "@mui/icons-material/Close";
 import FavoritesItem from "./FavoritesItem";
-const FavoritesModal = props => {
-  const { open, handleClose, card, usersCards, handleNewFavorite, categoryName } = props;
+import { useAxiosWithAuth } from "../../api/useAxiosWithAuth";
+const FavoritesModal = ({
+  open,
+  handleClose,
+  card,
+  usersCards,
+  handleNewFavorite,
+  categoryName,
+  newCategory,
+  usersCategories,
+  handleAddCategory,
+}) => {
+  const api = useAxiosWithAuth();
+  const [categories, setCategories] = useState([]);
+  const [selectedCategory, setSelectedCategory] = useState("");
+  useEffect(() => {
+    const getCategories = async () => {
+      const res = await fetchCategories();
+
+      const categories = res.data.filter(category => !usersCategories.includes(category.category));
+
+      setCategories(categories);
+    };
+    getCategories();
+  }, []);
+
+  const fetchCategories = async () => {
+    return api.get("/categories");
+  };
+  const handleChange = e => {
+    console.log(e.target);
+    setSelectedCategory(e.target.value);
+  };
+
   const style = {
     position: "absolute",
     top: "50%",
@@ -19,6 +51,75 @@ const FavoritesModal = props => {
     // justifyContent: "center",
     // alignItems: "center",
   };
+
+  const handleAddNewCategory = e => {
+    e.preventDefault();
+    handleAddCategory(selectedCategory);
+    setSelectedCategory("");
+  };
+
+  const handleSubmit = () => {
+    setSelectedCategory("");
+    handleClose();
+  };
+
+  if (newCategory) {
+    return (
+      <Modal
+        onClose={handleClose}
+        open={open}
+        style={style}
+        sx={{ "& .MuiBackdrop-root": { backgroundColor: "transparent" } }}
+      >
+        <form onSubmit={handleAddNewCategory}>
+          <Box
+            position="relative"
+            display={"flex"}
+            justifyContent={"center"}
+            flexDirection={"column"}
+            alignItems={"center"}
+          >
+            <Button
+              onClick={handleClose}
+              sx={{ position: "absolute", right: 0, top: "0", fontSize: "1.5rem", width: 0 }}
+            >
+              X
+            </Button>
+            <FormControl
+              fullWidth
+              sx={{
+                color: "#092C4C",
+                fontWeight: "bold",
+                textAlign: "center",
+                background: "none",
+                border: "none",
+                boxShadow: "none",
+                marginTop: "2.5em",
+                marginBottom: "1.5em",
+              }}
+            >
+              <InputLabel>Categories</InputLabel>
+              <Select value={selectedCategory} label="Category" onChange={handleChange} sx={{ left: 0 }}>
+                {categories.map(category => {
+                  return (
+                    <MenuItem key={category.category} value={category.category}>
+                      {category.category}
+                    </MenuItem>
+                  );
+                })}
+              </Select>
+            </FormControl>
+
+            {/* <Box display={"flex"} justifyContent={"center"} mt={2}> */}
+            <Button variant="contained" type="submit">
+              Submit
+            </Button>
+            {/* </Box> */}
+          </Box>
+        </form>
+      </Modal>
+    );
+  }
 
   return (
     // <Modal
