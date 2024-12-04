@@ -24,13 +24,16 @@ const FavoritesPage = () => {
 
   const [usersCategories, setUsersCategories] = useState(null);
 
+  const getUsersCategoryNames = categories => {
+    return categories.map(favorite => favorite.categoryName);
+  };
   useEffect(() => {
     setLoading(true);
     const getUsersFavorites = async () => {
       setLoading(true);
       const response = await fetchUsersFavorites();
 
-      const categories = response.data.map(favorite => favorite.categoryName);
+      const categories = getUsersCategoryNames(response.data);
 
       setUsersFavorites(response.data);
       setUsersCategories(categories);
@@ -54,15 +57,21 @@ const FavoritesPage = () => {
   };
 
   const handleAddNewCategory = async selectedCategory => {
-    console.log("new tategory trigged");
-    const response = await api.post(`/user/${user.id}/${selectedCategory}`);
+    const categoryName = selectedCategory.category;
+    const response = await api.post(`/user/${user.id}/${categoryName}`, {
+      categoryId: selectedCategory._id,
+    });
     setUsersFavorites(response.data);
+    const categories = getUsersCategoryNames(response.data);
+    setUsersCategories(categories);
     setShowNewCategory(false);
   };
   const handleDeleteCategory = async categoryId => {
     const response = await api.delete(`/user/${user.id}/${categoryId}`);
+    const categories = getUsersCategoryNames(response.data);
 
     setUsersFavorites(response.data);
+    setUsersCategories(categories);
   };
 
   const handleNewFavorite = (categoryName, card) => {

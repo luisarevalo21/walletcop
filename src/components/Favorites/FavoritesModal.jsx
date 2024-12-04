@@ -20,8 +20,8 @@ const FavoritesModal = ({
   const [selectedCategory, setSelectedCategory] = useState("");
   useEffect(() => {
     const getCategories = async () => {
+      console.log("user categories", usersCategories);
       const res = await fetchCategories();
-
       const categories = res.data.filter(category => !usersCategories.includes(category.category));
 
       setCategories(categories);
@@ -33,7 +33,6 @@ const FavoritesModal = ({
     return api.get("/categories");
   };
   const handleChange = e => {
-    console.log(e.target);
     setSelectedCategory(e.target.value);
   };
 
@@ -102,7 +101,7 @@ const FavoritesModal = ({
               <Select value={selectedCategory} label="Category" onChange={handleChange} sx={{ left: 0 }}>
                 {categories.map(category => {
                   return (
-                    <MenuItem key={category.category} value={category.category}>
+                    <MenuItem key={category.category} value={category}>
                       {category.category}
                     </MenuItem>
                   );

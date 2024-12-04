@@ -34,10 +34,12 @@ router.post("/:userId/newcard", async (req, res) => {
 router.post("/:userId/:newCategory", async (req, res) => {
   const { userId, newCategory } = req.params;
 
+  const { categoryId } = req.body;
+
   try {
     const updatedUser = await User.findOneAndUpdate(
       { googleId: userId },
-      { $push: { favorites: { categoryName: newCategory } } },
+      { $push: { favorites: { categoryName: newCategory, categoryId } } },
       {
         new: true,
       }
@@ -48,7 +50,6 @@ router.post("/:userId/:newCategory", async (req, res) => {
     }
 
     const { favorites } = updatedUser;
-    // console.log(favorites);
     return res.status(200).json(favorites);
   } catch (err) {
     console.log(err);
