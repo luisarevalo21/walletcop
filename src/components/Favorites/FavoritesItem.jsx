@@ -11,41 +11,8 @@ const FavoritesItem = ({
   handleNewFavorite,
   favoriteTitle,
   handleDeleteCategory,
+  toggleAddNewCard,
 }) => {
-  const handleAddCard = () => {
-    console.log("clicked");
-  };
-  // if (favoritesArray) {
-  //   return (
-  //     <Box
-  //       display={"flex"}
-  //       alignItems={"flex"}
-  //       justifyContent={"center"}
-  //       p={1.5}
-  //       onClick={() => handleNewFavorite(categoryName, card)}
-  //     >
-  //       <Box mr={2} boxShadow={""} borderRadius={"5px"} width={"200px"}>
-  //         <img src={visaImage} alt="card" width={"100%"} />
-  //       </Box>
-  //       <Box
-  //         width={"100%"}
-  //         display={"flex"}
-  //         flexDirection={"column"}
-  //         justifyContent={"space-evenly"}
-  //         alignItems={"flex-start"}
-  //       >
-  //         <Typography variant={"p"}>{card.bank}</Typography>
-  //         <Typography variant={"p"}>{card.creditCardName}</Typography>
-  //         <Typography variant={"p"}>2% cashback on food</Typography>
-  //         <Typography variant={"p"}>2% cashback on food</Typography>
-  //       </Box>
-  //     </Box>
-  //   );
-  // }
-
-  // const cardItems = card?.map(card => {
-  //   return <CardItem key={card.id} card={card} edit={true} handleEdit={handleEdit} categoryName={categoryName} />;
-  // });
   return (
     <Box mt={2} border={"2px solid black"} p={2} position={"relative"}>
       <Box>
@@ -67,11 +34,25 @@ const FavoritesItem = ({
         </Typography>
       </Box>
 
-      <Box display="flex" ml={4} alignItems={"center"} mt={2}>
-        <Button variant="contained" onClick={handleAddCard}>
+      {/* <Box display="flex" alignItems={"center"} mt={2}> */}
+      {favorite.creditCardId ? (
+        <CardItem favorites={true} card={favorite.creditCardId} />
+      ) : (
+        <Button variant="contained" onClick={() => toggleAddNewCard(favorite.categoryName, favorite.categoryId)}>
           Add Card
         </Button>
-      </Box>
+        // <Box>
+        //   <Typography variant="h5" textAlign={"left"} mt={2}>
+        //     No card added
+        //   </Typography>
+        // </Box>
+        // <CardItem
+        // // handleEdit={handleEdit}
+        // // categoryName={favorite.categoryName}
+        // // card={favorite.creditCardId}
+        // />
+      )}
+      {/* </Box> */}
 
       {/* <Box>{favorite.category}</Box> */}
       {/* <CardItem edit={true} handleEdit={handleEdit} categoryName={favorite.categoryName} /> */}

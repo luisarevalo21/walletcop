@@ -30,18 +30,47 @@ router.post("/:userId/newcard", async (req, res) => {
     res.status(500).json({ message: "Failed to add card  " });
   }
 });
+router.post("/:userId/favorites", async (req, res) => {
+  const { userId } = req.params;
+  const { cardId, categoryName, categoryId } = req.body;
+
+  if (!userId || !cardId || !categoryName) {
+    return res.status(400).json({ message: "no user or card or category" });
+  }
+  try {
+    const user = await User.findOne({
+      googleId: userId,
+    });
+
+    const favorite = user.favorites.find(fav => fav.categoryId.equals(categoryId));
+    if (favorite) {
+      favorite.creditCardId = cardId;
+      await user.save();
+      return res.status(200).json(user.favorites);
+    } else {
+      return res.status(404).json({ message: "Category not found" });
+    }
+    // const updatedUser = await
+  } catch (err) {
+    console.log("error", err);
+  }
+});
 
 router.post("/:userId/:newCategory", async (req, res) => {
   const { userId, newCategory } = req.params;
 
   const { categoryId } = req.body;
 
+  if (!userId || !newCategory || !categoryId) {
+    return res.status(400).json({ message: "no user or category" });
+  }
   try {
     const updatedUser = await User.findOneAndUpdate(
       { googleId: userId },
       { $push: { favorites: { categoryName: newCategory, categoryId } } },
       {
         new: true,
+        runValidators: true,
       }
     );
 
@@ -152,7 +181,9 @@ router.get("/:userId/favorites", async (req, res) => {
   try {
     const user = await User.findOne({
       googleId: userId,
-    });
+    })
+      .populate("favorites.creditCardId")
+      .exec();
     return res.status(200).json(user.favorites);
   } catch (err) {
     console.log(err);

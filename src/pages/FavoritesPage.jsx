@@ -2,14 +2,18 @@ import { Box, Card, Stack, Typography, Button } from "@mui/material";
 import React, { useState, useEffect } from "react";
 import FavoritesItem from "../components/Favorites/FavoritesItem";
 import FavoritesModal from "../components/Favorites/FavoritesModal";
+import FavoritesAddCardModal from "../components/Favorites/FavoritesAddCardModal";
 import { useAxiosWithAuth } from "../api/useAxiosWithAuth";
 import { useAuth, useUser } from "@clerk/clerk-react";
+import { ConnectingAirportsOutlined } from "@mui/icons-material";
 
 const FavoritesPage = () => {
   const { user } = useUser();
   const api = useAxiosWithAuth();
   const [open, setOpen] = useState(false);
   const [showNewCategory, setShowNewCategory] = useState(false);
+  const [showAddNewCard, setShowAddNewCard] = useState(false);
+
   const [usersCards, setUsersCards] = useState([
     // { creditCardName: "Chase Sapphire Preferred", bank: "JPMorgan Chase", id: 1 },
     // { creditCardName: "American Express Platinum", bank: "American Express", id: 2 },
@@ -19,7 +23,7 @@ const FavoritesPage = () => {
   const [loading, setLoading] = useState(true);
 
   const [selectedCard, setSelectedCard] = useState(null);
-
+  const [selectedCategory, setSelectedCategory] = useState(null);
   const [usersFavorites, setUsersFavorites] = useState();
 
   const [usersCategories, setUsersCategories] = useState(null);
@@ -30,22 +34,31 @@ const FavoritesPage = () => {
   useEffect(() => {
     setLoading(true);
     const getUsersFavorites = async () => {
-      setLoading(true);
-      const response = await fetchUsersFavorites();
+      fetchUsersFavorites();
+      // setLoading(true);
+      // const response = await fetchUsersFavorites();
 
-      const categories = getUsersCategoryNames(response.data);
+      // const categories = getUsersCategoryNames(response.data);
 
-      setUsersFavorites(response.data);
-      setUsersCategories(categories);
-      setLoading(false);
+      // setUsersFavorites(response.data);
+      // setUsersCategories(categories);
+      // setLoading(false);
     };
 
     getUsersFavorites();
   }, []);
 
   const fetchUsersFavorites = async () => {
+    setLoading(true);
+    // const response = await fetchUsersFavorites();
+
     const cards = await api.get(`/user/${user.id}/favorites`);
-    return cards;
+    const categories = getUsersCategoryNames(cards.data);
+
+    setUsersFavorites(cards.data);
+    setUsersCategories(categories);
+    setLoading(false);
+    // return cards;
   };
   const handleEdit = card => {
     setOpen(true);
@@ -88,6 +101,25 @@ const FavoritesPage = () => {
     setFavorites(newFavorites);
   };
 
+  const toggleAddNewCard = (categoryName, categoryId) => {
+    setSelectedCategory({ categoryName, categoryId });
+    setShowAddNewCard(true);
+  };
+  const handleAddNewCard = async (cardId, selectedCategory) => {
+    console.log("cardId", cardId);
+    console.log("hadnel add new card called");
+    const response = await api.post(`/user/${user.id}/favorites`, {
+      cardId: cardId,
+      categoryName: selectedCategory.categoryName,
+      categoryId: selectedCategory.categoryId,
+    });
+
+    setShowAddNewCard(false);
+    if (response.status === 200) {
+      fetchUsersFavorites();
+    }
+  };
+
   if (loading) {
     return <div>Loading...</div>;
   }
@@ -103,6 +135,15 @@ const FavoritesPage = () => {
           newCategory={true}
         />
       )}
+
+      {showAddNewCard && (
+        <FavoritesAddCardModal
+          showAddNewCard={showAddNewCard}
+          handleClose={() => setShowAddNewCard(false)}
+          selectedCategory={selectedCategory}
+          handleAddNewCard={handleAddNewCard}
+        />
+      )}
       {open && (
         <FavoritesModal
           open={open}
@@ -110,7 +151,7 @@ const FavoritesPage = () => {
           handleClose={handleClose}
           usersCards={usersCards}
           handleNewFavorite={handleNewFavorite}
-          categoryName={selectedCard.categoryName}
+          categoryName={selectedCard}
         />
       )}
       <Box flexDirection={"column"} justifyContent={"center"} alignItems={"center"} p={2} width={"100%"}>
@@ -125,6 +166,7 @@ const FavoritesPage = () => {
             id={favorite._id}
             favorite={favorite}
             handleDeleteCategory={handleDeleteCategory}
+            toggleAddNewCard={toggleAddNewCard}
             // favoriteTitle={favorite}
             // card={usersCards}
             // card={favorite.card}

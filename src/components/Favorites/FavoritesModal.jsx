@@ -20,7 +20,7 @@ const FavoritesModal = ({
   const [selectedCategory, setSelectedCategory] = useState("");
   useEffect(() => {
     const getCategories = async () => {
-      console.log("user categories", usersCategories);
+      // console.log("user categories", usersCategories);
       const res = await fetchCategories();
       const categories = res.data.filter(category => !usersCategories.includes(category.category));
 
@@ -55,11 +55,6 @@ const FavoritesModal = ({
     e.preventDefault();
     handleAddCategory(selectedCategory);
     setSelectedCategory("");
-  };
-
-  const handleSubmit = () => {
-    setSelectedCategory("");
-    handleClose();
   };
 
   if (newCategory) {

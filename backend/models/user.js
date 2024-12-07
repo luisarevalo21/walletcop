@@ -30,7 +30,7 @@ const userSchema = new Schema({
   favorites: {
     type: [
       {
-        categoryId: { type: Schema.Types.ObjectId, ref: "Card", default: null },
+        categoryId: { type: Schema.Types.ObjectId, ref: "Card", default: null, required: true },
         categoryName: {
           type: String,
           ref: "Category",
@@ -44,13 +44,9 @@ const userSchema = new Schema({
             message: props => `${props.value} is not a valid category!`,
           },
         },
+        creditCardId: { type: Schema.Types.ObjectId, ref: "Card", default: null },
       },
     ],
-    // default: [
-    //   { cardId: null, categoryName: "Gas" },
-    //   { cardId: null, categoryName: "Dining" },
-    //   { cardId: null, categoryName: "Groceries" },
-    // ],
   },
   categories: [
     {
@@ -61,3 +57,9 @@ const userSchema = new Schema({
 
 const User = mongoose.model("User", userSchema);
 module.exports = User;
+
+// default: [
+//   { cardId: null, categoryName: "Gas" },
+//   { cardId: null, categoryName: "Dining" },
+//   { cardId: null, categoryName: "Groceries" },
+// ],
