@@ -1,0 +1,168 @@
+[
+  {
+    "creditCardName": "Chase Amazon Prime Rewards",
+    "bankName": "JPMorgan Chase",
+    "abbreviation": "Chase",
+    "benefits": ["Cashback", "Online Shopping Rewards"],
+    "bonuses": [
+      {
+        "type": "cashback",
+        "value": 5,
+        "unit": "%",
+        "categories": ["Amazon Purchases", "Whole Foods"],
+        "details": "Earn 5% cashback on purchases at Amazon.com and Whole Foods Market with an eligible Prime membership."
+      },
+      {
+        "type": "cashback",
+        "value": 2,
+        "unit": "%",
+        "categories": ["Restaurants", "Gas Stations", "Drugstores"],
+        "details": "Earn 2% cashback at restaurants, gas stations, and drugstores."
+      },
+      {
+        "type": "cashback",
+        "value": 1,
+        "unit": "%",
+        "categories": ["All Other Purchases"],
+        "details": "Earn 1% cashback on all other purchases."
+      }
+    ],
+    "fees": {
+      "annualFee": "$0",
+      "foreignTransactionFee": "None",
+      "balanceTransferFee": "$5 or 5% of the transfer amount, whichever is greater."
+    },
+    "category": ["Online Shopping", "Dining", "Gas"],
+    "imageUrl": "https://creditcards.chase.com/content/dam/jpmc-marketplace/card-art/amazon_prime_rewards_card.png"
+  },
+  {
+    "creditCardName": "Apple Credit Card",
+    "bankName": "Goldman Sachs",
+    "abbreviation": "Apple Card",
+    "benefits": ["Daily Cashback", "No Fees", "Apple Pay Integration"],
+    "bonuses": [
+      {
+        "type": "cashback",
+        "value": 3,
+        "unit": "%",
+        "categories": ["Apple Purchases"],
+        "details": "Earn 3% Daily Cashback on purchases made at Apple and select partners when using Apple Pay."
+      },
+      {
+        "type": "cashback",
+        "value": 2,
+        "unit": "%",
+        "categories": ["Apple Pay Purchases"],
+        "details": "Earn 2% Daily Cashback on all purchases made using Apple Pay."
+      },
+      {
+        "type": "cashback",
+        "value": 1,
+        "unit": "%",
+        "categories": ["Physical Card Purchases"],
+        "details": "Earn 1% Daily Cashback on purchases made with the physical Apple Card."
+      }
+    ],
+    "fees": {
+      "annualFee": "$0",
+      "foreignTransactionFee": "None",
+      "balanceTransferFee": "Not applicable."
+    },
+    "category": ["Online Shopping", "Apple Pay", "General Purchases"],
+    "imageUrl": "https://www.apple.com/v/apple-card/e/images/overview/apple_card__c8q1zvqbl6b2_large.png"
+  },
+  {
+    "creditCardName": "Target RedCard Credit Card",
+    "bankName": "TD Bank",
+    "abbreviation": "Target Circle Card",
+    "benefits": ["Discounts", "No Annual Fee", "Target Exclusives"],
+    "bonuses": [
+      {
+        "type": "discount",
+        "value": 5,
+        "unit": "%",
+        "categories": ["Target Purchases"],
+        "details": "Get 5% off on every purchase made at Target stores and Target.com."
+      },
+      {
+        "type": "discount",
+        "value": 0,
+        "unit": "USD",
+        "categories": ["Shipping"],
+        "details": "Enjoy free 2-day shipping on eligible Target.com purchases."
+      }
+    ],
+    "fees": {
+      "annualFee": "$0",
+      "foreignTransactionFee": "Not applicable.",
+      "balanceTransferFee": "Not applicable."
+    },
+    "category": ["Department Stores", "Online Shopping"],
+    "imageUrl": "https://corporate.target.com/_media/TargetCorp/RedCard-Image.png"
+  },
+  {
+    "creditCardName": "Best Buy Credit Card",
+    "bankName": "Citi Bank",
+    "abbreviation": "BBY/CBNA",
+    "benefits": ["Electronics Rewards", "Flexible Financing Options"],
+    "bonuses": [
+      {
+        "type": "points",
+        "value": 5,
+        "unit": "%",
+        "categories": ["Best Buy Purchases"],
+        "details": "Earn 5% back in rewards on all Best Buy purchases."
+      },
+      {
+        "type": "financing",
+        "value": 0,
+        "unit": "%",
+        "categories": ["Large Purchases"],
+        "details": "Get 0% interest financing on eligible purchases of $199 or more if paid in full within 6 to 12 months."
+      }
+    ],
+    "fees": {
+      "annualFee": "$0 or $59 depending on the card type",
+      "foreignTransactionFee": "3%",
+      "balanceTransferFee": "$5 or 5% of the transfer amount, whichever is greater."
+    },
+    "category": ["Electronics", "Online Shopping"],
+    "imageUrl": "https://www.bestbuy.com/~images/credit-card/card-art.png"
+  },
+  {
+    "creditCardName": "Capital One Venture X Rewards Credit Card",
+    "bankName": "Capital One",
+    "abbreviation": "Venture X Rewards",
+    "benefits": ["Travel Rewards", "Airport Lounge Access", "Statement Credits"],
+    "bonuses": [
+      {
+        "type": "miles",
+        "value": 2,
+        "unit": "miles per $",
+        "categories": ["All Purchases"],
+        "details": "Earn 2x miles on all purchases."
+      },
+      {
+        "type": "miles",
+        "value": 5,
+        "unit": "miles per $",
+        "categories": ["Flights"],
+        "details": "Earn 5x miles on flights booked through Capital One Travel."
+      },
+      {
+        "type": "miles",
+        "value": 10,
+        "unit": "miles per $",
+        "categories": ["Hotels", "Rental Cars"],
+        "details": "Earn 10x miles on hotels and rental cars booked through Capital One Travel."
+      }
+    ],
+    "fees": {
+      "annualFee": "$395",
+      "foreignTransactionFee": "None",
+      "balanceTransferFee": "3% of the transfer amount."
+    },
+    "category": ["Travel", "Flights", "Hotels"],
+    "imageUrl": "https://www.capitalone.com/content/dam/card-art/venture-x-card.png"
+  }
+]
