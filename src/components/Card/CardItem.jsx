@@ -12,7 +12,24 @@ import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
 import TableRow from "@mui/material/TableRow";
-const CardItem = ({ handleClick, handleDelete, card, edit, handleEdit, favorite, categoryName, favorites }) => {
+const CardItem = ({
+  handleClick,
+  handleDelete,
+  card,
+  edit,
+  handleEdit,
+  favorite,
+  categoryName,
+  favorites,
+  handleDeleteCard,
+  favoritesModal,
+  categoryId,
+  handleEditCard,
+  handleToggleEditModal,
+  noEdit,
+  allowEdit,
+  selectedCard,
+}) => {
   if (favorites) {
     //pass teh fvaorite card
     //then map over the users cards and display them
@@ -25,7 +42,63 @@ const CardItem = ({ handleClick, handleDelete, card, edit, handleEdit, favorite,
 
     return (
       <Box borderRadius={"3px"} mt={"1em"} maxWidth={"100%"} border={"1px solid black"} position={"relative"} p={2}>
-        <Box p={2} display={"flex"} alignItems={"center"} justifyContent={"flex-start"} onClick={handleClick}>
+        <Box
+          p={2}
+          display={"flex"}
+          alignItems={"center"}
+          justifyContent={"flex-start"}
+          onClick={
+            allowEdit
+              ? () =>
+                  handleEditCard({
+                    creditCardId: card._id,
+                    categoryName: selectedCard.categoryName,
+                    categoryId: selectedCard.categoryId,
+                  })
+              : null
+          }
+        >
+          {!favoritesModal && (
+            <Button
+              sx={{
+                position: "absolute",
+                top: "0",
+                left: "0",
+                padding: "0",
+                margin: "0",
+                minWidth: 0,
+              }}
+              onClick={() => handleDeleteCard(card._id, categoryId)}
+            >
+              <DeleteForeverOutlinedIcon style={{ fill: "#EB5757" }} />
+            </Button>
+          )}
+          {!noEdit && (
+            <Button
+              sx={{
+                position: "absolute",
+                right: "0",
+                margin: "0",
+                padding: "0",
+                top: "0",
+                display: "flex",
+                justifyContent: "flex-end",
+              }}
+              onClick={() => {
+                handleToggleEditModal({
+                  creditCardId: card._id,
+                  categoryName,
+                  creditCardName: card.creditCardName,
+                  bankName: card.bankName,
+                  imageUrl: card.imageUrl,
+                  bonuses: card.bonuses,
+                  categoryId,
+                });
+              }}
+            >
+              <EditIcon sx={{ backgroundColor: "#85BDAC", color: "black", borderRadius: "50%" }} />
+            </Button>
+          )}
           <Box mr={2} maxWidth={"120px"}>
             <img src={card.imageUrl} alt="card" width={"100%"} />
           </Box>
@@ -105,7 +178,7 @@ const CardItem = ({ handleClick, handleDelete, card, edit, handleEdit, favorite,
           margin: "0",
           minWidth: 0,
         }}
-        onClick={() => handleDelete(card.id)}
+        onClick={() => handleDelete(card._id)}
       >
         <DeleteForeverOutlinedIcon style={{ fill: "#EB5757" }} />
       </Button>
@@ -119,12 +192,6 @@ const CardItem = ({ handleClick, handleDelete, card, edit, handleEdit, favorite,
             {card.bankName}
           </Typography>
           <Typography variant={"p"}>{card.creditCardName}</Typography>
-
-          {/* <Box mb={1} display={"flex"} flexDirection={"column"}> */}
-          {/* {card.bonuses.map(bonus => {
-          return <Typography key={bonus.details}>{bonus.details}</Typography>;
-        })} */}
-          {/* </Box> */}
         </Stack>
       </Box>
       <Accordion>
@@ -145,27 +212,6 @@ const CardItem = ({ handleClick, handleDelete, card, edit, handleEdit, favorite,
         </AccordionDetails>
       </Accordion>
 
-      {/* <Box mb={1} display={"flex"} flexDirection={"column"}>
-        {card.bonuses.map(bonus => {
-          return (
-            <Typography key={bonus.details} mb={0.75} component={"li"}>
-              {bonus.details}
-            </Typography>
-          );
-        })}
-      </Box> */}
-      {/* <Accordion>
-        <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-          <Typography>Bonuses</Typography>
-        </AccordionSummary>
-        <AccordionDetails>
-          <Box display="flex" flexDirection="column" gap={1}>
-            {card.bonuses.map(bonus => (
-              <Typography key={bonus.details}>{bonus.details}</Typography>
-            ))}
-          </Box>
-        </AccordionDetails>
-      </Accordion> */}
       {edit ? (
         <Button
           sx={{

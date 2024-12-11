@@ -5,7 +5,6 @@ import FavoritesModal from "../components/Favorites/FavoritesModal";
 import FavoritesAddCardModal from "../components/Favorites/FavoritesAddCardModal";
 import { useAxiosWithAuth } from "../api/useAxiosWithAuth";
 import { useAuth, useUser } from "@clerk/clerk-react";
-import { ConnectingAirportsOutlined } from "@mui/icons-material";
 
 const FavoritesPage = () => {
   const { user } = useUser();
@@ -14,17 +13,12 @@ const FavoritesPage = () => {
   const [showNewCategory, setShowNewCategory] = useState(false);
   const [showAddNewCard, setShowAddNewCard] = useState(false);
 
-  const [usersCards, setUsersCards] = useState([
-    // { creditCardName: "Chase Sapphire Preferred", bank: "JPMorgan Chase", id: 1 },
-    // { creditCardName: "American Express Platinum", bank: "American Express", id: 2 },
-    // { creditCardName: "Citi Double Cash Card", bank: "Citibank", id: 3 },
-    // { creditCardName: "Bank of America Cash Rewards", bank: "Bank of America", id: 4 },
-  ]);
+  const [usersCards, setUsersCards] = useState([]);
   const [loading, setLoading] = useState(true);
 
   const [selectedCard, setSelectedCard] = useState(null);
   const [selectedCategory, setSelectedCategory] = useState(null);
-  const [usersFavorites, setUsersFavorites] = useState();
+  const [usersFavorites, setUsersFavorites] = useState([]);
 
   const [usersCategories, setUsersCategories] = useState(null);
 
@@ -35,22 +29,20 @@ const FavoritesPage = () => {
     setLoading(true);
     const getUsersFavorites = async () => {
       fetchUsersFavorites();
-      // setLoading(true);
-      // const response = await fetchUsersFavorites();
-
-      // const categories = getUsersCategoryNames(response.data);
-
-      // setUsersFavorites(response.data);
-      // setUsersCategories(categories);
-      // setLoading(false);
     };
 
     getUsersFavorites();
+    fetchUsersCards();
   }, []);
 
+  const fetchUsersCards = async () => {
+    setLoading(true);
+    const cards = await api.get(`/user/${user.id}/cards`);
+    setUsersCards(cards.data);
+    setLoading(false);
+  };
   const fetchUsersFavorites = async () => {
     setLoading(true);
-    // const response = await fetchUsersFavorites();
 
     const cards = await api.get(`/user/${user.id}/favorites`);
     const categories = getUsersCategoryNames(cards.data);
@@ -60,9 +52,10 @@ const FavoritesPage = () => {
     setLoading(false);
     // return cards;
   };
-  const handleEdit = card => {
-    setOpen(true);
-    setSelectedCard(card);
+  const handleEditCard = async cardDetails => {
+    const response = await api.put(`/user/${user.id}/favorites`, cardDetails);
+    setOpen(false);
+    setUsersFavorites(response.data);
   };
   const handleClose = () => {
     setOpen(false);
@@ -87,18 +80,29 @@ const FavoritesPage = () => {
     setUsersCategories(categories);
   };
 
-  const handleNewFavorite = (categoryName, card) => {
-    setOpen(false);
-    setSelectedCard(null);
+  const handleDeleteCard = async (cardId, categoryId) => {
+    const response = await api.delete(`/user/${user.id}/favorites/${cardId}`, { data: { categoryId: categoryId } });
 
-    //set the favorites array with the new card
-    const newFavorites = favorites.map(favorite => {
-      if (favorite.categoryName === categoryName) {
-        return { categoryName: categoryName, card: card };
-      }
-      return favorite;
-    });
-    setFavorites(newFavorites);
+    setUsersFavorites(response.data);
+  };
+
+  const handleToggleEditModal = card => {
+    setOpen(true);
+    console.log("card", card);
+    setUsersCards(prev => prev.filter(prevCard => prevCard._id !== card.creditCardId));
+    setSelectedCard(card);
+  };
+  const handleNewFavorite = (categoryName, card) => {
+    // setOpen(false);
+    // setSelectedCard(null);
+    // //set the favorites array with the new card
+    // const newFavorites = favorites.map(favorite => {
+    //   if (favorite.categoryName === categoryName) {
+    //     return { categoryName: categoryName, card: card };
+    //   }
+    //   return favorite;
+    // });
+    // setFavorites(newFavorites);
   };
 
   const toggleAddNewCard = (categoryName, categoryId) => {
@@ -106,8 +110,6 @@ const FavoritesPage = () => {
     setShowAddNewCard(true);
   };
   const handleAddNewCard = async (cardId, selectedCategory) => {
-    console.log("cardId", cardId);
-    console.log("hadnel add new card called");
     const response = await api.post(`/user/${user.id}/favorites`, {
       cardId: cardId,
       categoryName: selectedCategory.categoryName,
@@ -135,23 +137,26 @@ const FavoritesPage = () => {
           newCategory={true}
         />
       )}
-
       {showAddNewCard && (
         <FavoritesAddCardModal
           showAddNewCard={showAddNewCard}
           handleClose={() => setShowAddNewCard(false)}
           selectedCategory={selectedCategory}
           handleAddNewCard={handleAddNewCard}
+          handleDeleteCard={handleDeleteCard}
         />
       )}
       {open && (
         <FavoritesModal
           open={open}
           card={selectedCard}
+          selectedCard={selectedCard}
           handleClose={handleClose}
           usersCards={usersCards}
           handleNewFavorite={handleNewFavorite}
-          categoryName={selectedCard}
+          usersCategories={usersCategories}
+          handleEditCard={handleEditCard}
+          allowEdit={true}
         />
       )}
       <Box flexDirection={"column"} justifyContent={"center"} alignItems={"center"} p={2} width={"100%"}>
@@ -167,12 +172,10 @@ const FavoritesPage = () => {
             favorite={favorite}
             handleDeleteCategory={handleDeleteCategory}
             toggleAddNewCard={toggleAddNewCard}
-            // favoriteTitle={favorite}
-            // card={usersCards}
-            // card={favorite.card}
-            // handleEdit={handleEdit}
-            // categoryName={favorite.categoryName}
-            // favoritesArray={true}
+            handleDeleteCard={handleDeleteCard}
+            handleEditCard={handleEditCard}
+            handleToggleEditModal={handleToggleEditModal}
+            allowEdit={false}
           />
         ))}
       </Box>

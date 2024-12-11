@@ -14,13 +14,16 @@ const FavoritesModal = ({
   newCategory,
   usersCategories,
   handleAddCategory,
+  handleEditCard,
+  allowEdit,
+  selectedCard,
 }) => {
   const api = useAxiosWithAuth();
   const [categories, setCategories] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState("");
+
   useEffect(() => {
     const getCategories = async () => {
-      // console.log("user categories", usersCategories);
       const res = await fetchCategories();
       const categories = res.data.filter(category => !usersCategories.includes(category.category));
 
@@ -45,10 +48,6 @@ const FavoritesModal = ({
     backgroundColor: "white",
     border: "2px solid #000",
     boxShadow: 24,
-
-    // display: "flex",
-    // justifyContent: "center",
-    // alignItems: "center",
   };
 
   const handleAddNewCategory = e => {
@@ -116,27 +115,6 @@ const FavoritesModal = ({
   }
 
   return (
-    // <Modal
-    //   onClose={handleClose}
-    //   open={open}
-    //   style={style}
-    //   //   sx={{ "& .MuiBackdrop-root": { backgroundColor: "transparent" } }}
-    // >
-    //   {/* <Typography variant="h6">Changing Favorite for {categoryName}</Typography>
-
-    //   <Box>
-    //     <Typography variant="h3">Current Favorite for {categoryName}</Typography>
-
-    //     <CardItem card={card} />
-    //   </Box>
-
-    //   <Box>
-    //     <Typography variant="h3">Tap a Different Card Below to Change Favorite Card</Typography>
-
-    //     <CardItem card={usersCards} handleNewFavorite={handleNewFavorite} />
-    //   </Box> */}
-    // </Modal>
-
     <Modal
       open={open}
       onClose={handleClose}
@@ -170,23 +148,29 @@ const FavoritesModal = ({
           />
         </Button>
         <Typography variant="h4" textAlign={"center"} mt={4}>
-          Changing Favorite for {categoryName}
+          Changing Favorite for {card.categoryName}
         </Typography>
         <Typography variant="h6" mt={3}>
-          Current Favorite for {categoryName}
+          Current Favorite for {card.categoryName}
         </Typography>
-        <CardItem card={card} favorites />
+        <CardItem card={card} favorites favoritesModal={true} noEdit={true} />
         <Typography variant="h6" mt={3}>
           Tap a Different Card Below to Change Favorite Card
         </Typography>
         {usersCards.map(card => (
-          <FavoritesItem
+          <CardItem
             card={card}
             favoritesArray={true}
             edit={false}
             handleNewFavorite={handleNewFavorite}
             key={card.id}
             categoryName={categoryName}
+            favorites={true}
+            noEdit={true}
+            favoritesModal={true}
+            handleEditCard={handleEditCard}
+            allowEdit={allowEdit}
+            selectedCard={selectedCard}
           />
         ))}
       </Box>

@@ -12,9 +12,13 @@ const FavoritesItem = ({
   favoriteTitle,
   handleDeleteCategory,
   toggleAddNewCard,
+  handleDeleteCard,
+  handleEditCard,
+  handleToggleEditModal,
+  allowEdit,
 }) => {
   return (
-    <Box mt={2} border={"2px solid black"} p={2} position={"relative"}>
+    <Box mt={2} border={"2px solid black"} p={1} position={"relative"}>
       <Box>
         <Button
           sx={{
@@ -36,9 +40,24 @@ const FavoritesItem = ({
 
       {/* <Box display="flex" alignItems={"center"} mt={2}> */}
       {favorite.creditCardId ? (
-        <CardItem favorites={true} card={favorite.creditCardId} />
+        <CardItem
+          favorites={true}
+          card={favorite.creditCardId}
+          categoryId={favorite.categoryId}
+          handleDeleteCard={handleDeleteCard}
+          handleEditCard={handleEditCard}
+          categoryName={favorite.categoryName}
+          handleToggleEditModal={handleToggleEditModal}
+          allowEdit={allowEdit}
+        />
       ) : (
-        <Button variant="contained" onClick={() => toggleAddNewCard(favorite.categoryName, favorite.categoryId)}>
+        <Button
+          variant="contained"
+          sx={{
+            marginTop: ".9em",
+          }}
+          onClick={() => toggleAddNewCard(favorite.categoryName, favorite.categoryId)}
+        >
           Add Card
         </Button>
         // <Box>

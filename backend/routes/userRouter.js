@@ -72,13 +72,16 @@ router.post("/:userId/:newCategory", async (req, res) => {
         new: true,
         runValidators: true,
       }
-    );
+    )
+      .populate("favorites.creditCardId")
+      .exec();
 
     if (!updatedUser) {
       return res.status(404).json({ message: "User not found" });
     }
 
     const { favorites } = updatedUser;
+    console.log("favorites", favorites);
     return res.status(200).json(favorites);
   } catch (err) {
     console.log(err);
@@ -93,7 +96,9 @@ router.delete("/:userId/:categoryId", async (req, res) => {
       { googleId: userId },
       { $pull: { favorites: { categoryId: categoryId } } },
       { new: true }
-    );
+    )
+      .populate("favorites.creditCardId")
+      .exec();
 
     if (!updated) {
       return res.status(404).json({ message: "User not found" });
@@ -190,6 +195,33 @@ router.get("/:userId/favorites", async (req, res) => {
   }
 });
 
+router.delete("/:userId/favorites/:cardId", async (req, res) => {
+  const { userId, cardId } = req.params;
+  const { categoryId } = req.body;
+
+  if (!userId || !cardId) {
+    return res.status(400).json({ message: "no user or card found" });
+  }
+  try {
+    const user = await User.findOneAndUpdate(
+      {
+        googleId: userId,
+        "favorites.categoryId": categoryId,
+      },
+      {
+        $set: {
+          "favorites.$.creditCardId": null,
+        },
+      },
+      { new: true }
+    );
+
+    return res.status(200).json(user.favorites);
+  } catch (error) {
+    console.log(error);
+  }
+});
+
 router.delete("/:userId/card/:creditCardId", async (req, res) => {
   const { userId, creditCardId } = req.params;
 
@@ -212,6 +244,41 @@ router.delete("/:userId/card/:creditCardId", async (req, res) => {
   if (result) {
     return res.status(200).json({ message: "successflly delted" });
   }
+});
+
+router.put(`/:userId/favorites`, async (req, res) => {
+  const { userId } = req.params;
+  const { creditCardId, categoryName, categoryId } = req.body;
+  console.log("categoryId", categoryId);
+  if (!userId || !creditCardId || !categoryName || !categoryId) {
+    return res.status(400).json({ message: "no user or card or category" });
+  }
+  try {
+    const user = await User.findOneAndUpdate(
+      {
+        googleId: userId,
+      },
+
+      {
+        $set: {
+          "favorites.$[elem].creditCardId": creditCardId,
+          "favorites.$[elem].categoryName": categoryName,
+        },
+      },
+      {
+        arrayFilters: [{ "elem.categoryId": categoryId }],
+        new: true,
+      }
+    )
+      .populate("favorites.creditCardId")
+      .exec();
+
+    return res.status(200).json(user.favorites);
+  } catch (err) {
+    console.log(err);
+  }
+
+  // console.log("cardDetails", categoryId);
 });
 
 module.exports = router;

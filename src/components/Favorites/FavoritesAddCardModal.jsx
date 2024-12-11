@@ -3,7 +3,13 @@ import { Box, Typography, Modal, Stack, Button } from "@mui/material";
 import { useAxiosWithAuth } from "../../api/useAxiosWithAuth";
 import { useUser } from "@clerk/clerk-react";
 import CardItem from "../Card/CardItem";
-const FavoritesAddCardModal = ({ showAddNewCard, handleClose, selectedCategory, handleAddNewCard }) => {
+const FavoritesAddCardModal = ({
+  showAddNewCard,
+  handleClose,
+  selectedCategory,
+  handleAddNewCard,
+  handleDeleteCard,
+}) => {
   const api = useAxiosWithAuth();
   const { user } = useUser();
   const [usersCards, setUsersCards] = useState([]);
@@ -72,6 +78,7 @@ const FavoritesAddCardModal = ({ showAddNewCard, handleClose, selectedCategory, 
                 favorites={true}
                 key={card._id}
                 handleClick={() => handleAddNewCard(card._id, selectedCategory)}
+                favoritesModal={true}
               />
             );
           })}
