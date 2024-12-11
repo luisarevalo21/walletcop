@@ -1,0 +1,323 @@
+[
+  {
+    "_id": { "$oid": "673bd769fe445011fac7834f" },
+    "creditCardName": "Chase Freedom Unlimited",
+    "bankName": "JPMorgan Chase",
+    "abbreviation": "Chase",
+    "benefits": ["Cashback", "Travel Rewards"],
+    "bonuses": [
+      {
+        "type": "cashback",
+        "value": 5,
+        "unit": "%",
+        "categories": ["Travel Purchases"],
+        "details": "Earn 5% cashback on travel purchases made through Chase Ultimate Rewards."
+      },
+      {
+        "type": "cashback",
+        "value": 5,
+        "unit": "%",
+        "categories": ["Grocery Store Purchases"],
+        "details": "Earn 5% cashback on grocery store purchases (excluding Walmart and Target) on up to $12,000 spent in the first year."
+      },
+      {
+        "type": "cashback",
+        "value": 3,
+        "unit": "%",
+        "categories": ["Dining", "Drugstores"],
+        "details": "Earn 3% cashback on dining at restaurants, including takeout and eligible delivery services, and purchases at drugstores."
+      },
+      {
+        "type": "cashback",
+        "value": 1.5,
+        "unit": "%",
+        "categories": ["All Purchases"],
+        "details": "Earn 1.5% cashback on all purchases with no limit."
+      }
+    ],
+    "fees": {
+      "annualFee": "$0",
+      "foreignTransactionFee": "3%",
+      "balanceTransferFee": "$5 or 3% of the amount of each transfer, whichever is greater."
+    },
+    "imageUrl": "https://creditcards.chase.com/content/dam/jpmc-marketplace/card-art/freedom_unlimited_card_alt.png",
+    "category": ["Travel", "Groceries", "Dining", "Drugstores", "All Purchases"]
+  },
+  {
+    "_id": { "$oid": "674017b63357e4c0867f0498" },
+    "creditCardName": "Bank of America® Customized Cash Rewards",
+    "bankName": "Bank of America",
+    "abbreviation": "BoFA",
+    "benefits": ["Cashback", "Custom Categories"],
+    "bonuses": [
+      {
+        "type": "cashback",
+        "value": 3,
+        "unit": "%",
+        "categories": ["Category of Choice"],
+        "details": "Earn 3% cashback in the category of your choice, such as gas, online shopping, dining, travel, drugstores, or home improvement."
+      },
+      {
+        "type": "cashback",
+        "value": 2,
+        "unit": "%",
+        "categories": ["Grocery Stores", "Wholesale Clubs"],
+        "details": "Earn 2% cashback at grocery stores and wholesale clubs on the first $2,500 in combined choice category/grocery store/wholesale club purchases each quarter."
+      },
+      {
+        "type": "cashback",
+        "value": 1,
+        "unit": "%",
+        "categories": ["All Purchases"],
+        "details": "Earn 1% cashback on all other purchases."
+      }
+    ],
+    "fees": {
+      "annualFee": "$0",
+      "foreignTransactionFee": "3%",
+      "balanceTransferFee": "$10 or 3% of the amount of each transfer, whichever is greater."
+    },
+    "imageUrl": "https://www.bankofamerica.com/content/images/credit-cards/Bank-of-America-Customized-Cash-Rewards-Credit-Card.png",
+    "category": ["Gas", "Online Shopping", "Dining", "Travel", "Drugstores", "Groceries"]
+  },
+  {
+    "_id": { "$oid": "674017b63357e4c0867f0499" },
+    "creditCardName": "Discover it® Cash Back",
+    "bankName": "Discover",
+    "abbreviation": "Discover",
+    "benefits": ["Cashback", "Rotating Categories"],
+    "bonuses": [
+      {
+        "type": "cashback",
+        "value": 5,
+        "unit": "%",
+        "categories": ["Rotating Categories"],
+        "details": "Earn 5% cashback on everyday purchases at different places each quarter, up to the quarterly maximum when you activate."
+      },
+      {
+        "type": "cashback",
+        "value": 1,
+        "unit": "%",
+        "categories": ["All Purchases"],
+        "details": "Earn 1% cashback on all other purchases."
+      }
+    ],
+    "fees": {
+      "annualFee": "$0",
+      "foreignTransactionFee": "None",
+      "balanceTransferFee": "$5 or 3% of the amount of each transfer, whichever is greater."
+    },
+    "imageUrl": "https://www.discover.com/content/dam/credit-cards/cash-back-credit-card-discover-it.png",
+    "category": ["Groceries", "Dining", "Gas", "Online Shopping", "All Purchases"]
+  },
+  {
+    "_id": { "$oid": "674017b63357e4c0867f049a" },
+    "creditCardName": "Citi Double Cash Card",
+    "bankName": "Citi Bank",
+    "abbreviation": "Citi",
+    "benefits": ["Cashback"],
+    "bonuses": [
+      {
+        "type": "cashback",
+        "value": 2,
+        "unit": "%",
+        "categories": ["All Purchases"],
+        "details": "Earn 2% cashback on all purchases: 1% when you buy and 1% as you pay."
+      }
+    ],
+    "fees": {
+      "annualFee": "$0",
+      "foreignTransactionFee": "3%",
+      "balanceTransferFee": "$5 or 3% of the amount of each transfer, whichever is greater."
+    },
+    "imageUrl": "https://www.citi.com/content/dam/citi/credit-cards/citi-double-cash-credit-card.png",
+    "category": ["All Purchases"]
+  },
+  {
+    "_id": { "$oid": "674017b63357e4c0867f049b" },
+    "creditCardName": "Blue Cash Preferred® Card",
+    "bankName": "American Express",
+    "abbreviation": "Amex",
+    "benefits": ["Cashback", "Grocery Rewards"],
+    "bonuses": [
+      {
+        "type": "cashback",
+        "value": 6,
+        "unit": "%",
+        "categories": ["U.S. Supermarkets"],
+        "details": "Earn 6% cashback on up to $6,000 per year in purchases at U.S. supermarkets, then 1%."
+      },
+      {
+        "type": "cashback",
+        "value": 6,
+        "unit": "%",
+        "categories": ["Streaming Services"],
+        "details": "Earn 6% cashback on select U.S. streaming subscriptions."
+      },
+      {
+        "type": "cashback",
+        "value": 3,
+        "unit": "%",
+        "categories": ["Gas Stations"],
+        "details": "Earn 3% cashback at U.S. gas stations."
+      }
+    ],
+    "fees": {
+      "annualFee": "$95",
+      "foreignTransactionFee": "2.7%",
+      "balanceTransferFee": "$5 or 3% of the amount of each transfer, whichever is greater."
+    },
+    "imageUrl": "https://www.americanexpress.com/content/dam/amex/credit-cards/blue-cash-preferred-card.png",
+    "category": ["Groceries", "Streaming Services", "Gas"]
+  },
+  {
+    "_id": { "$oid": "674017b63357e4c0867f049c" },
+    "creditCardName": "Chase Sapphire Preferred® Card",
+    "bankName": "JPMorgan Chase",
+    "abbreviation": "Chase",
+    "benefits": ["Travel Rewards", "Dining Rewards"],
+    "bonuses": [
+      {
+        "type": "points",
+        "value": 5,
+        "unit": "x",
+        "categories": ["Travel Purchases"],
+        "details": "Earn 5x points on travel purchased through Chase Ultimate Rewards."
+      },
+      {
+        "type": "points",
+        "value": 2,
+        "unit": "x",
+        "categories": ["Dining", "Travel"],
+        "details": "Earn 2x points on dining at restaurants and other travel purchases."
+      }
+    ],
+    "fees": {
+      "annualFee": "$95",
+      "foreignTransactionFee": "None",
+      "balanceTransferFee": "$5 or 5% of the amount of each transfer, whichever is greater."
+    },
+    "imageUrl": "https://creditcards.chase.com/content/dam/jpmc-marketplace/card-art/sapphire_preferred_card.png",
+    "category": ["Travel", "Dining"]
+  },
+  {
+    "_id": { "$oid": "674017b63357e4c0867f049d" },
+    "creditCardName": "Bank of America® Travel Rewards Credit Card",
+    "bankName": "Bank of America",
+    "abbreviation": "BoFA",
+    "benefits": ["Travel Rewards", "No Annual Fee"],
+    "bonuses": [
+      {
+        "type": "points",
+        "value": 1.5,
+        "unit": "x",
+        "categories": ["All Purchases"],
+        "details": "Earn unlimited 1.5x points for every dollar spent on all purchases."
+      }
+    ],
+    "fees": {
+      "annualFee": "$0",
+      "foreignTransactionFee": "None",
+      "balanceTransferFee": "$10 or 3% of the amount of each transfer, whichever is greater."
+    },
+    "imageUrl": "https://www.bankofamerica.com/content/images/credit-cards/Bank-of-America-Travel-Rewards-Credit-Card.png",
+    "category": ["Travel", "All Purchases"]
+  },
+  {
+    "_id": { "$oid": "674017b63357e4c0867f049e" },
+    "creditCardName": "Discover it® Student Cash Back",
+    "bankName": "Discover",
+    "abbreviation": "Discover",
+    "benefits": ["Cashback", "Student Perks"],
+    "bonuses": [
+      {
+        "type": "cashback",
+        "value": 5,
+        "unit": "%",
+        "categories": ["Rotating Categories"],
+        "details": "Earn 5% cashback on everyday purchases at different places each quarter, up to the quarterly maximum when you activate."
+      },
+      {
+        "type": "cashback",
+        "value": 1,
+        "unit": "%",
+        "categories": ["All Purchases"],
+        "details": "Earn 1% cashback on all other purchases."
+      }
+    ],
+    "fees": {
+      "annualFee": "$0",
+      "foreignTransactionFee": "None",
+      "balanceTransferFee": "$5 or 3% of the amount of each transfer, whichever is greater."
+    },
+    "imageUrl": "https://www.discover.com/content/dam/credit-cards/student-credit-card-discover-it-cashback.png",
+    "category": ["Groceries", "Dining", "Gas", "Online Shopping", "All Purchases"]
+  },
+  {
+    "_id": { "$oid": "674017b63357e4c0867f049f" },
+    "creditCardName": "Citi Rewards+® Card",
+    "bankName": "Citi Bank",
+    "abbreviation": "Citi",
+    "benefits": ["Points Rewards", "Rounded Up Points"],
+    "bonuses": [
+      {
+        "type": "points",
+        "value": 10,
+        "unit": "%",
+        "categories": ["Redeemed Points"],
+        "details": "Receive 10% points back on your first 100,000 redeemed points each year."
+      },
+      {
+        "type": "points",
+        "value": 2,
+        "unit": "x",
+        "categories": ["Supermarkets", "Gas Stations"],
+        "details": "Earn 2x points at supermarkets and gas stations for the first $6,000 per year."
+      },
+      {
+        "type": "points",
+        "value": 1,
+        "unit": "x",
+        "categories": ["All Purchases"],
+        "details": "Earn 1x points on all other purchases."
+      }
+    ],
+    "fees": {
+      "annualFee": "$0",
+      "foreignTransactionFee": "3%",
+      "balanceTransferFee": "$5 or 3% of the amount of each transfer, whichever is greater."
+    },
+    "imageUrl": "https://www.citi.com/content/dam/citi/credit-cards/Citi-Rewards-Plus-Credit-Card.png",
+    "category": ["Supermarkets", "Gas", "Redeemed Points", "All Purchases"]
+  },
+  {
+    "_id": { "$oid": "674017b63357e4c0867f04a0" },
+    "creditCardName": "American Express® Gold Card",
+    "bankName": "American Express",
+    "abbreviation": "Amex",
+    "benefits": ["Dining Rewards", "Travel Rewards"],
+    "bonuses": [
+      {
+        "type": "points",
+        "value": 4,
+        "unit": "x",
+        "categories": ["Dining", "U.S. Supermarkets"],
+        "details": "Earn 4x points at restaurants, including takeout and delivery, and on up to $25,000 per year at U.S. supermarkets."
+      },
+      {
+        "type": "points",
+        "value": 3,
+        "unit": "x",
+        "categories": ["Flights"],
+        "details": "Earn 3x points on flights booked directly with airlines or on amextravel.com."
+      }
+    ],
+    "fees": {
+      "annualFee": "$250",
+      "foreignTransactionFee": "None",
+      "balanceTransferFee": "Not applicable."
+    },
+    "imageUrl": "https://www.americanexpress.com/content/dam/amex/credit-cards/american-express-gold-card.png",
+    "category": ["Dining", "Travel", "Supermarkets", "Flights"]
+  }
+]
