@@ -112,6 +112,7 @@ router.delete("/:userId/:categoryId", async (req, res) => {
 router.get("/:userId/cards", async (req, res) => {
   const { userId } = req.params;
 
+  console.log("userId", userId);
   try {
     const usersCards = await User.findOne({
       googleId: userId,
