@@ -29,6 +29,7 @@ const CardItem = ({
   noEdit,
   allowEdit,
   selectedCard,
+  handleAddNewCard,
 }) => {
   if (favorites) {
     //pass teh fvaorite card
@@ -55,7 +56,7 @@ const CardItem = ({
                     categoryName: selectedCard.categoryName,
                     categoryId: selectedCard.categoryId,
                   })
-              : null
+              : () => handleAddNewCard(card._id, selectedCard)
           }
         >
           {!favoritesModal && (

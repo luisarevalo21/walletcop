@@ -4,7 +4,7 @@ import FavoritesItem from "../components/Favorites/FavoritesItem";
 import FavoritesModal from "../components/Favorites/FavoritesModal";
 import FavoritesAddCardModal from "../components/Favorites/FavoritesAddCardModal";
 import { useAxiosWithAuth } from "../api/useAxiosWithAuth";
-import { useAuth, useUser } from "@clerk/clerk-react";
+import { useUser } from "@clerk/clerk-react";
 
 const FavoritesPage = () => {
   const { user } = useUser();
@@ -50,7 +50,6 @@ const FavoritesPage = () => {
     setUsersFavorites(cards.data);
     setUsersCategories(categories);
     setLoading(false);
-    // return cards;
   };
   const handleEditCard = async cardDetails => {
     const response = await api.put(`/user/${user.id}/favorites`, cardDetails);
@@ -110,6 +109,7 @@ const FavoritesPage = () => {
     setShowAddNewCard(true);
   };
   const handleAddNewCard = async (cardId, selectedCategory) => {
+    console.log("add new card clicked");
     const response = await api.post(`/user/${user.id}/favorites`, {
       cardId: cardId,
       categoryName: selectedCategory.categoryName,
@@ -184,16 +184,3 @@ const FavoritesPage = () => {
 };
 
 export default FavoritesPage;
-
-// <Stack>
-//   <Typography variant="h3">Restaurant</Typography>
-//   {/* <CardItem></CardItem> */}
-// </Stack>
-// <Stack>
-//   <Typography variant="h3">Online Purchases</Typography>
-//   {/* <CardItem></CardItem> */}
-// </Stack>
-// <Stack>
-//   <Typography variant="h3">Gas</Typography>
-//   {/* <CardItem></CardItem> */}
-// </Stack>

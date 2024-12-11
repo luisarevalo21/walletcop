@@ -103,11 +103,9 @@ const FavoritesModal = ({
               </Select>
             </FormControl>
 
-            {/* <Box display={"flex"} justifyContent={"center"} mt={2}> */}
             <Button variant="contained" type="submit">
               Submit
             </Button>
-            {/* </Box> */}
           </Box>
         </form>
       </Modal>
@@ -179,22 +177,3 @@ const FavoritesModal = ({
 };
 
 export default FavoritesModal;
-
-{
-  /* <Typography variant="h6">Tap a Different Card Below to Change Favorite Card</Typography> */
-}
-
-{
-  /* <CardItem card={usersCards} handleNewFavorite={handleNewFavorite} /> */
-}
-{
-  /* <Typography id="modal-title" variant="h6" component="h2">
-  {card.creditCardName}
-</Typography>
-<Typography id="modal-description" sx={{ mt: 2 }}>
-  Bank: {card.bank}
-</Typography>
-<Button onClick={handleClose} variant="contained" sx={{ mt: 2 }}>
-  Close
-</Button> */
-}

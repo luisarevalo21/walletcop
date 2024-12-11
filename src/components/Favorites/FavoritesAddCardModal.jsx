@@ -77,7 +77,7 @@ const FavoritesAddCardModal = ({
                 card={card}
                 favorites={true}
                 key={card._id}
-                handleClick={() => handleAddNewCard(card._id, selectedCategory)}
+                handleAddNewCard={() => handleAddNewCard(card._id, selectedCategory)}
                 favoritesModal={true}
               />
             );
@@ -92,15 +92,3 @@ const FavoritesAddCardModal = ({
 };
 
 export default FavoritesAddCardModal;
-
-// <Modal
-//   open={showAddNewCard}
-//   onClose={handleClose}
-//   style={style}
-//   sx={{ "& .MuiBackdrop-root": { backgroundColor: "transparent" } }}
-// >
-//   <Typography variant="h4">Add a new card</Typography>
-//   {/* <Box>
-//     <Typography variant="h6">Card Name</Typography>
-//   </Box> */}
-// </Modal>

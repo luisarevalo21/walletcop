@@ -81,7 +81,6 @@ router.post("/:userId/:newCategory", async (req, res) => {
     }
 
     const { favorites } = updatedUser;
-    console.log("favorites", favorites);
     return res.status(200).json(favorites);
   } catch (err) {
     console.log(err);
@@ -249,7 +248,6 @@ router.delete("/:userId/card/:creditCardId", async (req, res) => {
 router.put(`/:userId/favorites`, async (req, res) => {
   const { userId } = req.params;
   const { creditCardId, categoryName, categoryId } = req.body;
-  console.log("categoryId", categoryId);
   if (!userId || !creditCardId || !categoryName || !categoryId) {
     return res.status(400).json({ message: "no user or card or category" });
   }
@@ -277,8 +275,6 @@ router.put(`/:userId/favorites`, async (req, res) => {
   } catch (err) {
     console.log(err);
   }
-
-  // console.log("cardDetails", categoryId);
 });
 
 module.exports = router;

@@ -38,7 +38,6 @@ const FavoritesItem = ({
         </Typography>
       </Box>
 
-      {/* <Box display="flex" alignItems={"center"} mt={2}> */}
       {favorite.creditCardId ? (
         <CardItem
           favorites={true}
@@ -60,22 +59,7 @@ const FavoritesItem = ({
         >
           Add Card
         </Button>
-        // <Box>
-        //   <Typography variant="h5" textAlign={"left"} mt={2}>
-        //     No card added
-        //   </Typography>
-        // </Box>
-        // <CardItem
-        // // handleEdit={handleEdit}
-        // // categoryName={favorite.categoryName}
-        // // card={favorite.creditCardId}
-        // />
       )}
-      {/* </Box> */}
-
-      {/* <Box>{favorite.category}</Box> */}
-      {/* <CardItem edit={true} handleEdit={handleEdit} categoryName={favorite.categoryName} /> */}
-      {/* <CardItem edit={true} card={card} handleEdit={handleEdit} categoryName={categoryName} /> */}
     </Box>
   );
 };
