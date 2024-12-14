@@ -22,27 +22,14 @@ const Category = ({ handleClick }) => {
     };
     fetchCategories();
   }, []);
-  //reset category state when going back here from card
   const [category, setCategory] = useState("");
-  const [categories, setCategories] = useState([
-    // { category: "groceries", id: 1 },
-    // { category: "gas", id: 2 },
-    // { category: "online", id: 3 },
-    // { category: "dining", id: 4 },
-  ]);
+  const [categories, setCategories] = useState([]);
   const [isLoadingCategories, setIsLoadingCategories] = useState(false);
   const [isLoadingUsersCards, setIsLoadingUsersCards] = useState(false);
-  const [usersCards, setUsersCards] = useState([
-    // { creditCardName: "Chase Sapphire Preferred", bank: "JPMorgan Chase", id: 1 },
-    // { creditCardName: "American Express Platinum", bank: "American Express", id: 2 },
-    // { creditCardName: "Citi Double Cash Card", bank: "Citibank", id: 3 },
-    // { creditCardName: "Bank of America Cash Rewards", bank: "Bank of America", id: 4 },
-  ]);
+  const [usersCards, setUsersCards] = useState([]);
 
   const fetchUsersCategory = async category => {
-    console.log("fetching users category");
     const res = await api.get(`/user/${user.id}/cards/${category}`);
-    console.log("users cards", res.data);
     setUsersCards(res.data);
   };
   const handleChange = event => {
@@ -84,26 +71,6 @@ const Category = ({ handleClick }) => {
               </MenuItem>
             );
           })}
-          {/* <MenuItem value={"groceries"}>Groceries</MenuItem>
-          <MenuItem value={"gas"}>Gas</MenuItem>
-          <MenuItem value={"online"}>Online</MenuItem>
-          <MenuItem value={"dining"}>Dining</MenuItem> */}
-
-          {/* {categories.map(category => {
-            return <CategoryItem key={category.id} value={category.value} label={category.value} />;
-          })} */}
-          {/* <CategoryItem value={"beer"} label="beer"></CategoryItem> */}
-          {/* <MenuItem value={"soda"}>soda </MenuItem> */}
-          {/* <MenuItem value={10}>Groceries</MenuItem>
-          {/* <Box display={"flex"} flexWrap={"wrap"} justifyContent={"center"} alignItems={"center"}> */}
-          {/* {categories.map(category => {
-            // console.log("category", category);
-            return <CategoryItem key={category.id} value={category.value} label={category.value} />;
-          })} */}
-
-          {/* </Box> */}
-          {/* <MenuItem value={20}>Gas</MenuItem>
-          <MenuItem value={30}>Online</MenuItem> */}
         </Select>
       </FormControl>
 

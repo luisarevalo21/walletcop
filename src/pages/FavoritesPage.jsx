@@ -87,7 +87,6 @@ const FavoritesPage = () => {
 
   const handleToggleEditModal = card => {
     setOpen(true);
-    console.log("card", card);
     setUsersCards(prev => prev.filter(prevCard => prevCard._id !== card.creditCardId));
     setSelectedCard(card);
   };
@@ -109,7 +108,6 @@ const FavoritesPage = () => {
     setShowAddNewCard(true);
   };
   const handleAddNewCard = async (cardId, selectedCategory) => {
-    console.log("add new card clicked");
     const response = await api.post(`/user/${user.id}/favorites`, {
       cardId: cardId,
       categoryName: selectedCategory.categoryName,
