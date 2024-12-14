@@ -17,13 +17,10 @@ const Dashboard = () => {
   }, []);
 
   const handleClick = id => {
-    console.log("clicked", id);
     navigate(`/card/${id}`, { state: { id } });
   };
 
-  const handleDelete = id => {
-    console.log("delete", id);
-  };
+  const handleDelete = id => {};
 
   return (
     <Box>

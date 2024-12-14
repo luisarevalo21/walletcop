@@ -14,10 +14,6 @@ import { SignedIn, SignedOut, SignOutButton, SignInButton, useUser } from "@cler
 const Sidebar = ({ open, setOpen }) => {
   const { isSignedIn, user, isLoaded } = useUser();
 
-  // console.log("user", user);
-  // //   if (!open) {
-  // //     return <></>;
-  // //   }
   return (
     <Box
       display={"flex"}
