@@ -4,10 +4,10 @@ import { useAuth } from "@clerk/clerk-react"; // Adjust this path as needed
 // Create a custom hook for an Axios instance with Clerk authentication
 export const useAxiosWithAuth = () => {
   const { getToken } = useAuth();
-  console.log("REACT_APP_API_BASE_URL", import.meta.env.REACT_APP_API_BASE_URL);
+  console.log("REACT_APP_API_BASE_URL", import.meta.env.VITE_API_BASE_URL);
 
   const api = axios.create({
-    baseURL: import.meta.env.REACT_APP_API_BASE_URL || "http://localhost:3000",
+    baseURL: import.meta.env.VITE_API_BASE_URL || "http://localhost:3000",
   });
 
   //may cause overhead as get token is called everytime
