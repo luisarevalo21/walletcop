@@ -25,3 +25,7 @@ dist-ssr
 
 .env.local
 .package-lock.json
+../backend/*
+backend/
+
+./walletcop-backend

@@ -147,7 +147,20 @@ const Sidebar = ({ open, setOpen }) => {
             sx={{ textDecoration: "none", color: "black" }}
           >
             <LoginIcon sx={{ mr: "4px" }} />
-            <SignInButton>Login/Sign Up</SignInButton>
+            Login
+            {/* <SignInButton>Login/Sign Up</SignInButton> */}
+          </Link>
+          <Link
+            href="/signup"
+            textAlign={"center"}
+            display={"flex"}
+            alignItems={"center"}
+            fontSize={"1.2rem"}
+            sx={{ textDecoration: "none", color: "black" }}
+          >
+            <LoginIcon sx={{ mr: "4px" }} />
+            Signup
+            {/* <SignInButton>Login/Sign Up</SignInButton> */}
           </Link>
         </SignedOut>
       </Stack>

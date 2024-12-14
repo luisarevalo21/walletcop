@@ -1,22 +1,20 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Box, Typography } from "@mui/material";
-import { SignedIn, SignedOut, SignIn, SignInButton, SignOutButton, UserButton } from "@clerk/clerk-react";
+import { SignedIn, SignedOut, SignUp, useUser } from "@clerk/clerk-react";
+import { useNavigate } from "react-router-dom";
 
 const SignUpPage = () => {
+  const { isSignedIn } = useUser();
+
+  const navigate = useNavigate();
+  useEffect(() => {
+    if (isSignedIn) {
+      navigate("/dashboard");
+    }
+  }, []);
   return (
     <Box display={"flex"} justifyContent={"center"} alignItems={"center"} margin={"0 auto"} flexDirection={"column"}>
-      <Typography variant={"h3"} mb={3}>
-        Sign Up
-      </Typography>
-      <>
-        <SignedOut>
-          <SignIn />
-        </SignedOut>
-
-        <SignedIn>
-          <SignOutButton />
-        </SignedIn>
-      </>
+      <SignUp path="/signup" signUpForceRedirectUrl="/dashboard" fallbackRedirectUrl="/dashboard" />
     </Box>
   );
 };

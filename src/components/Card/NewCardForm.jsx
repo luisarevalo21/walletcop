@@ -1,54 +1,58 @@
-import React, { useState } from "react";
-import {
-  Modal,
-  FormControl,
-  Box,
-  Typography,
-  InputLabel,
-  Input,
-  TextField,
-  MenuItem,
-  Stack,
-  Button,
-} from "@mui/material";
+import React, { useState, useEffect } from "react";
+import { Modal, FormControl, Typography, TextField, MenuItem, Stack, Button } from "@mui/material";
+import { useAxiosWithAuth } from "../../api/useAxiosWithAuth";
+import "../../index.css";
 const NewCardForm = ({ open, handleClose, handleNewCard }) => {
-  // const [bank, setBank] = useState("");
-  // const [creditCard, setCreditCard] = useState("");
-
   const [form, setForm] = useState({
-    bank: "",
+    bankName: "",
+    bankId: "",
     creditCardName: "",
+    creditCardId: "",
     name: "",
-    id: Math.floor(Math.random() * 1000),
+    // id: Math.floor(Math.random() * 1000),
   });
+  const [bankOptions, setBankOptions] = useState([]);
+  const [creditCardOptions, setCreditCardOptions] = useState([]);
 
-  const bankOptions = [
-    { label: "Chase", key: "Chase", option: "Chase" },
-    { label: "Bank of America", key: "Bank of America", option: "Bank of America" },
-    // { label: "Wells Fargo", key: "wellsfargo", option: "Wells Fargo" },
-    // { label: "Citibank", key: "citibank", option: "Citibank" },
-    // { label: "HSBC", key: "hsbc", option: "HSBC" },
-  ];
+  const api = useAxiosWithAuth();
+  useEffect(() => {
+    fetchBanks();
+  }, []);
 
-  const creditCardOptions = {
-    Chase: {
-      cards: [{ label: "Chase Sapphire Preferred", key: "chase_sapphire", option: "Chase Sapphire Preferred" }],
-    },
+  useEffect(() => {
+    fetchCreditCardOptions();
+  }, [form.bankName]);
 
-    ["Bank of America"]: {
-      cards: [
-        { label: "Bank of America Cash Rewards", key: "boa_cash_rewards", option: "Bank of America Cash Rewards" },
-        {
-          label: "Bank of America Travel Rewards",
-          key: "boa_travel_rewards",
-          option: "Bank of America Travel Rewards",
-        },
-      ],
-    },
+  const fetchBanks = async () => {
+    const res = await api.get("/banks");
+
+    const options = res.data.map(bank => {
+      return {
+        label: bank.bankName,
+        key: bank._id,
+        option: bank.abbreviation,
+      };
+    });
+
+    setBankOptions(options);
   };
-  // { label: "Chase Sapphire Preferred", key: "chase_sapphire", option: "Chase Sapphire Preferred" },
-  // { label: "American Express Platinum", key: "amex_platinum", option: "American Express Platinum" },
-  // { label: "Citi Double Cash Card", key: "citi_double_cash", option: "Citi Double Cash Card" },
+
+  const fetchCreditCardOptions = async () => {
+    if (form.bankName) {
+      const bankName = form.bankName.label;
+      const res = await api.get(`/banks/${bankName}`);
+
+      const filteredCards = res.data.map(card => {
+        return {
+          creditCardName: card.creditCardName,
+          key: card._id,
+          bankName: card.bankName,
+          abbreviation: card.abbreviation,
+        };
+      });
+      setCreditCardOptions(filteredCards);
+    }
+  };
 
   const style = {
     position: "absolute",
@@ -68,43 +72,29 @@ const NewCardForm = ({ open, handleClose, handleNewCard }) => {
   const handleSubmit = e => {
     e.preventDefault();
 
-    if (form.bank === "" || form.creditCard === "") {
-      return;
+    if (form.bankName || form.creditCardName) {
+      handleNewCard(form);
+      // api.post(`/user/${userId}`, form);
+      // return;
     }
 
-    handleNewCard(form);
+    setForm({
+      bankName: "",
+      bankId: "",
+      creditCardName: "",
+      creditCardId: "",
+      name: "",
+    });
     handleClose();
   };
   const handleChange = e => {
-    // console.log("e,taterge", e.target)
-    setForm({ ...form, [e.target.name]: e.target.value });
-    // if (e.target.name === "creditCard") {
-    //   setForm({ ...form, [e.target.name]: e.target.value, name: e.target.value });
-    //   return;
-    // }
-    // setForm({ ...form, [e.target.name]: e.target.value });
-    // handleClose(true);
+    if (e.target.name === "bankName") {
+      setForm({ ...form, bankName: e.target.value, bankId: e.target.value.key });
+    } else if (e.target.name === "creditCardName") {
+      setForm({ ...form, creditCardName: e.target.value, creditCardId: e.target.value.key });
+    }
   };
-  // console.log(creditCardOptions[form.bank]);
 
-  let creditCardMenuItems = null;
-  if (form.bank !== "") {
-    creditCardMenuItems = creditCardOptions[form.bank].cards.map(card => (
-      <MenuItem key={card.key} value={card.label}>
-        {card.option}
-      </MenuItem>
-    ));
-  }
-  // const creditCardMenuItems =
-  //   form.bank !== ""
-  //     ?  creditCardOptions[form.bank].map(option => {
-  //         return option.cards.map(card => (
-  //           <MenuItem key={card.key} value={card.key}>
-  //             {card.option}
-  //           </MenuItem>
-  //         ));
-  //       })
-  //     : null;
   return (
     <Modal
       open={open}
@@ -112,7 +102,7 @@ const NewCardForm = ({ open, handleClose, handleNewCard }) => {
       style={style}
       sx={{ "& .MuiBackdrop-root": { backgroundColor: "transparent" } }}
     >
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit} className="form">
         <Stack display={"flex"} width={"95%"} p={2} m={2} justifyContent={"space-around"} height={"300px"}>
           <Button onClick={handleClose} sx={{ position: "absolute", right: 0, top: "0", fontSize: "2rem" }}>
             X
@@ -125,13 +115,13 @@ const NewCardForm = ({ open, handleClose, handleNewCard }) => {
               select
               label="Select your bank"
               defaultValue="Select Bank"
-              name="bank"
-              value={form.bank}
+              name="bankName"
+              value={form.bankName}
               onChange={handleChange}
             >
               {bankOptions.map(option => (
-                <MenuItem key={option.key} value={option.key}>
-                  {option.option}
+                <MenuItem key={option.key} value={option}>
+                  {option.label} ({option.option})
                 </MenuItem>
               ))}
             </TextField>
@@ -144,12 +134,27 @@ const NewCardForm = ({ open, handleClose, handleNewCard }) => {
               onChange={handleChange}
               value={form.creditCardName}
               name="creditCardName"
-              disabled={form.bank !== "" ? false : true}
+              disabled={form.bankName.label !== "" ? false : true}
+              sx={{ width: "100%" }}
             >
-              {form.bank === "" ? <MenuItem value="Select Card" /> : creditCardMenuItems}
+              {form.bankName.label === "" ? (
+                <MenuItem value="Select Card" />
+              ) : (
+                creditCardOptions.map(card => {
+                  return (
+                    <MenuItem key={card.key} value={card}>
+                      {card.creditCardName} ({card.abbreviation})
+                    </MenuItem>
+                  );
+                })
+              )}
             </TextField>
           </FormControl>
-          <Button variant="contained" type="submit">
+          <Button
+            variant="contained"
+            type="submit"
+            disabled={form.bankName.label === "" || form.creditCardName === "" ? true : false}
+          >
             Submit
           </Button>
         </Stack>
