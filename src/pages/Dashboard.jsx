@@ -17,6 +17,7 @@ const Dashboard = () => {
   }, []);
 
   const handleClick = id => {
+    console.log(id);
     navigate(`/card/${id}`, { state: { id } });
   };
 

@@ -3,6 +3,8 @@ import { Box, Typography, Modal, Stack, Button } from "@mui/material";
 import { useAxiosWithAuth } from "../../api/useAxiosWithAuth";
 import { useUser } from "@clerk/clerk-react";
 import CardItem from "../Card/CardItem";
+import CloseIcon from "@mui/icons-material/Close";
+
 const FavoritesAddCardModal = ({
   showAddNewCard,
   handleClose,
@@ -27,18 +29,16 @@ const FavoritesAddCardModal = ({
 
   const style = {
     position: "absolute",
-    top: "50%",
-    height: "80vh",
-    left: "50%",
-    transform: "translate(-50%, -50%)",
     width: "95%",
+
     backgroundColor: "white",
     border: "2px solid #000",
     boxShadow: 24,
+    margin: "0 auto",
 
-    display: "flex",
-    textAlign: "center",
-    justifyContent: "center",
+    // display: "flex",
+    // textAlign: "center",
+    // justifyContent: "center",
   };
 
   return (
@@ -50,11 +50,24 @@ const FavoritesAddCardModal = ({
     >
       <Box
         sx={{
-          overflow: "scroll",
+          display: "flex",
+          textAlign: "center",
+          justifyContent: "center",
+          "flex-direction": "column",
+          overflow: "auto",
+          height: "100%",
         }}
       >
         <Button onClick={handleClose} position={"absolute"} right="0">
-          X
+          <CloseIcon
+            sx={{
+              color: "red",
+              borderRadius: "50%",
+              backgroundColor: "black",
+              fontWeight: "bold",
+            }}
+            style={{ fill: "white" }}
+          />
         </Button>
         <Stack spacing={1} mt={2}>
           <Typography variant="h4" sx={{ fontSize: "20px" }}>

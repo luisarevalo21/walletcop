@@ -30,6 +30,7 @@ const CardItem = ({
   allowEdit,
   selectedCard,
   handleAddNewCard,
+  categoryPage,
 }) => {
   if (favorites) {
     //pass teh fvaorite card
@@ -129,48 +130,27 @@ const CardItem = ({
           </AccordionDetails>
         </Accordion>
       </Box>
-      // <Box display={"flex"} alignItems={"center"} justifyContent={"center"} p={1.5} flexDirection={"column"}>
-      //   <Box display={"flex"} mb={1} justifyContent={"center"} alignItems={"center"}>
-      //     <Box boxShadow={""} borderRadius={"5px"} width={"300px"} p={1.5}>
-      //       <img src={card.imageUrl} alt="card" width={"100%"} />
-      //     </Box>
-      //     <Box
-      //       width={"100%"}
-      //       display={"flex"}
-      //       flexDirection={"column"}
-      //       textAlign={"left"}
-      //       // alignItems={"center"}
-
-      //       justifyContent={"center"}
-      //     >
-      //       <Typography variant={"p"}>{card.bankName}</Typography>
-      //       <Typography variant={"p"}>{card.creditCardName}</Typography>
-      //     </Box>
-      //   </Box>
-      //   <Accordion>
-      //     <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-      //       <Typography>Bonuses</Typography>
-      //     </AccordionSummary>
-      //     <AccordionDetails>
-      //       <Table>
-      //         <TableBody>
-      //           {card?.bonuses?.map(bonus => (
-      //             <TableRow key={bonus._id}>
-      //               <TableCell>{bonus.type}</TableCell>
-      //               <TableCell>{bonus.details}</TableCell>
-      //             </TableRow>
-      //           ))}
-      //         </TableBody>
-      //       </Table>
-      //     </AccordionDetails>
-      //   </Accordion>
-      // </Box>
     );
   }
 
   return (
     <Box borderRadius={"3px"} mt={"1em"} maxWidth={"100%"} border={"1px solid black"} position={"relative"} p={2}>
-      <Button
+      {!categoryPage && (
+        <Button
+          sx={{
+            position: "absolute",
+            top: "0",
+            left: "0",
+            padding: "0",
+            margin: "0",
+            minWidth: 0,
+          }}
+          onClick={() => handleDelete(card._id)}
+        >
+          <DeleteForeverOutlinedIcon style={{ fill: "#EB5757" }} />
+        </Button>
+      )}
+      {/* <Button
         sx={{
           position: "absolute",
           top: "0",
@@ -182,7 +162,7 @@ const CardItem = ({
         onClick={() => handleDelete(card._id)}
       >
         <DeleteForeverOutlinedIcon style={{ fill: "#EB5757" }} />
-      </Button>
+      </Button> */}
       <Box p={2} display={"flex"} alignItems={"center"} justifyContent={"flex-start"}>
         <Box mr={2} maxWidth={"120px"}>
           <img src={card.imageUrl} alt="card" width={"100%"} />
@@ -213,7 +193,7 @@ const CardItem = ({
         </AccordionDetails>
       </Accordion>
 
-      {edit ? (
+      {/* {edit ? (
         <Button
           sx={{
             position: "absolute",
@@ -234,25 +214,24 @@ const CardItem = ({
           }}
         >
           <EditIcon sx={{ backgroundColor: "#85BDAC", color: "black", borderRadius: "50%" }} />
-        </Button>
-      ) : (
-        <Button
-          sx={{
-            position: "absolute",
-            right: "0",
-            margin: "0",
-            padding: "0",
-            top: "0",
-            display: "flex",
-            justifyContent: "flex-end",
-          }}
-          onClick={() => {
-            handleClick(card.id);
-          }}
-        >
-          <NavigateNextIcon sx={{ backgroundColor: "#85BDAC", color: "black", borderRadius: "50%" }} />
-        </Button>
-      )}
+        </Button> 
+      ) : ( */}
+      <Button
+        sx={{
+          position: "absolute",
+          right: "0",
+          margin: "0",
+          padding: "0",
+          top: "0",
+          display: "flex",
+          justifyContent: "flex-end",
+        }}
+        onClick={() => {
+          handleClick(card._id);
+        }}
+      >
+        <NavigateNextIcon sx={{ backgroundColor: "#85BDAC", color: "black", borderRadius: "50%" }} />
+      </Button>
     </Box>
   );
 };

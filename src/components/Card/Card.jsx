@@ -28,7 +28,13 @@ const Card = ({ category, handleClick, handleDelete, cards, categoryPage }) => {
   }
   if (cards.length > 0) {
     cardsEl = cards.map(card => (
-      <CardItem key={card._id ? card._id : card.id} card={card} handleClick={handleClick} handleDelete={handleDelete} />
+      <CardItem
+        key={card._id ? card._id : card.id}
+        card={card}
+        handleClick={handleClick}
+        handleDelete={handleDelete}
+        categoryPage={categoryPage}
+      />
     ));
   }
   return (
