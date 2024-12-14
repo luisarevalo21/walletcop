@@ -6,7 +6,7 @@ export const useAxiosWithAuth = () => {
   const { getToken } = useAuth();
 
   const api = axios.create({
-    baseURL: process.env.REACT_APP_API_BASE_URL || "http://localhost:3000",
+    baseURL: import.meta.env.REACT_APP_API_BASE_URL || "http://localhost:3000",
   });
 
   //may cause overhead as get token is called everytime
