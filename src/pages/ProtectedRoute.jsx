@@ -15,6 +15,7 @@ const ProtectedRoute = () => {
 
   if (!isLoaded) {
     return "Loading...";
+
   }
   return <Outlet />;
 };
