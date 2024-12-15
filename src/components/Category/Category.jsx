@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Box, Typography, FormControl, Select, InputLabel, MenuItem } from "@mui/material";
+import { Box, Typography, FormControl, Select, InputLabel, MenuItem, Stack } from "@mui/material";
 import CategoryItem from "./CategoryItem";
 import Card from "../Card/Card";
 import { useAxiosWithAuth } from "../../api/useAxiosWithAuth";
@@ -50,7 +50,7 @@ const Category = ({ handleClick }) => {
   }
 
   return (
-    <>
+    <Stack display={"flex"} width={"95%"} p={2} height={"300px"}>
       <FormControl
         fullWidth
         sx={{
@@ -63,7 +63,7 @@ const Category = ({ handleClick }) => {
         }}
       >
         <InputLabel>Category</InputLabel>
-        <Select value={category} label="Category" onChange={handleChange} sx={{ left: 0 }}>
+        <Select value={category} label="Category" onChange={handleChange}>
           {categories.map(category => {
             return (
               <MenuItem key={category.category} value={category.category}>
@@ -77,7 +77,7 @@ const Category = ({ handleClick }) => {
       {category && (
         <Card handleClick={handleClick} handleDelete={handleDelete} cards={usersCards} categoryPage={true} />
       )}
-    </>
+    </Stack>
   );
 };
 
