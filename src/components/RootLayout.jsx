@@ -14,17 +14,22 @@ export default function RootLayout() {
       publishableKey={PUBLISHABLE_KEY}
       routerPush={to => navigate(to)}
       routerReplace={to => navigate(to, { replace: true })}
-      // signInFallbackRedirectUrl="/dashboard"
-      // signUpFallbackRedirectUrl="/dashboard"
+      signInFallbackRedirectUrl="/dashboard"
+      signUpFallbackRedirectUrl="/dashboard"
     >
-      <Navbar />
-      <main>
-        <Outlet />
-      </main>
+      <>
+        <Navbar />
+        <main>
+          <Outlet />
+        </main>
+      </>
     </ClerkProvider>
   );
 }
 
+{
+  /* </ClerkProvider> */
+}
 // <>
 //   <header className="header">
 //     <Navbar />

@@ -46,7 +46,7 @@ const FavoritesModal = ({
     transform: "translate(-50%, -50%)",
     width: "95%",
     backgroundColor: "white",
-    border: "2px solid #000",
+    border: "2px solid #D9D9D9",
     boxShadow: 24,
   };
 

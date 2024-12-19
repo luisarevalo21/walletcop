@@ -18,7 +18,7 @@ const FavoritesItem = ({
   allowEdit,
 }) => {
   return (
-    <Box mt={2} border={"2px solid black"} p={1} position={"relative"}>
+    <Box mt={2} border={"2px solid #D9D9D9"} p={1} position={"relative"}>
       <Box>
         <Button
           sx={{

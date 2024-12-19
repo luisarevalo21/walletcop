@@ -32,7 +32,7 @@ const FavoritesAddCardModal = ({
     width: "95%",
 
     backgroundColor: "white",
-    border: "2px solid #000",
+    border: "2px solid #D9D9D9",
     boxShadow: 24,
     margin: "0 auto",
 

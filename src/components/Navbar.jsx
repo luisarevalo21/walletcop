@@ -26,7 +26,7 @@ const Navbar = () => {
         </Box>
 
         {user && location.pathname.startsWith("/dashboard") && (
-          <Typography variant={"h3"} textAlign={"center"}>
+          <Typography variant={"h3"} textAlign={"center"} sx={{ color: "#092C4C" }}>
             {user.firstName}&#39;s Portal
           </Typography>
         )}

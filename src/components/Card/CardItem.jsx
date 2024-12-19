@@ -43,7 +43,7 @@ const CardItem = ({
     //send it back to the favorites page component
 
     return (
-      <Box borderRadius={"3px"} mt={"1em"} maxWidth={"100%"} border={"1px solid black"} position={"relative"} p={2}>
+      <Box borderRadius={"3px"} mt={"1em"} maxWidth={"100%"} border={"2px solid #D9D9D9"} position={"relative"} p={2}>
         <Box
           p={2}
           display={"flex"}
@@ -134,7 +134,7 @@ const CardItem = ({
   }
 
   return (
-    <Box borderRadius={"3px"} mt={"1em"} maxWidth={"100%"} border={"1px solid black"} position={"relative"} p={2}>
+    <Box borderRadius={"3px"} mt={"1em"} maxWidth={"100%"} border={"2px solid #D9D9D9"} position={"relative"} p={2}>
       {!categoryPage && (
         <Button
           sx={{
