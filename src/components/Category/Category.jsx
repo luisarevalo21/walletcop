@@ -1,10 +1,12 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { Box, Typography, FormControl, Select, InputLabel, MenuItem } from "@mui/material";
 import CategoryItem from "./CategoryItem";
 import Card from "../Card/Card";
 import { useAxiosWithAuth } from "../../api/useAxiosWithAuth";
 
+import { AuthContext } from "../../context/AuthContext";
 const Category = ({ handleClick }) => {
+  const { curUser } = useContext(AuthContext);
   const api = useAxiosWithAuth();
   useEffect(() => {
     const fetchCategories = async () => {
@@ -28,7 +30,7 @@ const Category = ({ handleClick }) => {
   const [usersCards, setUsersCards] = useState([]);
 
   const fetchUsersCategory = async category => {
-    const res = await api.get(`/user/${user.id}/cards/${category}`);
+    const res = await api.get(`/user/${curUser.id}/cards/${category}`);
     setUsersCards(res.data);
   };
   const handleChange = event => {
