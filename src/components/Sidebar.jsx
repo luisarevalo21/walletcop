@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext } from "react";
 import { Box, Typography, Stack, Link, Button, Divider } from "@mui/material";
 import AccountBoxIcon from "@mui/icons-material/AccountBox";
 import WalletIcon from "@mui/icons-material/Wallet";
@@ -10,12 +10,12 @@ import CloseIcon from "@mui/icons-material/Close";
 import DashboardIcon from "@mui/icons-material/Dashboard";
 import InfoIcon from "@mui/icons-material/Info";
 import avatar from "../assets/avatar.jpg";
-import { logout } from "../api/useAxiosWithAuth";
+import { AuthContext } from "../context/AuthContext";
+import { useNavigate } from "react-router-dom";
 const Sidebar = ({ open, setOpen }) => {
-  // console.log("user", user);
-  // //   if (!open) {
-  // //     return <></>;
-  // //   }
+  const navigate = useNavigate();
+
+  const { curUser, logout } = useContext(AuthContext);
   return (
     <Box
       display={"flex"}
@@ -100,42 +100,50 @@ const Sidebar = ({ open, setOpen }) => {
           <AccountBoxIcon sx={{ mr: "4px" }} /> Account
         </Link>
 
-        <Link
-          textAlign={"center"}
-          display={"flex"}
-          alignItems={"center"}
-          fontSize={"1.2rem"}
-          sx={{ textDecoration: "none", color: "black" }}
-          onClick={() => logout()}
-        >
-          <LogoutIcon sx={{ mr: "4px" }} />
-          Sign out
-        </Link>
-
-        <Link
-          href="/login"
-          textAlign={"center"}
-          display={"flex"}
-          alignItems={"center"}
-          fontSize={"1.2rem"}
-          sx={{ textDecoration: "none", color: "black" }}
-        >
-          <LoginIcon sx={{ mr: "4px" }} />
-          Login
-          {/* <SignInButton>Login/Sign Up</SignInButton> */}
-        </Link>
-        <Link
-          href="/signup"
-          textAlign={"center"}
-          display={"flex"}
-          alignItems={"center"}
-          fontSize={"1.2rem"}
-          sx={{ textDecoration: "none", color: "black" }}
-        >
-          <LoginIcon sx={{ mr: "4px" }} />
-          Signup
-          {/* <SignInButton>Login/Sign Up</SignInButton> */}
-        </Link>
+        {curUser && (
+          <Link
+            textAlign={"center"}
+            display={"flex"}
+            alignItems={"center"}
+            fontSize={"1.2rem"}
+            sx={{ textDecoration: "none", color: "black" }}
+            onClick={() => {
+              logout();
+              navigate("/login");
+            }}
+          >
+            <LogoutIcon sx={{ mr: "4px" }} />
+            Log out
+          </Link>
+        )}
+        {!curUser && (
+          <>
+            <Link
+              href="/login"
+              textAlign={"center"}
+              display={"flex"}
+              alignItems={"center"}
+              fontSize={"1.2rem"}
+              sx={{ textDecoration: "none", color: "black" }}
+            >
+              <LoginIcon sx={{ mr: "4px" }} />
+              Login
+              {/* <SignInButton>Login/Sign Up</SignInButton> */}
+            </Link>
+            <Link
+              href="/signup"
+              textAlign={"center"}
+              display={"flex"}
+              alignItems={"center"}
+              fontSize={"1.2rem"}
+              sx={{ textDecoration: "none", color: "black" }}
+            >
+              <LoginIcon sx={{ mr: "4px" }} />
+              Signup
+              {/* <SignInButton>Login/Sign Up</SignInButton> */}
+            </Link>
+          </>
+        )}
       </Stack>
     </Box>
   );
