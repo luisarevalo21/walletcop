@@ -14,7 +14,7 @@ import ProtectedRoute from "./pages/ProtectedRoute.jsx";
 import SignUpPage from "./pages/SignUpPage.jsx";
 import NotFound from "./pages/NotFound.jsx";
 import AccountPage from "./pages/AccountPage.jsx";
-import { UserDataProvider } from "./context/UserDataContext.jsx";
+import { AuthProvider } from "./context/AuthContext.jsx";
 const router = createBrowserRouter([
   {
     element: <RootLayout />,
@@ -41,8 +41,8 @@ const router = createBrowserRouter([
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
-    <UserDataProvider>
+    <AuthProvider>
       <RouterProvider router={router} />
-    </UserDataProvider>
+    </AuthProvider>
   </StrictMode>
 );

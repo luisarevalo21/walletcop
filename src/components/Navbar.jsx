@@ -1,13 +1,12 @@
-import React, { useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { Typography, Box, Stack } from "@mui/material";
-import { SignedIn, SignOutButton, useUser } from "@clerk/clerk-react";
 import MenuIcon from "@mui/icons-material/Menu";
 import Sidebar from "./Sidebar";
 import { useLocation } from "react-router-dom";
-
+import { AuthContext } from "../context/AuthContext";
 const Navbar = () => {
-  const { isSignedIn, user, isLoaded } = useUser();
   const [open, setOpen] = useState(false);
+  const { curUser } = useContext(AuthContext);
   const location = useLocation();
 
   return (
@@ -25,16 +24,23 @@ const Navbar = () => {
           />
         </Box>
 
-        {user &&
+        {/* <Typography variant={"h3"} textAlign={"center"}>
+          {curUser?.email}
+        </Typography> */}
+        {/* {user &&
           !location.pathname.startsWith("/wallet") &&
           !location.pathname.startsWith("/favorites") &&
           !location.pathname.startsWith("/card") && (
             <Typography variant={"h3"} textAlign={"center"}>
               {user.firstName}&#39;s Portal
             </Typography>
-          )}
-
-        {location.pathname.startsWith("/wallet") && (
+          )} */}
+        {curUser && location.pathname.startsWith("/dashboard") && (
+          <Typography variant={"h3"} textAlign={"center"}>
+            {curUser?.firstName}&#39;s Portal
+          </Typography>
+        )}
+        {/* {location.pathname.startsWith("/wallet") && (
           <Typography variant={"h3"} textAlign={"center"}>
             Wallet
           </Typography>
@@ -43,7 +49,7 @@ const Navbar = () => {
           <Typography variant={"h3"} textAlign={"center"}>
             Favorites
           </Typography>
-        )}
+        )} */}
       </Box>
     </Box>
   );

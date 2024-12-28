@@ -1,16 +1,11 @@
-import React, { useState, useEffect } from "react";
-import { SignedIn, SignOutButton, useUser } from "@clerk/clerk-react";
+import React, { useState, useEffect, useContext } from "react";
 import Category from "../components/Category/Category";
 import { Box, Typography } from "@mui/material";
-import { useNavigate, redirect } from "react-router-dom";
-import axios from "axios";
+import { AuthContext } from "../context/AuthContext";
 const Dashboard = () => {
-  const [curUser, setCurUser] = useState(null);
-  const { isSignedIn, user, isLoaded } = useUser();
-  const navigate = useNavigate();
+  const { sendUserToBackend, curUser } = useContext(AuthContext);
 
   const addNewUser = async () => {
-    console.log("user", user);
     const newUser = {
       email: user.emailAddresses[0].emailAddress,
       firstName: user.firstName,
@@ -30,10 +25,10 @@ const Dashboard = () => {
     console.log("res", res);
   };
 
-  useEffect(() => {
-    if (user) {
-    }
-  });
+  // useEffect(() => {
+  //   if (user) {
+  //   }
+  // });
 
   const handleClick = id => {
     console.log("clicked", id);

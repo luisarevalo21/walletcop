@@ -10,10 +10,8 @@ import CloseIcon from "@mui/icons-material/Close";
 import DashboardIcon from "@mui/icons-material/Dashboard";
 import InfoIcon from "@mui/icons-material/Info";
 import avatar from "../assets/avatar.jpg";
-import { SignedIn, SignedOut, SignOutButton, SignInButton, useUser } from "@clerk/clerk-react";
+import { logout } from "../api/useAxiosWithAuth";
 const Sidebar = ({ open, setOpen }) => {
-  const { isSignedIn, user, isLoaded } = useUser();
-
   // console.log("user", user);
   // //   if (!open) {
   // //     return <></>;
@@ -36,28 +34,9 @@ const Sidebar = ({ open, setOpen }) => {
         <CloseIcon />
       </Button>
 
-      <SignedIn>
-        <img
-          src={user?.imageUrl}
-          alt="User Profile"
-          style={{
-            width: "70px",
-            height: "70px",
-            borderRadius: "50%",
-            border: "1px solid black",
-            textAlign: "center",
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-          }}
-        />
-        <Box display={"flex"} flexDirection={"column"} textAlign={"center"} mt={2} mb={3} width={"100%"}>
-          <Typography variant="h4">{user?.firstName}</Typography>
-          <Typography variant="p" fontSize={"13px"}>
-            {user?.emailAddresses[0].emailAddress}
-          </Typography>
-        </Box>
-      </SignedIn>
+      <Box display={"flex"} flexDirection={"column"} textAlign={"center"} mt={2} mb={3} width={"100%"}>
+        <Typography variant="p" fontSize={"13px"}></Typography>
+      </Box>
       <Divider sx={{ border: "1px solid white", width: "100%" }} />
       <Stack
         spacing={3}
@@ -79,90 +58,84 @@ const Sidebar = ({ open, setOpen }) => {
         >
           <InfoIcon sx={{ mr: "4px" }} /> About
         </Link>
-        <SignedIn>
-          <Link
-            href={"/dashboard"}
-            textAlign={"center"}
-            display={"flex"}
-            alignItems={"center"}
-            fontSize={"1.2rem"}
-            sx={{ textDecoration: "none", color: "black" }}
-          >
-            <DashboardIcon sx={{ mr: "4px" }} /> Dashboard
-          </Link>
-          <Link
-            href={"/wallet"}
-            textAlign={"center"}
-            display={"flex"}
-            alignItems={"center"}
-            fontSize={"1.2rem"}
-            sx={{ textDecoration: "none", color: "black" }}
-          >
-            <WalletIcon sx={{ mr: "4px" }} /> Wallet
-          </Link>
-          <Link
-            href={"/favorites"}
-            textAlign={"center"}
-            display={"flex"}
-            alignItems={"center"}
-            fontSize={"1.2rem"}
-            sx={{ textDecoration: "none", color: "black" }}
-          >
-            <FavoriteIcon sx={{ mr: "4px" }} /> Favorites
-          </Link>
+        <Link
+          href={"/dashboard"}
+          textAlign={"center"}
+          display={"flex"}
+          alignItems={"center"}
+          fontSize={"1.2rem"}
+          sx={{ textDecoration: "none", color: "black" }}
+        >
+          <DashboardIcon sx={{ mr: "4px" }} /> Dashboard
+        </Link>
+        <Link
+          href={"/wallet"}
+          textAlign={"center"}
+          display={"flex"}
+          alignItems={"center"}
+          fontSize={"1.2rem"}
+          sx={{ textDecoration: "none", color: "black" }}
+        >
+          <WalletIcon sx={{ mr: "4px" }} /> Wallet
+        </Link>
+        <Link
+          href={"/favorites"}
+          textAlign={"center"}
+          display={"flex"}
+          alignItems={"center"}
+          fontSize={"1.2rem"}
+          sx={{ textDecoration: "none", color: "black" }}
+        >
+          <FavoriteIcon sx={{ mr: "4px" }} /> Favorites
+        </Link>
 
-          <Link
-            href={"/account"}
-            textAlign={"center"}
-            display={"flex"}
-            alignItems={"center"}
-            fontSize={"1.2rem"}
-            sx={{ textDecoration: "none", color: "black" }}
-          >
-            <AccountBoxIcon sx={{ mr: "4px" }} /> Account
-          </Link>
-        </SignedIn>
-        <SignedIn>
-          <SignOutButton>
-            <Link
-              href="/"
-              textAlign={"center"}
-              display={"flex"}
-              alignItems={"center"}
-              fontSize={"1.2rem"}
-              sx={{ textDecoration: "none", color: "black" }}
-            >
-              <LogoutIcon sx={{ mr: "4px" }} />
-              Log out
-            </Link>
-          </SignOutButton>
-        </SignedIn>
-        <SignedOut>
-          <Link
-            href="/login"
-            textAlign={"center"}
-            display={"flex"}
-            alignItems={"center"}
-            fontSize={"1.2rem"}
-            sx={{ textDecoration: "none", color: "black" }}
-          >
-            <LoginIcon sx={{ mr: "4px" }} />
-            Login
-            {/* <SignInButton>Login/Sign Up</SignInButton> */}
-          </Link>
-          <Link
-            href="/signup"
-            textAlign={"center"}
-            display={"flex"}
-            alignItems={"center"}
-            fontSize={"1.2rem"}
-            sx={{ textDecoration: "none", color: "black" }}
-          >
-            <LoginIcon sx={{ mr: "4px" }} />
-            Signup
-            {/* <SignInButton>Login/Sign Up</SignInButton> */}
-          </Link>
-        </SignedOut>
+        <Link
+          href={"/account"}
+          textAlign={"center"}
+          display={"flex"}
+          alignItems={"center"}
+          fontSize={"1.2rem"}
+          sx={{ textDecoration: "none", color: "black" }}
+        >
+          <AccountBoxIcon sx={{ mr: "4px" }} /> Account
+        </Link>
+
+        <Link
+          textAlign={"center"}
+          display={"flex"}
+          alignItems={"center"}
+          fontSize={"1.2rem"}
+          sx={{ textDecoration: "none", color: "black" }}
+          onClick={() => logout()}
+        >
+          <LogoutIcon sx={{ mr: "4px" }} />
+          Sign out
+        </Link>
+
+        <Link
+          href="/login"
+          textAlign={"center"}
+          display={"flex"}
+          alignItems={"center"}
+          fontSize={"1.2rem"}
+          sx={{ textDecoration: "none", color: "black" }}
+        >
+          <LoginIcon sx={{ mr: "4px" }} />
+          Login
+          {/* <SignInButton>Login/Sign Up</SignInButton> */}
+        </Link>
+        <Link
+          href="/signup"
+          textAlign={"center"}
+          display={"flex"}
+          alignItems={"center"}
+          fontSize={"1.2rem"}
+          sx={{ textDecoration: "none", color: "black" }}
+        >
+          <LoginIcon sx={{ mr: "4px" }} />
+          Signup
+          {/* <SignInButton>Login/Sign Up</SignInButton> */}
+        </Link>
       </Stack>
     </Box>
   );

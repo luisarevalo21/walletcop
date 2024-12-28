@@ -10,9 +10,7 @@ const Category = ({ handleClick }) => {
     const fetchCategories = async () => {
       try {
         setIsLoadingCategories(true);
-        // const token = await getToken();
         const res = await api.get("/auth-state");
-        console.log("res", res.data);
         setCategories([]);
         setIsLoadingCategories(false);
       } catch (err) {
@@ -21,6 +19,7 @@ const Category = ({ handleClick }) => {
     };
     fetchCategories();
   }, []);
+
   //reset category state when going back here from card
   const [category, setCategory] = useState("");
   const [categories, setCategories] = useState([

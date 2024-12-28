@@ -1,10 +1,6 @@
 import axios from "axios";
-import { useAuth } from "@clerk/clerk-react"; // Adjust this path as needed
-
-// Create a custom hook for an Axios instance with Clerk authentication
+import supabase from "../supabaseClient";
 export const useAxiosWithAuth = () => {
-  const { getToken } = useAuth();
-
   const api = axios.create({
     baseURL: "http://localhost:3000",
   });
@@ -13,8 +9,8 @@ export const useAxiosWithAuth = () => {
   // Set up an Axios request interceptor
   api.interceptors.request.use(
     async config => {
-      // Retrieve the token from Clerk
-      const token = await getToken();
+      const { data } = await supabase.auth.getSession();
+      const token = data?.session?.access_token;
       if (token) {
         config.headers.Authorization = `Bearer ${token}`;
       }
@@ -24,4 +20,12 @@ export const useAxiosWithAuth = () => {
   );
 
   return api;
+};
+
+export const getSession = async () => {
+  const { data } = await supabase.auth.getSession();
+  return data;
+};
+export const logout = async () => {
+  await supabase.auth.signOut();
 };
