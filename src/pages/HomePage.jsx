@@ -1,9 +1,17 @@
+import React, { useEffect, useState, useContext } from "react";
 import { Box, Button, Container, Typography } from "@mui/material";
-import React, { useEffect } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import { SignedOut } from "@clerk/clerk-react";
-
+import AuthButtons from "../components/AuthButtons.jsx";
+import { useAxiosWithAuth } from "../api/useAxiosWithAuth";
+import { AuthContext } from "../context/AuthContext.jsx";
+import { useNavigate } from "react-router-dom";
 const HomePage = () => {
+  const [user, setUser] = useState(null);
+  const navigate = useNavigate();
+  const { signInWithGoogle, curUser, logout, sendUserToBackend } = useContext(AuthContext);
+
+  if (curUser) {
+    navigate("/dashboard");
+  }
   return (
     <Box
       display={"flex"}
@@ -18,26 +26,19 @@ const HomePage = () => {
       <Typography variant="h1" component="h1" mb={2} mt={0} sx={{ fontSize: "4.5rem" }}>
         WalletCop
       </Typography>
-      <Typography variant={"p"}>
-        Our goal is to help you find the best credit card to use to maximize your cash-back benefits. No more worrying
-        about which card to use for groceries vs. restaurants. With just a few taps, you’ll know which card you should
-        use for your purchase!
-      </Typography>
+      <Typography variant={"p"}>Find the best credit card to use to maximize cash-back benefits.</Typography>
       <Box display={"flex"} justifyItems={"center"} mt={2}>
-        <SignedOut>
-          <Link to="/login">
-            <Button variant="outlined">Login</Button>
-          </Link>
-
-          <Link to="/signup">
-            <Button variant="contained" sx={{ ml: ".5em" }}>
-              Sign Up
+        {!curUser ? (
+          <AuthButtons />
+        ) : (
+          <>
+            <Button onClick={logout} variant="contained">
+              Sign Out
             </Button>
-          </Link>
-        </SignedOut>
+          </>
+        )}
       </Box>
     </Box>
-    // </Container>
   );
 };
 

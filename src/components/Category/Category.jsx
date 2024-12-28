@@ -4,10 +4,8 @@ import CategoryItem from "./CategoryItem";
 import Card from "../Card/Card";
 import { useAxiosWithAuth } from "../../api/useAxiosWithAuth";
 
-import { useUser } from "@clerk/clerk-react";
 const Category = ({ handleClick }) => {
   const api = useAxiosWithAuth();
-  const { user } = useUser();
   useEffect(() => {
     const fetchCategories = async () => {
       try {
@@ -22,6 +20,7 @@ const Category = ({ handleClick }) => {
     };
     fetchCategories();
   }, []);
+
   const [category, setCategory] = useState("");
   const [categories, setCategories] = useState([]);
   const [isLoadingCategories, setIsLoadingCategories] = useState(false);

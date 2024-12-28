@@ -1,20 +1,18 @@
-import React, { useState, useEffect } from "react";
-import { useUser } from "@clerk/clerk-react";
+import React, { useState, useEffect, useContext } from "react";
 import Category from "../components/Category/Category";
 import { Box, Typography } from "@mui/material";
+import { AuthContext } from "../context/AuthContext";
 import { useNavigate } from "react-router-dom";
 const Dashboard = () => {
-  const [curUser, setCurUser] = useState(null);
-  const { isSignedIn, user, isLoaded } = useUser();
+  const { sendUserToBackend, curUser } = useContext(AuthContext);
   const navigate = useNavigate();
-
-  useEffect(() => {
-    setCurUser({
-      id: user.id,
-      firstName: user.firstName,
-      lastName: user.lastName,
-    });
-  }, []);
+  // useEffect(() => {
+  //   setCurUser({
+  //     id: user.id,
+  //     firstName: user.firstName,
+  //     lastName: user.lastName,
+  //   });
+  // }, []);
 
   const handleClick = id => {
     console.log(id);

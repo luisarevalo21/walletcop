@@ -14,6 +14,7 @@ import ProtectedRoute from "./pages/ProtectedRoute.jsx";
 import SignUpPage from "./pages/SignUpPage.jsx";
 import NotFound from "./pages/NotFound.jsx";
 import AccountPage from "./pages/AccountPage.jsx";
+import { AuthProvider } from "./context/AuthContext.jsx";
 const router = createBrowserRouter([
   {
     element: <RootLayout />,
@@ -40,7 +41,8 @@ const router = createBrowserRouter([
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
-    <RouterProvider router={router} />
-
+    <AuthProvider>
+      <RouterProvider router={router} />
+    </AuthProvider>
   </StrictMode>
 );
