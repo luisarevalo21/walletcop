@@ -168,6 +168,7 @@ const FavoritesModal = ({
             favoritesModal={true}
             handleEditCard={handleEditCard}
             allowEdit={allowEdit}
+            allowClick={true}
             selectedCard={selectedCard}
           />
         ))}

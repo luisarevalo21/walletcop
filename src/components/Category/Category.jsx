@@ -30,7 +30,8 @@ const Category = ({ handleClick }) => {
   const [usersCards, setUsersCards] = useState([]);
 
   const fetchUsersCategory = async category => {
-    const res = await api.get(`/user/${curUser.id}/cards/${category}`);
+    if (!curUser) return;
+    const res = await api.get(`/user/${curUser.userId}/cards/${category}`);
     setUsersCards(res.data);
   };
   const handleChange = event => {

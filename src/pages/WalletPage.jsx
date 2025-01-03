@@ -1,28 +1,30 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { Box, Typography, Button, Stack } from "@mui/material";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import Card from "../components/Card/Card";
 import NewCardForm from "../components/Card/NewCardForm";
 import { useAxiosWithAuth } from "../api/useAxiosWithAuth";
-import { useAuth, useUser } from "@clerk/clerk-react";
+import { AuthContext } from "../context/AuthContext";
 const Wallet = () => {
+  const { curUser } = useContext(AuthContext);
+
   const navigate = useNavigate();
-  const { user } = useUser();
   const api = useAxiosWithAuth();
 
   const [toggleAddCard, setToggleAddCard] = useState(false);
   const [cards, setCards] = useState([]);
 
   useEffect(() => {
-    const getUserCards = async () => {
-      const response = await fetchUsersCards();
+    if (!curUser) return;
 
-      setCards(response.data);
+    const getUserCards = async () => {
+      const response = await fetchUsersCards(curUser);
+      setCards(response?.data || []);
     };
 
     getUserCards();
-  }, []);
+  }, [curUser]);
 
   // useEffect(() => {}, []);
 
@@ -31,9 +33,17 @@ const Wallet = () => {
     // await api.get("/card/673bd769fe445011fac7834f");
   };
 
-  const fetchUsersCards = async () => {
-    const cards = await api.get(`/user/${user.id}/cards`);
-    return cards;
+  const fetchUsersCards = async user => {
+    try {
+      if (user) {
+        const cards = await api.get(`/user/${user.userId}/cards`);
+        return cards;
+      }
+    } catch (err) {
+      console.error("error fetching userse cards", err);
+      return [];
+    }
+    return [];
   };
 
   const handleAddCard = () => {
@@ -44,28 +54,30 @@ const Wallet = () => {
     setToggleAddCard(false);
   };
   const handleDelete = async id => {
-    const res = await api.delete(`/user/${user.id}/card/${id}`);
+    console.log(curUser.userId);
+    const res = await api.delete(`/user/${curUser.userId}/card/${id}`);
     if (res.status === 200) {
       setCards(cards => cards.filter(card => card.id !== id));
     }
   };
   const handleNewCard = async form => {
     try {
-      const res = await api.post(`/user/${user.id}/newcard`, {
+      const res = await api.post(`/user/${curUser.userId}/newcard`, {
         creditCardId: form.creditCardId,
       });
 
       if (res.data.success) {
-        const updatedCards = await fetchUsersCards();
+        const updatedCards = await fetchUsersCards(curUser);
         setCards(updatedCards.data);
         return;
       }
       if (!res.data.success) {
         alert("Card already exists try another card");
         return;
-        // throw new Error(res.message);
       }
-    } catch (err) {}
+    } catch (err) {
+      throw new Error(err.message);
+    }
   };
 
   return (
@@ -78,7 +90,7 @@ const Wallet = () => {
       <Card handleClick={handleClick} handleDelete={handleDelete} cards={cards} />
 
       {toggleAddCard && (
-        <NewCardForm open={toggleAddCard} handleClose={handleClose} userId={user.id} handleNewCard={handleNewCard} />
+        <NewCardForm open={toggleAddCard} handleClose={handleClose} userId={curUser.id} handleNewCard={handleNewCard} />
       )}
     </Box>
   );

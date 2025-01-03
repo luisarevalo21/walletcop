@@ -7,11 +7,13 @@ import { useNavigate } from "react-router-dom";
 const HomePage = () => {
   const [user, setUser] = useState(null);
   const navigate = useNavigate();
-  const { signInWithGoogle, curUser, logout, sendUserToBackend } = useContext(AuthContext);
+  const { curUser, logout } = useContext(AuthContext);
 
-  if (curUser) {
-    navigate("/dashboard");
-  }
+  useEffect(() => {
+    if (curUser) {
+      navigate("/dashboard");
+    }
+  }, [curUser]);
   return (
     <Box
       display={"flex"}

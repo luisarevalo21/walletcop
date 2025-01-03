@@ -1,14 +1,14 @@
 import { Box, Card, Stack, Typography, Button } from "@mui/material";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import FavoritesItem from "../components/Favorites/FavoritesItem";
 import FavoritesModal from "../components/Favorites/FavoritesModal";
 import FavoritesAddCardModal from "../components/Favorites/FavoritesAddCardModal";
 import { useAxiosWithAuth } from "../api/useAxiosWithAuth";
-import { useUser } from "@clerk/clerk-react";
+import { AuthContext } from "../context/AuthContext";
 
 const FavoritesPage = () => {
-  const { user } = useUser();
   const api = useAxiosWithAuth();
+  const { curUser } = useContext(AuthContext);
   const [open, setOpen] = useState(false);
   const [showNewCategory, setShowNewCategory] = useState(false);
   const [showAddNewCard, setShowAddNewCard] = useState(false);
@@ -19,32 +19,36 @@ const FavoritesPage = () => {
   const [selectedCard, setSelectedCard] = useState(null);
   const [selectedCategory, setSelectedCategory] = useState(null);
   const [usersFavorites, setUsersFavorites] = useState([]);
-
+  const [originalCards, setOriginalCards] = useState([]);
   const [usersCategories, setUsersCategories] = useState(null);
 
   const getUsersCategoryNames = categories => {
     return categories.map(favorite => favorite.categoryName);
   };
+
   useEffect(() => {
+    if (!curUser) return;
     setLoading(true);
     const getUsersFavorites = async () => {
+      console.log("get users favorites was called");
       fetchUsersFavorites();
     };
 
     getUsersFavorites();
     fetchUsersCards();
-  }, []);
+  }, [curUser]);
 
   const fetchUsersCards = async () => {
     setLoading(true);
-    const cards = await api.get(`/user/${user.id}/cards`);
+    const cards = await api.get(`/user/${curUser.userId}/cards`);
     setUsersCards(cards.data);
+    setOriginalCards(cards.data);
     setLoading(false);
   };
   const fetchUsersFavorites = async () => {
     setLoading(true);
 
-    const cards = await api.get(`/user/${user.id}/favorites`);
+    const cards = await api.get(`/user/${curUser.userId}/favorites`);
     const categories = getUsersCategoryNames(cards.data);
 
     setUsersFavorites(cards.data);
@@ -52,7 +56,7 @@ const FavoritesPage = () => {
     setLoading(false);
   };
   const handleEditCard = async cardDetails => {
-    const response = await api.put(`/user/${user.id}/favorites`, cardDetails);
+    const response = await api.put(`/user/${curUser.userId}/favorites`, cardDetails);
     setOpen(false);
     setUsersFavorites(response.data);
   };
@@ -63,7 +67,7 @@ const FavoritesPage = () => {
 
   const handleAddNewCategory = async selectedCategory => {
     const categoryName = selectedCategory.category;
-    const response = await api.post(`/user/${user.id}/${categoryName}`, {
+    const response = await api.post(`/user/${curUser.userId}/${categoryName}`, {
       categoryId: selectedCategory._id,
     });
     setUsersFavorites(response.data);
@@ -72,7 +76,7 @@ const FavoritesPage = () => {
     setShowNewCategory(false);
   };
   const handleDeleteCategory = async categoryId => {
-    const response = await api.delete(`/user/${user.id}/${categoryId}`);
+    const response = await api.delete(`/user/${curUser.userId}/${categoryId}`);
     const categories = getUsersCategoryNames(response.data);
 
     setUsersFavorites(response.data);
@@ -80,14 +84,17 @@ const FavoritesPage = () => {
   };
 
   const handleDeleteCard = async (cardId, categoryId) => {
-    const response = await api.delete(`/user/${user.id}/favorites/${cardId}`, { data: { categoryId: categoryId } });
+    const response = await api.delete(`/user/${curUser.userId}/favorites/${cardId}`, {
+      data: { categoryId: categoryId },
+    });
 
     setUsersFavorites(response.data);
   };
 
   const handleToggleEditModal = card => {
     setOpen(true);
-    setUsersCards(prev => prev.filter(prevCard => prevCard._id !== card.creditCardId));
+    //something to do wiht the
+    setUsersCards(() => originalCards.filter(prevCard => prevCard._id !== card.creditCardId));
     setSelectedCard(card);
   };
   const handleNewFavorite = (categoryName, card) => {
@@ -107,8 +114,9 @@ const FavoritesPage = () => {
     setSelectedCategory({ categoryName, categoryId });
     setShowAddNewCard(true);
   };
+
   const handleAddNewCard = async (cardId, selectedCategory) => {
-    const response = await api.post(`/user/${user.id}/favorites`, {
+    const response = await api.post(`/user/${curUser.userId}/favorites`, {
       cardId: cardId,
       categoryName: selectedCategory.categoryName,
       categoryId: selectedCategory.categoryId,
@@ -133,6 +141,7 @@ const FavoritesPage = () => {
           handleAddCategory={handleAddNewCategory}
           usersCategories={usersCategories}
           newCategory={true}
+          allowClick={true}
         />
       )}
       {showAddNewCard && (
@@ -142,6 +151,7 @@ const FavoritesPage = () => {
           selectedCategory={selectedCategory}
           handleAddNewCard={handleAddNewCard}
           handleDeleteCard={handleDeleteCard}
+          allowClick={true}
         />
       )}
       {open && (
@@ -157,7 +167,7 @@ const FavoritesPage = () => {
           allowEdit={true}
         />
       )}
-      <Box flexDirection={"column"} justifyContent={"center"} alignItems={"center"} p={2} width={"100%"}>
+      <Box justifyContent={"center"} alignItems={"center"} p={2} width={"100%"}>
         <Box display={"flex"} justifyContent={"center"} mb={4}>
           <Button variant="contained" onClick={() => setShowNewCategory(true)}>
             Add New Category
@@ -173,7 +183,9 @@ const FavoritesPage = () => {
             handleDeleteCard={handleDeleteCard}
             handleEditCard={handleEditCard}
             handleToggleEditModal={handleToggleEditModal}
+            handleAddNewCard={handleAddNewCard}
             allowEdit={false}
+            allowClick={false}
           />
         ))}
       </Box>

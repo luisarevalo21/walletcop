@@ -31,6 +31,7 @@ const CardItem = ({
   selectedCard,
   handleAddNewCard,
   categoryPage,
+  allowClick,
 }) => {
   if (favorites) {
     //pass teh fvaorite card
@@ -42,24 +43,20 @@ const CardItem = ({
     //filter our users cards that doesn't include teh current favorite card
     //send it back to the favorites page component
 
+    let clickFunction = allowEdit
+      ? () =>
+          handleEditCard({
+            creditCardId: card._id,
+            categoryName: selectedCard.categoryName,
+            categoryId: selectedCard.categoryId,
+          })
+      : () => handleAddNewCard(card._id, selectedCard);
+    if (!allowClick) {
+      clickFunction = null;
+    }
     return (
       <Box borderRadius={"3px"} mt={"1em"} maxWidth={"100%"} border={"1px solid black"} position={"relative"} p={2}>
-        <Box
-          p={2}
-          display={"flex"}
-          alignItems={"center"}
-          justifyContent={"flex-start"}
-          onClick={
-            allowEdit
-              ? () =>
-                  handleEditCard({
-                    creditCardId: card._id,
-                    categoryName: selectedCard.categoryName,
-                    categoryId: selectedCard.categoryId,
-                  })
-              : () => handleAddNewCard(card._id, selectedCard)
-          }
-        >
+        <Box p={2} display={"flex"} alignItems={"center"} justifyContent={"flex-start"} onClick={clickFunction}>
           {!favoritesModal && (
             <Button
               sx={{
@@ -70,7 +67,10 @@ const CardItem = ({
                 margin: "0",
                 minWidth: 0,
               }}
-              onClick={() => handleDeleteCard(card._id, categoryId)}
+              onClick={event => {
+                event.stopPropagation(); // Prevent click event from reaching the parent
+                handleDeleteCard(card._id, categoryId);
+              }}
             >
               <DeleteForeverOutlinedIcon style={{ fill: "#EB5757" }} />
             </Button>
@@ -86,7 +86,9 @@ const CardItem = ({
                 display: "flex",
                 justifyContent: "flex-end",
               }}
-              onClick={() => {
+              onClick={event => {
+                event.stopPropagation(); // Prevent click event from reaching the parent
+
                 handleToggleEditModal({
                   creditCardId: card._id,
                   categoryName,

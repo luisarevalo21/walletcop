@@ -24,6 +24,7 @@ export const useAxiosWithAuth = () => {
 
 export const getSession = async () => {
   const { data } = await supabase.auth.getSession();
+  console.log("get data", data);
   return data;
 };
 export const logout = async () => {

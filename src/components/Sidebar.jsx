@@ -58,64 +58,66 @@ const Sidebar = ({ open, setOpen }) => {
         >
           <InfoIcon sx={{ mr: "4px" }} /> About
         </Link>
-        <Link
-          href={"/dashboard"}
-          textAlign={"center"}
-          display={"flex"}
-          alignItems={"center"}
-          fontSize={"1.2rem"}
-          sx={{ textDecoration: "none", color: "black" }}
-        >
-          <DashboardIcon sx={{ mr: "4px" }} /> Dashboard
-        </Link>
-        <Link
-          href={"/wallet"}
-          textAlign={"center"}
-          display={"flex"}
-          alignItems={"center"}
-          fontSize={"1.2rem"}
-          sx={{ textDecoration: "none", color: "black" }}
-        >
-          <WalletIcon sx={{ mr: "4px" }} /> Wallet
-        </Link>
-        <Link
-          href={"/favorites"}
-          textAlign={"center"}
-          display={"flex"}
-          alignItems={"center"}
-          fontSize={"1.2rem"}
-          sx={{ textDecoration: "none", color: "black" }}
-        >
-          <FavoriteIcon sx={{ mr: "4px" }} /> Favorites
-        </Link>
-
-        <Link
-          href={"/account"}
-          textAlign={"center"}
-          display={"flex"}
-          alignItems={"center"}
-          fontSize={"1.2rem"}
-          sx={{ textDecoration: "none", color: "black" }}
-        >
-          <AccountBoxIcon sx={{ mr: "4px" }} /> Account
-        </Link>
-
         {curUser && (
-          <Link
-            textAlign={"center"}
-            display={"flex"}
-            alignItems={"center"}
-            fontSize={"1.2rem"}
-            sx={{ textDecoration: "none", color: "black" }}
-            onClick={() => {
-              logout();
-              navigate("/login");
-            }}
-          >
-            <LogoutIcon sx={{ mr: "4px" }} />
-            Log out
-          </Link>
+          <>
+            <Link
+              href={"/dashboard"}
+              textAlign={"center"}
+              display={"flex"}
+              alignItems={"center"}
+              fontSize={"1.2rem"}
+              sx={{ textDecoration: "none", color: "black" }}
+            >
+              <DashboardIcon sx={{ mr: "4px" }} /> Dashboard
+            </Link>
+            <Link
+              href={"/wallet"}
+              textAlign={"center"}
+              display={"flex"}
+              alignItems={"center"}
+              fontSize={"1.2rem"}
+              sx={{ textDecoration: "none", color: "black" }}
+            >
+              <WalletIcon sx={{ mr: "4px" }} /> Wallet
+            </Link>
+            <Link
+              href={"/favorites"}
+              textAlign={"center"}
+              display={"flex"}
+              alignItems={"center"}
+              fontSize={"1.2rem"}
+              sx={{ textDecoration: "none", color: "black" }}
+            >
+              <FavoriteIcon sx={{ mr: "4px" }} /> Favorites
+            </Link>
+
+            <Link
+              href={"/account"}
+              textAlign={"center"}
+              display={"flex"}
+              alignItems={"center"}
+              fontSize={"1.2rem"}
+              sx={{ textDecoration: "none", color: "black" }}
+            >
+              <AccountBoxIcon sx={{ mr: "4px" }} /> Account
+            </Link>
+
+            <Link
+              textAlign={"center"}
+              display={"flex"}
+              alignItems={"center"}
+              fontSize={"1.2rem"}
+              sx={{ textDecoration: "none", color: "black" }}
+              onClick={() => {
+                logout();
+              }}
+            >
+              <LogoutIcon sx={{ mr: "4px" }} />
+              Log out
+            </Link>
+          </>
         )}
+
         {!curUser && (
           <>
             <Link

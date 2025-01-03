@@ -1,30 +1,32 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { Box, Typography, Modal, Stack, Button } from "@mui/material";
 import { useAxiosWithAuth } from "../../api/useAxiosWithAuth";
-import { useUser } from "@clerk/clerk-react";
 import CardItem from "../Card/CardItem";
 import CloseIcon from "@mui/icons-material/Close";
-
+import { AuthContext } from "../../context/AuthContext";
 const FavoritesAddCardModal = ({
   showAddNewCard,
   handleClose,
   selectedCategory,
   handleAddNewCard,
   handleDeleteCard,
+  allowClick,
 }) => {
+  const { curUser } = useContext(AuthContext);
   const api = useAxiosWithAuth();
-  const { user } = useUser();
   const [usersCards, setUsersCards] = useState([]);
 
   useEffect(() => {
+    if (!curUser) return;
     const getUsersCards = async () => {
       const res = await fetchUsersCards();
       setUsersCards(res.data);
     };
     getUsersCards();
-  }, []);
+  }, [curUser]);
+
   const fetchUsersCards = async () => {
-    return await api.get(`/user/${user.id}/cards`);
+    return await api.get(`/user/${curUser.userId}/cards`);
   };
 
   const style = {
@@ -52,13 +54,21 @@ const FavoritesAddCardModal = ({
         sx={{
           display: "flex",
           textAlign: "center",
-          justifyContent: "center",
+          // justifyContent: "center",
           "flex-direction": "column",
           overflow: "auto",
           height: "100%",
+          position: "relative",
         }}
       >
-        <Button onClick={handleClose} position={"absolute"} right="0">
+        <Button
+          onClick={handleClose}
+          sx={{
+            position: "absolute",
+            right: "0",
+            top: "5px",
+          }}
+        >
           <CloseIcon
             sx={{
               color: "red",
@@ -92,6 +102,7 @@ const FavoritesAddCardModal = ({
                 key={card._id}
                 handleAddNewCard={() => handleAddNewCard(card._id, selectedCategory)}
                 favoritesModal={true}
+                allowClick={true}
               />
             );
           })}

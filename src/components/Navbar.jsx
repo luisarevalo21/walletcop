@@ -40,6 +40,16 @@ const Navbar = () => {
             {curUser?.firstName}&#39;s Portal
           </Typography>
         )}
+        {curUser && location.pathname.startsWith("/favorites") && (
+          <Typography variant={"h3"} textAlign={"center"}>
+            Favorites
+          </Typography>
+        )}
+        {curUser && location.pathname.startsWith("/wallet") && (
+          <Typography variant={"h3"} textAlign={"center"}>
+            Wallet
+          </Typography>
+        )}
         {/* {location.pathname.startsWith("/wallet") && (
           <Typography variant={"h3"} textAlign={"center"}>
             Wallet

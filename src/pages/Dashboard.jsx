@@ -7,12 +7,11 @@ const Dashboard = () => {
   const { sendUserToBackend, curUser } = useContext(AuthContext);
   const navigate = useNavigate();
   // useEffect(() => {
-  //   setCurUser({
-  //     id: user.id,
-  //     firstName: user.firstName,
-  //     lastName: user.lastName,
-  //   });
-  // }, []);
+  //   if (!curUser) {
+  //     navigate("/");
+  //     return;
+  //   }
+  // }, [curUser]);
 
   const handleClick = id => {
     console.log(id);

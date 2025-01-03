@@ -16,6 +16,8 @@ const FavoritesItem = ({
   handleEditCard,
   handleToggleEditModal,
   allowEdit,
+  handleAddNewCard,
+  allowClick,
 }) => {
   return (
     <Box mt={2} border={"2px solid black"} p={1} position={"relative"}>
@@ -48,6 +50,8 @@ const FavoritesItem = ({
           categoryName={favorite.categoryName}
           handleToggleEditModal={handleToggleEditModal}
           allowEdit={allowEdit}
+          allowClick={allowClick}
+          handleAddNewCard={handleAddNewCard}
         />
       ) : (
         <Button

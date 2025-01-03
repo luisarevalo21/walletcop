@@ -1,14 +1,14 @@
 import React, { createContext, useState, useEffect } from "react";
 import supabase from "../supabaseClient";
 import { useAxiosWithAuth } from "../api/useAxiosWithAuth";
-import { ConnectingAirportsOutlined } from "@mui/icons-material";
-
+import { useNavigate } from "react-router-dom";
 const AuthContext = createContext();
 
 const AuthProvider = ({ children }) => {
   const api = useAxiosWithAuth();
-  const [curUser, setCurUser] = useState(null);
+  const navigate = useNavigate();
 
+  const [curUser, setCurUser] = useState(null);
   // Function to handle sign-in with Google
   const signInWithGoogle = async () => {
     try {
@@ -45,9 +45,9 @@ const AuthProvider = ({ children }) => {
     }
   };
 
-  // Effect to track authentication state changes
+  // Fetch session from Supabase on initial load
   useEffect(() => {
-    const fetchSession = async () => {
+    const initializeUser = async () => {
       const { data: sessionData, error } = await supabase.auth.getSession();
       if (error) {
         console.error("Error fetching session:", error);
@@ -55,29 +55,42 @@ const AuthProvider = ({ children }) => {
       }
 
       const user = sessionData?.session?.user || null;
+
       if (user) {
-        setCurUser(user);
-        await sendUserToBackend(user); // Call backend when session is fetched
+        try {
+          const response = await api.post("/auth/callback", user);
+          if (response.status === 200) {
+            setCurUser(response.data); // Save to state
+          }
+        } catch (err) {
+          console.error("Error fetching user from backend:", err);
+        }
       }
     };
 
-    // Subscribe to auth state changes
+    initializeUser();
+
+    // Subscribe to session changes
     const { data } = supabase.auth.onAuthStateChange((event, session) => {
       if (session) {
-        // console.log("Session event:", event);
-        setCurUser(session.user);
+        const user = session?.user;
+        if (!curUser && !user) {
+          // sendUserToBackend();
+        }
+        // setCurUser(session.user);
       } else {
         setCurUser(null);
       }
+
+      if (event === "SIGNED_OUT") {
+        navigate("/");
+        console.log("uesr logged out");
+      }
     });
 
-    // Initial session fetch
-    fetchSession();
-
-    // Cleanup subscription on unmount
-    // return () => {
-    //   subscription?.unsubscribe();
-    // };
+    return () => {
+      data.subscription?.unsubscribe();
+    };
   }, []);
 
   return (

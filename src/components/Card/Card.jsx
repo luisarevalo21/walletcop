@@ -3,13 +3,14 @@ import { Box, Button, Typography } from "@mui/material";
 import CardItem from "./CardItem";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
-
+import { useNavigate } from "react-router-dom";
 const Card = ({ category, handleClick, handleDelete, cards, categoryPage }) => {
   const [toggleCards, setToggleCards] = useState(true);
   const handleToggleCards = () => {
     setToggleCards(!toggleCards);
   };
 
+  const navigate = useNavigate();
   let cardsEl = null;
 
   if (cards.length === 0 && categoryPage) {
@@ -17,6 +18,9 @@ const Card = ({ category, handleClick, handleDelete, cards, categoryPage }) => {
       <Box>
         <Typography variant="h4"> No cards found for that category! </Typography>
         <Typography variant="h4"> Select a new category </Typography>
+        <Button onClick={() => navigate("/wallet")} variant="contained">
+          Add New Cards
+        </Button>
       </Box>
     );
   } else if (cards.length === 0) {
