@@ -9,6 +9,7 @@ const HomePage = () => {
   const navigate = useNavigate();
   const { curUser, logout } = useContext(AuthContext);
 
+  console.log("cur user", curUser);
   useEffect(() => {
     if (curUser) {
       navigate("/dashboard");
