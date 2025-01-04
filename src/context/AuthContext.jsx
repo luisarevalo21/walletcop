@@ -53,16 +53,16 @@ const AuthProvider = ({ children }) => {
         console.error("Error fetching session:", error);
         return;
       }
-      console.log("session data", sessionData);
+      // console.log("session data", sessionData);
 
       const user = sessionData?.session?.user || null;
-      console.log("user in session data", user);
+      // console.log("user in session data", user);
 
       if (user) {
         try {
           const response = await api.post("/auth/callback", user);
-          console.log("response", response);
-          console.log("respones data", response.data);
+          // console.log("response", response);
+          // console.log("respones data", response.data);
           if (response.status === 200) {
             setCurUser(response.data); // Save to state
           }
@@ -76,7 +76,7 @@ const AuthProvider = ({ children }) => {
 
     // Subscribe to session changes
     const { data } = supabase.auth.onAuthStateChange((event, session) => {
-      console.log("session in authstate change", session);
+      // console.log("session in authstate change", session);
       if (session) {
         const user = session?.user;
         if (!curUser && !user) {
