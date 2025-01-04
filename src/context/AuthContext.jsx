@@ -36,7 +36,6 @@ const AuthProvider = ({ children }) => {
   const sendUserToBackend = async user => {
     try {
       const response = await api.post("/auth/callback");
-      console.log("response", response);
       if (response.status === 200) {
         setCurUser(response.data);
         // navigate("/dashboard"); // Uncomment this if needed
@@ -62,6 +61,8 @@ const AuthProvider = ({ children }) => {
       if (user) {
         try {
           const response = await api.post("/auth/callback", user);
+          console.log("response", response);
+          console.log("respones data", response.data);
           if (response.status === 200) {
             setCurUser(response.data); // Save to state
           }
@@ -79,11 +80,11 @@ const AuthProvider = ({ children }) => {
       if (session) {
         const user = session?.user;
         if (!curUser && !user) {
-          sendUserToBackend();
+          // sendUserToBackend();
         }
         // setCurUser(session.user);
       } else {
-        setCurUser("test");
+        // setCurUser("test");
       }
 
       if (event === "SIGNED_OUT") {
