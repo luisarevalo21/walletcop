@@ -82,7 +82,7 @@ const AuthProvider = ({ children }) => {
         }
         // setCurUser(session.user);
       } else {
-        setCurUser(null);
+        setCurUser("test");
       }
 
       if (event === "SIGNED_OUT") {

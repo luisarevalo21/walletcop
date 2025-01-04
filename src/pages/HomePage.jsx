@@ -9,8 +9,8 @@ const HomePage = () => {
   const navigate = useNavigate();
   const { curUser, logout } = useContext(AuthContext);
 
-  console.log("cur user", curUser);
   useEffect(() => {
+    console.log("cur user updated", curUser);
     if (curUser) {
       navigate("/dashboard");
     }
