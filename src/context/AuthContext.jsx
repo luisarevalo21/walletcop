@@ -53,8 +53,10 @@ const AuthProvider = ({ children }) => {
         console.error("Error fetching session:", error);
         return;
       }
+      console.log("session data", sessionData);
 
       const user = sessionData?.session?.user || null;
+      console.log("user in session data", user);
 
       if (user) {
         try {
@@ -72,6 +74,7 @@ const AuthProvider = ({ children }) => {
 
     // Subscribe to session changes
     const { data } = supabase.auth.onAuthStateChange((event, session) => {
+      console.log("session in authstate change", session);
       if (session) {
         const user = session?.user;
         if (!curUser && !user) {
