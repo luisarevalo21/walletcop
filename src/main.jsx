@@ -26,7 +26,7 @@ const router = createBrowserRouter([
         element: <ProtectedRoute />,
         path: "",
         children: [
-          { path: "dashboard", element: <Dashboard /> },
+          { path: "categories", element: <Dashboard /> },
           { path: "wallet", element: <WalletPage /> },
           { path: "favorites", element: <FavoritesPage /> },
           { path: "card/:id", element: <CardDetails /> },

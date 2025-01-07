@@ -31,7 +31,14 @@ const Sidebar = ({ open, setOpen }) => {
         onClick={() => setOpen(false)}
         sx={{ position: "absolute", right: "0", padding: 0, minWidth: 0, top: "1" }}
       >
-        <CloseIcon />
+        <CloseIcon
+          sx={{
+            borderRadius: "50%",
+            backgroundColor: "black",
+            fontWeight: "bold",
+          }}
+          style={{ fill: "white" }}
+        />
       </Button>
 
       <Box display={"flex"} flexDirection={"column"} textAlign={"center"} mt={2} mb={3} width={"100%"}>
@@ -61,14 +68,14 @@ const Sidebar = ({ open, setOpen }) => {
         {curUser && (
           <>
             <Link
-              href={"/dashboard"}
+              href={"/categories"}
               textAlign={"center"}
               display={"flex"}
               alignItems={"center"}
               fontSize={"1.2rem"}
               sx={{ textDecoration: "none", color: "black" }}
             >
-              <DashboardIcon sx={{ mr: "4px" }} /> Dashboard
+              <DashboardIcon sx={{ mr: "4px" }} /> categories
             </Link>
             <Link
               href={"/wallet"}

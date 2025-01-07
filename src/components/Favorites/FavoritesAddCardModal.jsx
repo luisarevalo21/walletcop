@@ -29,35 +29,25 @@ const FavoritesAddCardModal = ({
     return await api.get(`/user/${curUser.userId}/cards`);
   };
 
-  const style = {
-    position: "absolute",
-    width: "95%",
-
-    backgroundColor: "white",
-    border: "2px solid #000",
-    boxShadow: 24,
-    margin: "0 auto",
-
-    // display: "flex",
-    // textAlign: "center",
-    // justifyContent: "center",
-  };
-
   return (
     <Modal
       onClose={handleClose}
       open={showAddNewCard}
-      style={style}
-      sx={{ "& .MuiBackdrop-root": { backgroundColor: "transparent" } }}
+      sx={{
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        "& .MuiBackdrop-root": { backgroundColor: "rgba(0, 0, 0, 0.5)" },
+      }}
     >
       <Box
         sx={{
-          display: "flex",
-          textAlign: "center",
-          // justifyContent: "center",
-          "flex-direction": "column",
-          overflow: "auto",
-          height: "100%",
+          width: "95%",
+          maxWidth: "500px",
+          background: "white",
+          borderRadius: "8px",
+          padding: "20px",
+          boxShadow: "0px 4px 10px rgba(0,0,0,0.25)",
           position: "relative",
         }}
       >
@@ -67,6 +57,7 @@ const FavoritesAddCardModal = ({
             position: "absolute",
             right: "0",
             top: "5px",
+            minWidth: "auto",
           }}
         >
           <CloseIcon

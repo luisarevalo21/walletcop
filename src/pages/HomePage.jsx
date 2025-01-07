@@ -12,7 +12,7 @@ const HomePage = () => {
   useEffect(() => {
     // console.log("cur user updated", curUser);
     if (curUser) {
-      navigate("/dashboard");
+      navigate("/categories");
     }
   }, [curUser]);
   return (

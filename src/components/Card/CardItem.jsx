@@ -55,7 +55,14 @@ const CardItem = ({
       clickFunction = null;
     }
     return (
-      <Box borderRadius={"3px"} mt={"1em"} maxWidth={"100%"} border={"1px solid black"} position={"relative"} p={2}>
+      <Box
+        borderRadius={"8px"}
+        mt={"1em"}
+        maxWidth={"100%"}
+        position={"relative"}
+        p={"20px"}
+        boxShadow={"0px 4px 10px rgba(0,0,0,0.25)"}
+      >
         <Box p={2} display={"flex"} alignItems={"center"} justifyContent={"flex-start"} onClick={clickFunction}>
           {!favoritesModal && (
             <Button
@@ -136,7 +143,14 @@ const CardItem = ({
   }
 
   return (
-    <Box borderRadius={"3px"} mt={"1em"} maxWidth={"100%"} border={"1px solid black"} position={"relative"} p={2}>
+    <Box
+      borderRadius={"8px"}
+      mt={"1em"}
+      maxWidth={"100%"}
+      position={"relative"}
+      p={"20px"}
+      boxShadow={"0px 4px 10px rgba(0,0,0,0.25)"}
+    >
       {!categoryPage && (
         <Button
           sx={{

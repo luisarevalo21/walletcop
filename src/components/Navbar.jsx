@@ -35,7 +35,7 @@ const Navbar = () => {
               {user.firstName}&#39;s Portal
             </Typography>
           )} */}
-        {curUser && location.pathname.startsWith("/dashboard") && (
+        {curUser && location.pathname.startsWith("/categories") && (
           <Typography variant={"h3"} textAlign={"center"}>
             {curUser?.firstName}&#39;s Portal
           </Typography>

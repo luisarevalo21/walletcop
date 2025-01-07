@@ -39,17 +39,6 @@ const FavoritesModal = ({
     setSelectedCategory(e.target.value);
   };
 
-  const style = {
-    position: "absolute",
-    top: "50%",
-    left: "50%",
-    transform: "translate(-50%, -50%)",
-    width: "95%",
-    backgroundColor: "white",
-    border: "2px solid #000",
-    boxShadow: 24,
-  };
-
   const handleAddNewCategory = e => {
     e.preventDefault();
     handleAddCategory(selectedCategory);
@@ -61,10 +50,24 @@ const FavoritesModal = ({
       <Modal
         onClose={handleClose}
         open={open}
-        style={style}
-        sx={{ "& .MuiBackdrop-root": { backgroundColor: "transparent" } }}
+        sx={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          "& .MuiBackdrop-root": { backgroundColor: "rgba(0, 0, 0, 0.5)" },
+        }}
       >
-        <form onSubmit={handleAddNewCategory}>
+        <form
+          onSubmit={handleAddNewCategory}
+          style={{
+            width: "95%",
+            maxWidth: "500px",
+            background: "white",
+            borderRadius: "8px",
+            padding: "20px",
+            boxShadow: "0px 4px 10px rgba(0,0,0,0.25)",
+          }}
+        >
           <Box
             position="relative"
             display={"flex"}
@@ -74,9 +77,23 @@ const FavoritesModal = ({
           >
             <Button
               onClick={handleClose}
-              sx={{ position: "absolute", right: 0, top: "0", fontSize: "1.5rem", width: 0 }}
+              sx={{
+                position: "absolute",
+                right: "0px",
+                top: "0px",
+                fontSize: "1.5rem",
+                minWidth: "auto",
+                padding: "0",
+              }}
             >
-              X
+              <CloseIcon
+                sx={{
+                  borderRadius: "50%",
+                  backgroundColor: "black",
+                  fontWeight: "bold",
+                }}
+                style={{ fill: "white" }}
+              />
             </Button>
             <FormControl
               fullWidth
@@ -121,7 +138,7 @@ const FavoritesModal = ({
         width: "400px",
         padding: "1em .75em",
         overflow: "scroll",
-        height: "80%",
+        height: "100%",
       }}
       style={style}
     >

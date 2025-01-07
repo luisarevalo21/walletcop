@@ -20,7 +20,14 @@ const FavoritesItem = ({
   allowClick,
 }) => {
   return (
-    <Box mt={2} border={"2px solid black"} p={1} position={"relative"}>
+    <Box
+      mt={2}
+      borderRadius={"8px"}
+      maxWidth={"100%"}
+      position={"relative"}
+      p={"20px"}
+      boxShadow={"0px 4px 10px rgba(0,0,0,0.25)"}
+    >
       <Box>
         <Button
           sx={{
