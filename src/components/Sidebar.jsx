@@ -41,8 +41,27 @@ const Sidebar = ({ open, setOpen }) => {
         />
       </Button>
 
+      <img
+        src={curUser?.imageUrl}
+        alt="User Profile"
+        style={{
+          width: "70px",
+          height: "70px",
+          borderRadius: "50%",
+          border: "1px solid black",
+          textAlign: "center",
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+      />
       <Box display={"flex"} flexDirection={"column"} textAlign={"center"} mt={2} mb={3} width={"100%"}>
-        <Typography variant="p" fontSize={"13px"}></Typography>
+        <Typography variant="p" fontSize={"13px"}>
+          {curUser?.firstName}
+        </Typography>
+        <Typography variant="p" fontSize={"13px"}>
+          {curUser?.email}
+        </Typography>
       </Box>
       <Divider sx={{ border: "1px solid white", width: "100%" }} />
       <Stack
@@ -137,7 +156,6 @@ const Sidebar = ({ open, setOpen }) => {
             >
               <LoginIcon sx={{ mr: "4px" }} />
               Login
-              {/* <SignInButton>Login/Sign Up</SignInButton> */}
             </Link>
             <Link
               href="/signup"
@@ -149,7 +167,6 @@ const Sidebar = ({ open, setOpen }) => {
             >
               <LoginIcon sx={{ mr: "4px" }} />
               Signup
-              {/* <SignInButton>Login/Sign Up</SignInButton> */}
             </Link>
           </>
         )}
