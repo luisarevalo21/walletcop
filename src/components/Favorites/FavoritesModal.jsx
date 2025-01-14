@@ -140,7 +140,6 @@ const FavoritesModal = ({
         overflow: "scroll",
         height: "100%",
       }}
-      style={style}
     >
       <Box display={"flex"} flexDirection={"column"}>
         <Button

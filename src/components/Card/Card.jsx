@@ -4,7 +4,18 @@ import CardItem from "./CardItem";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import { useNavigate } from "react-router-dom";
-const Card = ({ category, handleClick, handleDelete, cards, categoryPage }) => {
+const Card = ({
+  category,
+  handleClick,
+  handleDelete,
+  cards,
+  categoryPage,
+  handleAddCardToFavorites,
+  selectedCategory,
+  walletPage,
+  favoriteCard,
+  handleShowCategoryModal,
+}) => {
   const [toggleCards, setToggleCards] = useState(true);
   const handleToggleCards = () => {
     setToggleCards(!toggleCards);
@@ -35,9 +46,14 @@ const Card = ({ category, handleClick, handleDelete, cards, categoryPage }) => {
       <CardItem
         key={card._id ? card._id : card.id}
         card={card}
+        selectedCategory={selectedCategory}
         handleClick={handleClick}
         handleDelete={handleDelete}
         categoryPage={categoryPage}
+        walletPage={walletPage}
+        handleAddCardToFavorites={handleAddCardToFavorites}
+        handleShowCategoryModal={handleShowCategoryModal}
+        favoriteCard={favoriteCard}
       />
     ));
   }

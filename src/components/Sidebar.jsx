@@ -27,10 +27,7 @@ const Sidebar = ({ open, setOpen }) => {
       p={2}
       opacity={0.8}
     >
-      <Button
-        onClick={() => setOpen(false)}
-        sx={{ position: "absolute", right: "0", padding: 0, minWidth: 0, top: "1" }}
-      >
+      <Button onClick={() => setOpen(false)} sx={{ position: "absolute", right: "0", padding: 0, minWidth: 0, top: "1" }}>
         <CloseIcon
           sx={{
             borderRadius: "50%",
@@ -41,20 +38,22 @@ const Sidebar = ({ open, setOpen }) => {
         />
       </Button>
 
-      <img
-        src={curUser?.imageUrl}
-        alt="User Profile"
-        style={{
-          width: "70px",
-          height: "70px",
-          borderRadius: "50%",
-          border: "1px solid black",
-          textAlign: "center",
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-        }}
-      />
+      {curUser && (
+        <img
+          src={curUser?.imageUrl}
+          alt="User Profile"
+          style={{
+            width: "70px",
+            height: "70px",
+            borderRadius: "50%",
+            border: "1px solid black",
+            textAlign: "center",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        />
+      )}
       <Box display={"flex"} flexDirection={"column"} textAlign={"center"} mt={2} mb={3} width={"100%"}>
         <Typography variant="p" fontSize={"13px"}>
           {curUser?.firstName}

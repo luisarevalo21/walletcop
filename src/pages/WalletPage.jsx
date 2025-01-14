@@ -87,7 +87,7 @@ const Wallet = () => {
           Add Card
         </Button>
       </Stack>
-      <Card handleClick={handleClick} handleDelete={handleDelete} cards={cards} />
+      <Card handleClick={handleClick} handleDelete={handleDelete} cards={cards} walletPage={true} />
 
       {toggleAddCard && (
         <NewCardForm open={toggleAddCard} handleClose={handleClose} userId={curUser.id} handleNewCard={handleNewCard} />

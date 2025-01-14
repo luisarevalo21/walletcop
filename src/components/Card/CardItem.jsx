@@ -3,6 +3,8 @@ import { Box, Typography, Stack, Button } from "@mui/material";
 import visaImage from "../../assets/visa-cc.png";
 import NavigateNextIcon from "@mui/icons-material/NavigateNext";
 import EditIcon from "@mui/icons-material/Edit";
+import FavoriteIcon from "@mui/icons-material/Favorite";
+import AddIcon from "@mui/icons-material/Add";
 import DeleteForeverOutlinedIcon from "@mui/icons-material/DeleteForeverOutlined";
 import Accordion from "@mui/material/Accordion";
 import AccordionSummary from "@mui/material/AccordionSummary";
@@ -16,9 +18,6 @@ const CardItem = ({
   handleClick,
   handleDelete,
   card,
-  edit,
-  handleEdit,
-  favorite,
   categoryName,
   favorites,
   handleDeleteCard,
@@ -32,7 +31,15 @@ const CardItem = ({
   handleAddNewCard,
   categoryPage,
   allowClick,
+  handleAddCardToFavorites,
+  selectedCategory,
+  walletPage,
+  handleShowCategoryModal,
+  basicCard,
+  favoriteCard,
 }) => {
+  const currentFavorite = card?._id === favoriteCard?._id;
+
   if (favorites) {
     //pass teh fvaorite card
     //then map over the users cards and display them
@@ -55,14 +62,7 @@ const CardItem = ({
       clickFunction = null;
     }
     return (
-      <Box
-        borderRadius={"8px"}
-        mt={"1em"}
-        maxWidth={"100%"}
-        position={"relative"}
-        p={"20px"}
-        boxShadow={"0px 4px 10px rgba(0,0,0,0.25)"}
-      >
+      <Box borderRadius={"8px"} mt={"1em"} maxWidth={"100%"} position={"relative"} p={"20px"} boxShadow={"0px 4px 10px rgba(0,0,0,0.25)"}>
         <Box p={2} display={"flex"} alignItems={"center"} justifyContent={"flex-start"} onClick={clickFunction}>
           {!favoritesModal && (
             <Button
@@ -142,15 +142,52 @@ const CardItem = ({
     );
   }
 
+  if (basicCard) {
+    return (
+      <Box
+        borderRadius={"8px"}
+        mt={"1em"}
+        mb={"2.5em"}
+        maxWidth={"100%"}
+        position={"relative"}
+        p={"20px"}
+        boxShadow={"0px 4px 10px rgba(0,0,0,0.25)"}
+      >
+        <Box p={2} display={"flex"} alignItems={"center"} justifyContent={"flex-start"}>
+          <Box mr={2} maxWidth={"120px"}>
+            <img src={card.imageUrl} alt="card" width={"100%"} />
+          </Box>
+
+          <Stack>
+            <Typography variant={"p"} mb={1}>
+              {card.bankName}
+            </Typography>
+            <Typography variant={"p"}>{card.creditCardName}</Typography>
+          </Stack>
+        </Box>
+        <Accordion>
+          <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+            <Typography>Bonuses</Typography>
+          </AccordionSummary>
+          <AccordionDetails>
+            <Table>
+              <TableBody>
+                {card?.bonuses?.map(bonus => (
+                  <TableRow key={bonus._id}>
+                    <TableCell>{bonus.type}</TableCell>
+                    <TableCell>{bonus.details}</TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </AccordionDetails>
+        </Accordion>
+      </Box>
+    );
+  }
+
   return (
-    <Box
-      borderRadius={"8px"}
-      mt={"1em"}
-      maxWidth={"100%"}
-      position={"relative"}
-      p={"20px"}
-      boxShadow={"0px 4px 10px rgba(0,0,0,0.25)"}
-    >
+    <Box borderRadius={"8px"} mt={"1em"} mb={"2.5em"} maxWidth={"100%"} position={"relative"} p={"20px"} boxShadow={"0px 4px 10px rgba(0,0,0,0.25)"}>
       {!categoryPage && (
         <Button
           sx={{
@@ -232,13 +269,26 @@ const CardItem = ({
           <EditIcon sx={{ backgroundColor: "#85BDAC", color: "black", borderRadius: "50%" }} />
         </Button> 
       ) : ( */}
+
+      {currentFavorite && selectedCategory !== undefined && (
+        <div>
+          <FavoriteIcon
+            sx={{
+              position: "absolute",
+              top: "0",
+              left: "0",
+              fill: "red",
+            }}
+          />
+        </div>
+      )}
       <Button
         sx={{
           position: "absolute",
           right: "0",
           margin: "0",
+          top: walletPage ? "0" : "-1",
           padding: "0",
-          top: "0",
           display: "flex",
           justifyContent: "flex-end",
         }}
@@ -248,6 +298,24 @@ const CardItem = ({
       >
         <NavigateNextIcon sx={{ backgroundColor: "#85BDAC", color: "black", borderRadius: "50%" }} />
       </Button>
+      {!walletPage && (
+        <Button
+          sx={{
+            position: "absolute",
+            right: "0",
+            margin: "0",
+            padding: "0",
+            top: "0",
+            display: "flex",
+            justifyContent: "flex-end",
+          }}
+          onClick={() => {
+            favoriteCard ? handleShowCategoryModal(card) : handleAddCardToFavorites(card._id);
+          }}
+        >
+          <AddIcon sx={{ backgroundColor: "#85BDAC", color: "black", borderRadius: "50%" }} />
+        </Button>
+      )}
     </Box>
   );
 };

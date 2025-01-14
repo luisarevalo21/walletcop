@@ -1,27 +1,24 @@
-import React, { useEffect } from "react";
+import React, { useContext } from "react";
 import { Box, Typography, Button } from "@mui/material";
-import { useNavigate } from "react-router-dom";
-import supabase from "../supabaseClient";
-import AuthButtons from "../components/AuthButtons.jsx";
-const SignUpPage = () => {
-  const navigate = useNavigate();
+import { AuthContext } from "../context/AuthContext";
 
-  const handleSignUp = () => {
-    const { user, session, error } = supabase.auth
-      .signInWithOAuth({
-        provider: "google",
-      })
-      .then(response => {
-        console.log(response);
-      });
-    console.log(user, session, error);
-  };
+const SignUpPage = () => {
+  const { signInWithGoogle } = useContext(AuthContext);
+
   return (
     <Box display={"flex"} justifyContent={"center"} alignItems={"center"} margin={"0 auto"} flexDirection={"column"}>
-      <AuthButtons />
-      {/* <Button variant="outlined" onClick={handleSignUp}>
-        Sign up with google
-      </Button> */}
+      <Typography variant="h5">Welcome to WalletCop</Typography>
+      <Typography variant="p">Please sign up with google</Typography>
+
+      <Button
+        variant="contained"
+        sx={{
+          marginTop: ".75em",
+        }}
+        onClick={signInWithGoogle}
+      >
+        Sign up with Google
+      </Button>
     </Box>
   );
 };
