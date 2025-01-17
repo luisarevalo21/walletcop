@@ -5,9 +5,9 @@ import Card from "../Card/Card";
 import { useAxiosWithAuth } from "../../api/useAxiosWithAuth";
 import CategoryModal from "./CategoryModal";
 import { AuthContext } from "../../context/AuthContext";
-import { useUser } from "../../context/AuthContext";
 const Category = ({ handleClick }) => {
-  const { curUser } = useUser(AuthContext);
+  const { curUser } = useContext(AuthContext);
+  console.log("cur usdr", curUser);
   const api = useAxiosWithAuth();
   useEffect(() => {
     const fetchCategories = async () => {
@@ -87,7 +87,6 @@ const Category = ({ handleClick }) => {
     return <Typography>Loading Users Cards...</Typography>;
   }
 
-  console.log("categoryes", categories);
   return (
     <>
       <FormControl

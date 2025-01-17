@@ -10,11 +10,11 @@ const HomePage = () => {
   const { curUser, logout } = useContext(AuthContext);
 
   useEffect(() => {
-    // console.log("cur user updated", curUser);
     if (curUser) {
       navigate("/categories");
     }
   }, [curUser]);
+
   return (
     <Box
       display={"flex"}
