@@ -54,7 +54,6 @@ const Wallet = () => {
     setToggleAddCard(false);
   };
   const handleDelete = async id => {
-    console.log(curUser.userId);
     const res = await api.delete(`/user/${curUser.userId}/card/${id}`);
     if (res.status === 200) {
       setCards(cards => cards.filter(card => card.id !== id));
@@ -89,9 +88,7 @@ const Wallet = () => {
       </Stack>
       <Card handleClick={handleClick} handleDelete={handleDelete} cards={cards} walletPage={true} />
 
-      {toggleAddCard && (
-        <NewCardForm open={toggleAddCard} handleClose={handleClose} userId={curUser.id} handleNewCard={handleNewCard} />
-      )}
+      {toggleAddCard && <NewCardForm open={toggleAddCard} handleClose={handleClose} userId={curUser.id} handleNewCard={handleNewCard} />}
     </Box>
   );
 };

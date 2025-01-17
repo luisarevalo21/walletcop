@@ -30,7 +30,6 @@ const FavoritesPage = () => {
     if (!curUser) return;
     setLoading(true);
     const getUsersFavorites = async () => {
-      console.log("get users favorites was called");
       fetchUsersFavorites();
     };
 

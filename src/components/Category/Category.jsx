@@ -7,7 +7,6 @@ import CategoryModal from "./CategoryModal";
 import { AuthContext } from "../../context/AuthContext";
 const Category = ({ handleClick }) => {
   const { curUser } = useContext(AuthContext);
-  console.log("cur usdr", curUser);
   const api = useAxiosWithAuth();
   useEffect(() => {
     const fetchCategories = async () => {

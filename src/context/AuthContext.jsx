@@ -76,16 +76,13 @@ const AuthProvider = ({ children }) => {
 
     //   // Subscribe to session changes
     const { data } = supabase.auth.onAuthStateChange((event, session) => {
-      // console.log("cur user", curUser);
       if (session) {
         const user = session?.user;
 
-        // console.log("user", user);
         if (!curUser && !user) {
           console.log("send to backend called");
         } else {
           sendUserToBackend();
-          console.log("cur user inside of auth xcontext", curUser);
         }
       } else {
         navigate("/");

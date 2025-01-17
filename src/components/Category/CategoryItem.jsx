@@ -2,12 +2,6 @@ import React from "react";
 import { Box, MenuItem } from "@mui/material";
 
 const CategoryItem = ({ value, label }) => {
-  //   console.log(props);
-
-  //   const { value } = props;
-  // console.log("value", value);
-  // return <MenuItem value={label}>{label}</MenuItem>;
-
   return (
     <Box
       borderRadius={"50%"}
