@@ -68,13 +68,7 @@ const FavoritesModal = ({
             boxShadow: "0px 4px 10px rgba(0,0,0,0.25)",
           }}
         >
-          <Box
-            position="relative"
-            display={"flex"}
-            justifyContent={"center"}
-            flexDirection={"column"}
-            alignItems={"center"}
-          >
+          <Box position="relative" display={"flex"} justifyContent={"center"} flexDirection={"column"} alignItems={"center"}>
             <Button
               onClick={handleClose}
               sx={{
@@ -134,14 +128,28 @@ const FavoritesModal = ({
       open={open}
       onClose={handleClose}
       sx={{
-        "& .MuiBackdrop-root": { backgroundColor: "transparent" },
+        "& .MuiBackdrop-root": { backgroundColor: "rgba(0, 0, 0, 0.5)" },
         width: "400px",
         padding: "1em .75em",
         overflow: "scroll",
         height: "100%",
       }}
     >
-      <Box display={"flex"} flexDirection={"column"}>
+      <Box
+        position="relative"
+        display={"flex"}
+        justifyContent={"center"}
+        flexDirection={"column"}
+        alignItems={"center"}
+        sx={{
+          width: "95%",
+          maxWidth: "500px",
+          background: "white",
+          borderRadius: "8px",
+          padding: "20px",
+          boxShadow: "0px 4px 10px rgba(0,0,0,0.25)",
+        }}
+      >
         <Button
           onClick={handleClose}
           sx={{

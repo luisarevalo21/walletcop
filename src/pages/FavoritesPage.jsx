@@ -55,7 +55,7 @@ const FavoritesPage = () => {
     setLoading(false);
   };
   const handleEditCard = async cardDetails => {
-    const response = await api.put(`/user/${curUser.userId}/favorites`, cardDetails);
+    const response = await api.put(`/user/${curUser.userId}/favorites/categories`, cardDetails);
     setOpen(false);
     setUsersFavorites(response.data);
   };
