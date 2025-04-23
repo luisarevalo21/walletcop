@@ -7,7 +7,7 @@ Wallet Cop helps you choose the best credit card for specific spending categorie
 ### 1. Clone Repositories
 
 - **Frontend** (this repo)
-- **Backend**: Clone the backend repository from your preferred source.
+- **Backend**: [Wallet Cop](https://github.com/luisarevalo21/walletcop)
 
 ### 2. Install Dependencies
 
@@ -32,11 +32,10 @@ Make sure to create a `.env` file in both the frontend and backend directories w
 #### Backend `.env`
 
 ```env
-MONGODB_URI=your_mongodb_uri
-SUPABASE_URL=your_supabase_url
-SUPABASE_KEY=your_supabase_service_key
-GOOGLE_CLIENT_ID=your_google_client_id
-GOOGLE_CLIENT_SECRET=your_google_client_secret
+DB_URI=
+SUPABASE_URL=
+SUPABASE_ANON_KEY=
+SUPABASE_JWT_SECRET=
 ```
 
 #### Frontend `.env`
