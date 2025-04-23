@@ -1,76 +1,80 @@
-# Wallet Cop
+# Wallet Cop – Frontend
 
-Wallet Cop helps you choose the best credit card for specific spending categories based on the cards you own.
+This is the frontend for **Wallet Cop**, a smart tool that helps users identify the best credit card to use for different spending categories, based on the cards they own.
 
-## Getting Started
+## 🧠 What It Does
 
-### 1. Clone Repositories
+Wallet Cop simplifies credit card optimization by letting users:
 
-- **Frontend** (this repo)
-- **Backend**: [Wallet Cop](https://github.com/luisarevalo21/walletcop)
+- Securely sign in with Google
+- Add credit cards they currently use (or test with random ones)
+- View personalized recommendations on which card to use for various categories (e.g. dining, groceries, travel)
+- Manage their wallet and favorites for easy access and organization
+
+The goal is to help users **maximize their rewards and benefits** by always using the best card for each purchase.
+
+---
+
+## ✨ Core Features
+
+- **Google Authentication** via OAuth 2.0
+- **Interactive Dashboard** with smart card recommendations by category
+- **Wallet Management**: Add, view, and remove cards
+- **Favorites System**: Mark cards as favorites and easily manage them
+- **Supabase Integration** for user/session handling
+- **Vite + React** powered frontend with fast refresh and modern tooling
+
+---
+
+## 🚀 Getting Started
+
+### 1. Clone the Repository
+
+```bash
+git clone https://github.com/luisarevalo21/walletcop.git
+cd walletcop
+```
 
 ### 2. Install Dependencies
-
-For both the frontend and backend folders, run:
 
 ```bash
 npm install
 ```
 
-### 3. Set Up Environment Variables
+### 3. Configure Environment Variables
 
-To run the project, you’ll need credentials for the following services:
-
-- **MongoDB**
-- **Supabase**
-- **Google Auth (OAuth 2.0)**
-
-> If you don’t have these credentials yet, feel free to ask — I can provide test credentials to get you started.
-
-Make sure to create a `.env` file in both the frontend and backend directories with the required keys. Here's an example structure for each:
-
-#### Backend `.env`
+Create a `.env` file in the root with the following:
 
 ```env
-DB_URI=
-SUPABASE_URL=
-SUPABASE_ANON_KEY=
-SUPABASE_JWT_SECRET=
+VITE_SUPABASE_URL=your_supabase_url
+VITE_SUPABASE_ANON_KEY=your_supabase_anon_key
+VITE_GOOGLE_CLIENT_ID=your_google_client_id
 ```
 
-#### Frontend `.env`
+> Need help getting these? Ask and test credentials can be provided!
 
-```env
-VITE_CLERK_PUBLISHABLE_KEY=
-VITE_SUPABASE_URL=
-VITE_SUPABASE_ANON_KEY=
-
-```
-
-### 4. Run the Backend
-
-In the backend folder:
-
-```bash
-npm run start
-```
-
-> Note: The backend is hosted on a free Render server, so it may take a few seconds to wake up on first use.
-
-### 5. Run the Frontend
-
-In the frontend folder:
+### 4. Run the Frontend
 
 ```bash
 npm run dev
 ```
 
-Open the app in your browser — typically at [http://localhost:5173](http://localhost:5173).
+Visit [http://localhost:5173](http://localhost:5173) to view the app.
 
-## Usage Instructions
+---
 
-1. **Sign In**: Use a Google account to log in.
-2. **Wait a Moment**: The backend may take a few seconds to respond on the first load.
-3. **Add Cards**: Go to the Wallet tab and add cards you own (or test with dummy cards).
-4. **View Recommendations**: Return to the Dashboard and select a spending category to see the best card from your wallet.
-5. **Manage Cards**: You can favorite cards, or remove them from your wallet or favorites list as needed.
+## 🧪 How to Use
+
+1. Sign in using your Google account.
+2. Wait a few seconds — the backend is hosted on a free Render server and may take a moment to start.
+3. Head to the **Wallet** tab and add a few cards you own (or random test cards).
+4. Go back to the **Dashboard** and pick a category — Wallet Cop will show you the best card to use.
+5. Favorite the cards you love and manage your list however you like.
+
+---
+
+## 🔗 Related Repositories
+
+- **Backend Repo**: [walletcop-backend](https://github.com/luisarevalo21/walletcop-backend)
+
+Make sure to follow the backend setup guide to get the full app working.
