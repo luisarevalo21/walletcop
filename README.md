@@ -1,7 +1,3 @@
-Here’s an updated version of your README for **Wallet Cop**, combining your project instructions with a cleaner structure and preserving the original Vite info at the bottom:
-
----
-
 # Wallet Cop
 
 Wallet Cop helps you choose the best credit card for specific spending categories based on the cards you own.
